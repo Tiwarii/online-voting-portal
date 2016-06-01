@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="ovp" default="default" basedir=".">
-    <description>Builds, tests, and runs the project ovp.</description>
+<project name="online-voting-portal" default="default" basedir=".">
+    <description>Builds, tests, and runs the project online-voting-portal.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 
