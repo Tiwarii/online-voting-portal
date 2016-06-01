@@ -7,7 +7,7 @@ package com.ovp.dao;
 
 /**
  *
- * @author pjayswal
+ * @author Rashmi Tiwari
  */
 import java.sql.Connection;
 import java.sql.DriverManager;

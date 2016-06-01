@@ -13,20 +13,31 @@ import java.util.Objects;
  * @author Rashmi Tiwari
  */
 public class Contestent {
+
+    private Integer id = null;
     private String name;
     private String picLocation;
     private List<String> agendaList;
-    private int votes=0;
+    private int votes = 0;
 
     public Contestent(String name, String picLocation, List<String> agendaList) {
         this.name = name;
         this.picLocation = picLocation;
         this.agendaList = agendaList;
     }
-    
-    public void increment(){
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void increment() {
         votes++;
     }
+
     public String getName() {
         return name;
     }
@@ -54,7 +65,11 @@ public class Contestent {
     public int getVotes() {
         return votes;
     }
-   
+
+    public void setVotes(int votes) {
+        this.votes = votes;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -84,10 +99,9 @@ public class Contestent {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
-        return "Contestent{" + "name=" + name + ", picLocation=" + picLocation + ", agendaList=" + agendaList + '}';
+        return "Contestent{" + "id=" + id + ", name=" + name + ", picLocation=" + picLocation + ", agendaList=" + agendaList + ", votes=" + votes + '}';
     }
-
 }

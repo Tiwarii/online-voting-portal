@@ -7,149 +7,186 @@ package com.ovp.dao;
 
 /**
  *
- * @author pjayswal
+ * @author Rashmi Tiwari
  */
-
 import com.ovp.entities.Contestent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContestentDao {
-  private Connection connection ;
-  private Statement statement ;
-  private PreparedStatement preparedStatement ;
-  private ResultSet resultSet = null;
+    private final static Logger log = Logger.getLogger("ContestentDao");
 
-
-  public Contestent getContestent(int contestentId) throws SQLException{
+    public Contestent getContestent(int contestentId) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        log.log(Level.INFO, "Getting Contestent with Id:{0} from DB", contestentId);
         String query = "SELECT * FROM contestent WHERE id=" + contestentId;
-        ResultSet rs = null;
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();
-            rs = statement.executeQuery(query);
-            List<Contestent> lists =  resultSetToContestentList(resultSet);
-            if(lists.size()==0){
+            resultSet = statement.executeQuery(query);
+            List<Contestent> lists = resultSetToContestentList(resultSet);
+            if (lists.isEmpty()) {
                 return null;
-            }
-            else {
+            } else {
                 return lists.get(0);
             }
         } finally {
-            DBUtil.close(rs);
+            DBUtil.close(resultSet);
             DBUtil.close(statement);
             DBUtil.close(connection);
         }
-  }
-  
-  public List<Contestent> getAllContestent() throws SQLException{
+    }
+
+    public List<Contestent> getAllContestent() throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        log.info("Getting all contestent from DB");
         String query = "SELECT * FROM contestent";
-        ResultSet rs = null;
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();
-            rs = statement.executeQuery(query);
+            resultSet = statement.executeQuery(query);
             return resultSetToContestentList(resultSet);
         } finally {
-            DBUtil.close(rs);
+            DBUtil.close(resultSet);
             DBUtil.close(statement);
             DBUtil.close(connection);
         }
-  }
-  /*
-  public void readDataBase() throws Exception {
-    try {
-      // This will load the MySQL driver, each DB has its own driver
-      Class.forName("com.mysql.jdbc.Driver");
-      // Setup the connection with the DB
-      connect = DriverManager
-          .getConnection("jdbc:mysql://localhost/test?");
-      
-      /*connect = DriverManager
-          .getConnection("jdbc:mysql://localhost/test?"
-              + "user=sqluser&password=sqluserpw");*/
-/*
-      // Statements allow to issue SQL queries to the database
-      statement = connect.createStatement();
-      // Result set get the result of the SQL query
-      resultSet = statement
-          .executeQuery("select * from contestent");
-      writeResultSet(resultSet);
-
-      // PreparedStatements can use variables and are more efficient
-      preparedStatement = connect
-          .prepareStatement("insert into  contestent values (default, ?, ?, ?, ? , ?)");
-      // "myuser, webpage, datum, summery, COMMENTS from feedback.comments");
-      // Parameters start with 1
-      preparedStatement.setString(1, "Test");
-      preparedStatement.setString(2, "TestEmail");
-      preparedStatement.setString(3, "TestWebpage");
-      preparedStatement.setInt(4, 2);
-      preparedStatement.setString(5, "TestComment");
-      preparedStatement.executeUpdate();
-
-      preparedStatement = connect
-          .prepareStatement("SELECT name, picloc, agenda, vote, summary from contestent");
-      resultSet = preparedStatement.executeQuery();
-      writeResultSet(resultSet);
-
-      // Remove again the insert comment
-      preparedStatement = connect
-      .prepareStatement("delete from contestent where name= ? ; ");
-      preparedStatement.setString(1, "Test");
-      preparedStatement.executeUpdate();
-      
-      resultSet = statement
-      .executeQuery("select * from contestent");
-      writeMetaData(resultSet);
-      
-    } catch (Exception e) {
-      throw e;
-    } finally {
-      close();
     }
 
-  }
+    public void createContestent(Contestent contestent) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        log.log(Level.INFO, "Creating contestent:{0} in DB", contestent);
+        String insertQuery = "INSERT INTO contestent(NAME, PICLOC, AGENDA, VOTE, SUMMARY) VALUES(?,?,?,?,?)";
+        try {
+            connection = ConnectionFactory.getConnection();
+            stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
 
-  private void writeMetaData(ResultSet resultSet) throws SQLException {
-    //   Now get some metadata from the database
-    // Result set get the result of the SQL query
+            stmt.setString(1, contestent.getName());
+            stmt.setString(2, contestent.getPicLocation());
+            stmt.setString(3, listToString(contestent.getAgendaList()));
+            stmt.setInt(4, contestent.getVotes());
+            stmt.setString(5, "TODO: Add summary to Contestent Class");
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                log.log(Level.SEVERE, "Creating user failed:{0} in DB", contestent);
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+            // get primary key of the inserted row
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    contestent.setId(generatedKeys.getInt(1));
+                    log.log(Level.INFO, "Contestent created:{0} in DB", contestent);
+                } else {
+                    log.log(Level.SEVERE, "Creating user failed:{0} in DB", contestent);
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+        } finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(stmt);
+            DBUtil.close(connection);
+        }
+    }
+
+    public void updateContestent(Contestent contestent) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        log.log(Level.INFO, "Updating contestent:{0} in DB", contestent);
+        String updateQuery = "UPDATE contestent SET NAME=?, PICLOC=?, AGENDA=?, VOTE=?, SUMMARY=?"
+                + "WHERE id=?";
+        try {
+            connection = ConnectionFactory.getConnection();
+            stmt = connection.prepareStatement(updateQuery);
+
+            stmt.setString(1, contestent.getName());
+            stmt.setString(2, contestent.getPicLocation());
+            stmt.setString(3, listToString(contestent.getAgendaList()));
+            stmt.setInt(4, contestent.getVotes());
+            stmt.setString(5, "TODO: Add summary to Contestent Class");
+            stmt.setInt(6, contestent.getId());
+
+            stmt.executeUpdate();
+            log.log(Level.INFO, "Updated contestent:{0} in DB", contestent);
+
+        } finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(stmt);
+            DBUtil.close(connection);
+        }
+    }
     
-    System.out.println("The columns in the table are: ");
+    public void deleteContestent(Contestent contestent) throws SQLException {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        log.log(Level.INFO, "Updating contestent:{0} in DB", contestent);
+        String updateQuery = "DELETE FROM contestent WHERE id=?";
+        try {
+            connection = ConnectionFactory.getConnection();
+            stmt = connection.prepareStatement(updateQuery);
+            stmt.setInt(0, contestent.getId());
+
+            stmt.executeUpdate();
+            log.log(Level.INFO, "Deleted contestent:{0} in DB", contestent);
+
+        } finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(stmt);
+            DBUtil.close(connection);
+        }
+    }
+
+    private List<Contestent> resultSetToContestentList(ResultSet resultSet) throws SQLException {
+        List<Contestent> contestentList = new ArrayList();
+        // ResultSet is initially before the first data set
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            String picLoc = resultSet.getString("picloc");
+            String agenda = resultSet.getString("agenda");
+            int vote = resultSet.getInt("vote");
+            String summary = resultSet.getString("summary");
+            System.out.println("Name: " + name);
+            System.out.println("Picloc: " + picLoc);
+            System.out.println("agenda: " + agenda);
+            System.out.println("Vote: " + vote);
+            System.out.println("Summary: " + summary);
+            // TODO: convert agentList array to real List and use it in constructor
+            Contestent contestent = new Contestent(name, picLoc, stringToList(agenda));
+            contestent.setVotes(vote);
+            contestentList.add(contestent);
+        }
+        return contestentList;
+    }
     
-    System.out.println("Table: " + resultSet.getMetaData().getTableName(1));
-    for  (int i = 1; i<= resultSet.getMetaData().getColumnCount(); i++){
-      System.out.println("Column " +i  + " "+ resultSet.getMetaData().getColumnName(i));
+    private String listToString(List<String> agendaList){
+        StringBuilder builder = new StringBuilder();
+        for(String agenda: agendaList) {
+            builder.append(agenda+";");
+        }
+        return builder.toString();
     }
-  }*/
-
-  private List<Contestent> resultSetToContestentList(ResultSet resultSet) throws SQLException {
-      List<Contestent> contestentList = new ArrayList();
-    // ResultSet is initially before the first data set
-    while (resultSet.next()) {
-      String name = resultSet.getString("name");
-      String picLoc = resultSet.getString("picloc");
-      String[] agendaList = resultSet.getString("agenda").split(";");
-      int vote = resultSet.getInt("vote");
-      String summary = resultSet.getString("summary");
-      System.out.println("Name: " + name);
-      System.out.println("Picloc: " + picLoc);
-      System.out.println("agenda: " + agendaList);
-      System.out.println("Vote: " + vote);
-      System.out.println("Summary: " + summary);
-      // TODO: convert agentList array to real List and use it in constructor
-      Contestent contestent = new Contestent(name, picLoc, new ArrayList());
-      contestent.setVotes(vote);
-      contestentList.add(contestent);      
+    
+    private List<String> stringToList(String agenda){
+        String[] agendas = agenda.split(";");
+        return Arrays.asList(agendas);
     }
-    return contestentList;
-  }
 
-} 
+}

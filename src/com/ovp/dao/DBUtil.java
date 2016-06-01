@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author pjayswal
+ * @author Rashmi Tiwari
  */
 public class DBUtil {
  
