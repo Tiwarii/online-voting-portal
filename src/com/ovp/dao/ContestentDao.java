@@ -48,12 +48,12 @@ public class ContestentDao {
         }
     }
 
-    public List<Contestent> getAllContestent() throws SQLException {
+    public List<Contestent> getAllContestent(int campaignId) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         log.info("Getting all contestent from DB");
-        String query = "SELECT * FROM contestent";
+        String query = "SELECT * FROM contestent WHERE campaign_id="+campaignId;
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();
@@ -71,7 +71,7 @@ public class ContestentDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Creating contestent:{0} in DB", contestent);
-        String insertQuery = "INSERT INTO contestent(NAME, PICLOC, AGENDA, VOTE, SUMMARY) VALUES(?,?,?,?,?)";
+        String insertQuery = "INSERT INTO contestent(NAME, PICLOC, AGENDA, VOTE, SUMMARY, CAMPAIGN_ID) VALUES(?,?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -81,6 +81,7 @@ public class ContestentDao {
             stmt.setString(3, listToString(contestent.getAgendaList()));
             stmt.setInt(4, contestent.getVotes());
             stmt.setString(5, "TODO: Add summary to Contestent Class");
+            stmt.setInt(6, contestent.getCampaignId());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -110,7 +111,7 @@ public class ContestentDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Updating contestent:{0} in DB", contestent);
-        String updateQuery = "UPDATE contestent SET NAME=?, PICLOC=?, AGENDA=?, VOTE=?, SUMMARY=?"
+        String updateQuery = "UPDATE contestent SET NAME=?, PICLOC=?, AGENDA=?, VOTE=?, SUMMARY=?, CAMPAIGN_ID=?"
                 + "WHERE id=?";
         try {
             connection = ConnectionFactory.getConnection();
@@ -121,7 +122,8 @@ public class ContestentDao {
             stmt.setString(3, listToString(contestent.getAgendaList()));
             stmt.setInt(4, contestent.getVotes());
             stmt.setString(5, "TODO: Add summary to Contestent Class");
-            stmt.setInt(6, contestent.getId());
+            stmt.setInt(6, contestent.getCampaignId());
+            stmt.setInt(7, contestent.getId());
 
             stmt.executeUpdate();
             log.log(Level.INFO, "Updated contestent:{0} in DB", contestent);
@@ -158,18 +160,23 @@ public class ContestentDao {
         List<Contestent> contestentList = new ArrayList();
         // ResultSet is initially before the first data set
         while (resultSet.next()) {
+            int id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             String picLoc = resultSet.getString("picloc");
             String agenda = resultSet.getString("agenda");
             int vote = resultSet.getInt("vote");
             String summary = resultSet.getString("summary");
+            int campaignId = resultSet.getInt("campaign_id");
+            
             System.out.println("Name: " + name);
             System.out.println("Picloc: " + picLoc);
             System.out.println("agenda: " + agenda);
             System.out.println("Vote: " + vote);
             System.out.println("Summary: " + summary);
+            System.out.println("campaignId: " + campaignId);
             // TODO: convert agentList array to real List and use it in constructor
-            Contestent contestent = new Contestent(name, picLoc, stringToList(agenda));
+            Contestent contestent = new Contestent(name, picLoc, stringToList(agenda), campaignId);
+            contestent.setId(id);
             contestent.setVotes(vote);
             contestentList.add(contestent);
         }

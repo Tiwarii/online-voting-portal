@@ -19,11 +19,13 @@ public class Contestent {
     private String picLocation;
     private List<String> agendaList;
     private int votes = 0;
+    private int campaignId;
 
-    public Contestent(String name, String picLocation, List<String> agendaList) {
+    public Contestent(String name, String picLocation, List<String> agendaList, int campaignId) {
         this.name = name;
         this.picLocation = picLocation;
         this.agendaList = agendaList;
+        this.campaignId = campaignId;
     }
 
     public Integer getId() {
@@ -70,17 +72,33 @@ public class Contestent {
         this.votes = votes;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.name);
-        hash = 67 * hash + Objects.hashCode(this.picLocation);
-        hash = 67 * hash + Objects.hashCode(this.agendaList);
-        return hash;
+    public int getCampaignId() {
+        return campaignId;
+    }
+
+    public void setCampaignId(int campaignId) {
+        this.campaignId = campaignId;
     }
 
     @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.name);
+        hash = 79 * hash + Objects.hashCode(this.picLocation);
+        hash = 79 * hash + Objects.hashCode(this.agendaList);
+        hash = 79 * hash + this.votes;
+        hash = 79 * hash + this.campaignId;
+        return hash;
+    }
+
+   
+
+    @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         if (obj == null) {
             return false;
         }
@@ -88,20 +106,38 @@ public class Contestent {
             return false;
         }
         final Contestent other = (Contestent) obj;
+        if (this.votes != other.votes) {
+            return false;
+        }
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         if (!Objects.equals(this.picLocation, other.picLocation)) {
             return false;
         }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
         if (!Objects.equals(this.agendaList, other.agendaList)) {
+            return false;
+        }
+        if (this.campaignId != other.campaignId) {
             return false;
         }
         return true;
     }
 
+    
+
     @Override
     public String toString() {
-        return "Contestent{" + "id=" + id + ", name=" + name + ", picLocation=" + picLocation + ", agendaList=" + agendaList + ", votes=" + votes + '}';
+        return "Contestent{" + "id=" + id + 
+                ", name=" + name + 
+                ", picLocation=" + picLocation + 
+                ", agendaList=" + agendaList + 
+                ", votes=" + votes + 
+                ", campaignId=" + campaignId + '}';
     }
+
+    
 }

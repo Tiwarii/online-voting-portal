@@ -15,6 +15,7 @@ import java.util.Objects;
  * @author Rashmi Tiwari
  */
 public class Campaign {
+    private Integer id=null;
     private String title;
     private Date startDate;
     private Date endDate;
@@ -28,6 +29,15 @@ public class Campaign {
 
     public void addContestent(Contestent contestent){
         contestentList.add(contestent);
+        contestent.setCampaignId(this.id);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     public String getTitle() {
@@ -65,15 +75,19 @@ public class Campaign {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.title);
-        hash = 29 * hash + Objects.hashCode(this.startDate);
-        hash = 29 * hash + Objects.hashCode(this.endDate);
-        hash = 29 * hash + Objects.hashCode(this.contestentList);
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.title);
+        hash = 89 * hash + Objects.hashCode(this.startDate);
+        hash = 89 * hash + Objects.hashCode(this.endDate);
+        hash = 89 * hash + Objects.hashCode(this.contestentList);
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         if (obj == null) {
             return false;
         }
@@ -82,6 +96,9 @@ public class Campaign {
         }
         final Campaign other = (Campaign) obj;
         if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.startDate, other.startDate)) {
@@ -100,7 +117,4 @@ public class Campaign {
     public String toString() {
         return "Campaign{" + "title=" + title + ", startDate=" + startDate + ", endDate=" + endDate + ", contestentList=" + contestentList + '}';
     }
-    
-    
-    
 }
