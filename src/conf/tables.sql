@@ -1,0 +1,27 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ * Author:  Rashmi Tiwarii
+ * Created: Jun 2, 2016
+ */
+CREATE TABLE campaign (id INT NOT NULL AUTO_INCREMENT, 
+    TITLE VARCHAR(30) NOT NULL,
+    STARTDATE DATE, 
+    ENDDATE DATE NOT NULL, 
+    PRIMARY KEY (ID));
+    
+CREATE TABLE contestent (
+	id INT NOT NULL AUTO_INCREMENT, 
+    NAME VARCHAR(30) NOT NULL,
+    PICLOC VARCHAR(30), 
+    AGENDA VARCHAR(1000) NOT NULL, 
+    VOTE INT NOT NULL, 
+    SUMMARY VARCHAR(40) NOT NULL,
+    campaign_id INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (campaign_id) REFERENCES campaign(id));
+    
+
