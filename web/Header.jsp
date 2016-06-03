@@ -63,12 +63,13 @@
             <div class="header"> 
             <div class="website_name" ><h1>Online voting portal</h1>
     
-            <ul class="nav nav-tabs">
-            <li class="active"><a  href="#home">Home</a></li>
+            <ul class="nav nav-tabs-justified">
+                <li class="active"><a  href="#home"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
             <li ><a href="#election_setup">Election Setup</a></li>
-            <li ><a href="#contact">Contact</a></li>
-            <li ><a href="#vote">Vote</a></li>
-            <li ><a href="#about">About</a></li>
+            <li ><a href="#contact"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact</a></li>
+            <li ><a href="#vote"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
+       
+            <li ><a href="#about"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;About Us</a></li>
             </ul>
             </div>
              </div>    

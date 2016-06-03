@@ -20,7 +20,7 @@
             fieldset.scheduler-border {border: 1px groove #ddd !important; padding: 0 1.4em 1.4em 1.4em !important;border:none;
             margin: 0 0 1.5em 0 !important; -webkit-box-shadow:  0px 0px 0px 0px #000;  box-shadow:  0px 0px 0px 0px #000;}
 
-            legend.scheduler-border { font-size: 1.2em !important; font-weight: bold !important; text-align: left !important;}
+            legend.scheduler-border { font-size: 1.2em !important; border:none; width:110px; font-weight: bold !important; text-align: left !important;}
             
         </style>    
     </head>
@@ -41,21 +41,31 @@
                             <label for="middle-name">Middle name:</label>
                             <input type="text" class="form-control" id="middle-name" placeholder="middle name">
                         </div>
-                        <div class="form-group">
+                          <div class="form-group">
                             <label for="last-name">Last name:</label>
                             <input type="text" class="form-control" id="last-name" placeholder="last name">
                         </div>
+                        <div class="form-group">
+                            <label for="dob">Date of birth:</label>
+                            <div class='input-group date' id='datetimepicker2'>
+                                <input type='date' class="form-control" placeholder="mm/dd/yy"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    
+                </div>
+                        </div>
                          <div class="form-group">
                             <label for="dob">Date of birth:</label>
-                            <input type="date" class="form-control" id="dob" placeholder="mm/dd/yy">
+                            <input type="date" class="form-control" id="dob" placeholder="mm/dd/yy" date-date-pattern="mm/dd/yy">
                         </div>
                           <div class="form-group">
                             <label for="ctn">Citizenship No.:</label>
-                            <input type="number" class="form-control" id="ctn" placeholder="enter your citizenship number">
+                            <input type="text" class="form-control" id="ctn" placeholder="enter your citizenship number">
                         </div>
                         <div class="form-group">
                             <label for="vid">Voter ID:</label>
-                            <input type="number" class="form-control" id="vid" placeholder="enter your voter id">
+                            <input type="text" class="form-control" id="vid" placeholder="enter your voter id">
                         </div>
                           <div class="form-group">
                             <label for="email">Email:</label>
@@ -67,7 +77,14 @@
                     </fieldset>
                 
                     
-            </div>    
+            </div>   
+            <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker2').datetimepicker({
+                    locale: 'ru'
+                });
+            });
+             </script>
         </div>
     </body>
 </html>
