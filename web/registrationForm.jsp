@@ -49,16 +49,13 @@
                             <label for="dob">Date of birth:</label>
                             <div class='input-group date' id='datetimepicker2'>
                                 <input type='date' class="form-control" placeholder="mm/dd/yy"/>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
                     
-                </div>
+                             </div>
                         </div>
-                         <div class="form-group">
-                            <label for="dob">Date of birth:</label>
-                            <input type="date" class="form-control" id="dob" placeholder="mm/dd/yy" date-date-pattern="mm/dd/yy">
-                        </div>
+                         
                           <div class="form-group">
                             <label for="ctn">Citizenship No.:</label>
                             <input type="text" class="form-control" id="ctn" placeholder="enter your citizenship number">

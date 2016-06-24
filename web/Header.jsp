@@ -23,7 +23,7 @@
                     margin: 0;
                     padding: 0;
                     overflow: hidden;
-                    background-color:purple;
+                    background-color:#185890;
                     position: fixed;
                     width: 100%;
                 } 
@@ -48,9 +48,10 @@
              .header{margin-right:10px;  padding:none; width:100%; }
 
             
-            .website_name{height:100px; width:100%; margin:auto; background-color:darkmagenta;  position: fixed;
+            .website_name{height:100px; width:100%; margin:auto; background-color:#185890;  position: fixed;
                          padding-top:10px; color:burlywood; text-align:center;}
             .footer{height:90px; width:100%; margin:auto; color:lightgrey; padding-top:5px; padding-bottom:20px;  background-color:darkmagenta; text-align:center;}
+            
         </style>
         <title>JSP Page</title>
         
@@ -63,11 +64,11 @@
             <div class="header"> 
             <div class="website_name" ><h1>Online voting portal</h1>
     
-            <ul class="nav nav-tabs-justified">
-                <li class="active"><a  href="#home"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
-            <li ><a href="#election_setup">Election Setup</a></li>
+            <ul class="nav nav-tabs">
+                <li><a  href="main.jsp"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
+            <li ><a href="#election_setup"><span class="glyphicon glyphicon-cog"></span>&nbsp;Election Setup</a></li>
             <li ><a href="#contact"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact</a></li>
-            <li ><a href="#vote"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
+            <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
        
             <li ><a href="#about"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;About Us</a></li>
             </ul>
