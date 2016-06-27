@@ -4,6 +4,7 @@
     Author     : Rashmi Tiwari
 --%>
 
+<%@page import="com.ovp.entities.Commisner"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,6 +20,8 @@
         <link rel="stylesheet" type="text/css" href="style.css">
             </head>
     <body>
+        
+      
         <div class="main">
             <div class="right1">
                 <label  ><h1>Election Commission of Nepal </h1> </label>
@@ -31,7 +34,7 @@
                 <br>
   <!-- Trigger the modal with a button -->
   <div class="btn-group btn-group-justified">
-    <a href="main.jsp?a=a" class="btn btn-primary btn-block button1">Voter</a>
+    <a href="main.jsp" class="btn btn-primary btn-block button1">Voter</a>
   </div>
   <br><br>
   <div>
@@ -48,14 +51,14 @@
           <h3><span class="glyphicon glyphicon-lock"></span> Login</h3>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-            <form action="main.jsp" role="form">
+            <form action="CommisnerLoginServlet" role="form" method="post">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+              <input type="text" class="form-control" name="userName" placeholder="Enter email">
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="text" class="form-control" id="psw" placeholder="Enter password">
+              <input type="password" class="form-control" name="password" placeholder="Enter password">
             </div>
             
               <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>

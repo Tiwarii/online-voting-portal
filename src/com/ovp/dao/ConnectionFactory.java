@@ -33,7 +33,7 @@ class ConnectionFactory {
     private Connection createConnection() {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection(URL);
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ovp", "root", "");
             //connect with database using username and password
             //connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
