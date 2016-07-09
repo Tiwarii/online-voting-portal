@@ -40,11 +40,13 @@ public class CandidateServlet extends HttpServlet {
             String name= request.getParameter("name");
             String voterId= request.getParameter("voterID");
             String party= request.getParameter("selectParty");
+            String post= request.getParameter("position");
             
             Candidate candidate=new Candidate();
             candidate.setName(name);
             candidate.setId(voterId);
             candidate.setParty(party);
+            candidate.setPost(post);
             ContestentDao cd=new ContestentDao();
             cd.createContestent(candidate);
         }

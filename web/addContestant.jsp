@@ -37,18 +37,21 @@
                         </div>
                         <div class="form-group">
                              <label for="voterID">Voter ID: </label>
-                             <input class="form-control"  type="text" name="voterID" name="voterID" placeholder="Enter your Voter ID" >
+                             <input class="form-control"  type="text"  name="voterID" placeholder="Enter your Voter ID" >
                         </div>
-                          
+                          <div class="form-group">
+                             <label for="position">Post: </label>
+                             <input class="form-control"  type="text"  name="position" placeholder="Enter your post for this election" >
+                        </div>
                        <div  class="form-group" id="container">		
                              <p id="first">
                                  <label>Party:</label>
                             <select id="sample1" class="form-control small " name="selectParty" >
-                                    <option value="0"> </option>
+                                    <option value=""> </option>
                           
-                                    <option value="1">Individual</option>
-                                    <option value="2">Congress</option>
-                                    <option value="3">Maoist</option>
+                                    <option value="Individual">Individual</option>
+                                    <option value="Congress">Congress</option>
+                                    <option value="Maoist">Maoist</option>
                                                 
                             </select>
                              <div class="list-group">

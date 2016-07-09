@@ -17,6 +17,7 @@ public class Candidate {
     private String id = null;
     private String name;
     private String party;
+    private String post;
     private List<String> agendaList;
     private int votes = 0;
     private int campaignId;
@@ -42,6 +43,15 @@ public class Candidate {
         this.name = name;
     }
 
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    
     public String getPicLocation() {
         return party;
     }
@@ -91,6 +101,7 @@ public class Candidate {
         hash = 79 * hash + Objects.hashCode(this.agendaList);
         hash = 79 * hash + this.votes;
         hash = 79 * hash + this.campaignId;
+        
         return hash;
     }
 

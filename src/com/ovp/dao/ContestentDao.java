@@ -71,7 +71,7 @@ public class ContestentDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Creating contestent:{0} in DB", contestent);
-        String insertQuery = "INSERT INTO candidate VALUES(?,?,?)";
+        String insertQuery = "INSERT INTO candidate VALUES(?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -80,6 +80,7 @@ public class ContestentDao {
             stmt.setString(2, contestent.getName());
           //  stmt.setString(3, listToString(contestent.getAgendaList()));
             stmt.setString(3, contestent.getParty());
+            stmt.setString(4, contestent.getPost());
            // stmt.setString(5, "TODO: Add summary to Contestent Class");
            // stmt.setInt(6, contestent.getCampaignId());
 
