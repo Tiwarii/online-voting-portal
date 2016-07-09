@@ -16,7 +16,7 @@ import java.sql.SQLException;
 class ConnectionFactory {
     //static reference to itself
     private static ConnectionFactory instance = new ConnectionFactory();
-    public static final String URL = "jdbc:mysql://localhost/test";
+    public static final String URL = "jdbc:mysql://localhost/ovp";
     public static final String USER = "YOUR_DATABASE_USERNAME";
     public static final String PASSWORD = " YOUR_DATABASE_PASSWORD";
     public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver"; 

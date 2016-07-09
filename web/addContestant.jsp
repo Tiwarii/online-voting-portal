@@ -6,12 +6,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="bootstrap/js/jquery.js"></script>
+        
+       
 
         <script >
             <%@include file="bootstrap/js/bootstrap.js" %>
@@ -27,19 +29,34 @@
                 </div>
             <fieldset class="scheduler-border">
                         <legend class="scheduler-border" >contestant:</legend>
-                      <form role="form">
-                          
+                        <form role="form" method="post" action="CandidateServlet">
+                    
                         <div class="form-group" >
                             <label for="name"> Name:</label>
-                            <input type="text" class="form-control" id="name" placeholder="party name" >
+                            <input type="text" class="form-control" name="name" placeholder="Your name" >
+                        </div>
+                        <div class="form-group">
+                             <label for="voterID">Voter ID: </label>
+                             <input class="form-control"  type="text" name="voterID" name="voterID" placeholder="Enter your Voter ID" >
                         </div>
                           
-                        <div class="form-group">
-                             <label for="members">No. of members: </label>
-                             <input class="form-control"  type="number" id="members" placeholder="No. of members in party" >
-                         </div>
-                        
-                        
+                       <div  class="form-group" id="container">		
+                             <p id="first">
+                                 <label>Party:</label>
+                            <select id="sample1" class="form-control small " name="selectParty" >
+                                    <option value="0"> </option>
+                          
+                                    <option value="1">Individual</option>
+                                    <option value="2">Congress</option>
+                                    <option value="3">Maoist</option>
+                                                
+                            </select>
+                             <div class="list-group">
+                                 <label>Agendas:</label>
+                                 <textarea class="list-group-item form-control "  name="agendas"></textarea>
+                             </div>  
+                             </div>                      
+                        <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </fieldset>
         

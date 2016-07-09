@@ -9,7 +9,7 @@ package com.ovp.dao;
  *
  * @author Rashmi Tiwari
  */
-import com.ovp.entities.Contestent;
+import com.ovp.entities.Candidate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class ContestentDao {
     private final static Logger log = Logger.getLogger("ContestentDao");
 
-    public Contestent getContestent(int contestentId) throws SQLException {
+    public Candidate getContestent(int contestentId) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -35,7 +35,7 @@ public class ContestentDao {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
-            List<Contestent> lists = resultSetToContestentList(resultSet);
+            List<Candidate> lists = resultSetToContestentList(resultSet);
             if (lists.isEmpty()) {
                 return null;
             } else {
@@ -48,7 +48,7 @@ public class ContestentDao {
         }
     }
 
-    public List<Contestent> getAllContestent(int campaignId) throws SQLException {
+    public List<Candidate> getAllContestent(int campaignId) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -66,22 +66,22 @@ public class ContestentDao {
         }
     }
 
-    public void createContestent(Contestent contestent) throws SQLException {
+    public void createContestent(Candidate contestent) throws SQLException {
         Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Creating contestent:{0} in DB", contestent);
-        String insertQuery = "INSERT INTO contestent(NAME, PICLOC, AGENDA, VOTE, SUMMARY, CAMPAIGN_ID) VALUES(?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO candidate VALUES(?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            stmt.setString(1, contestent.getName());
-            stmt.setString(2, contestent.getPicLocation());
-            stmt.setString(3, listToString(contestent.getAgendaList()));
-            stmt.setInt(4, contestent.getVotes());
-            stmt.setString(5, "TODO: Add summary to Contestent Class");
-            stmt.setInt(6, contestent.getCampaignId());
+            stmt.setString(1, contestent.getId());
+            stmt.setString(2, contestent.getName());
+          //  stmt.setString(3, listToString(contestent.getAgendaList()));
+            stmt.setString(3, contestent.getParty());
+           // stmt.setString(5, "TODO: Add summary to Contestent Class");
+           // stmt.setInt(6, contestent.getCampaignId());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -92,7 +92,7 @@ public class ContestentDao {
             // get primary key of the inserted row
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    contestent.setId(generatedKeys.getInt(1));
+                    contestent.setId(generatedKeys.getString(1));
                     log.log(Level.INFO, "Contestent created:{0} in DB", contestent);
                 } else {
                     log.log(Level.SEVERE, "Creating user failed:{0} in DB", contestent);
@@ -106,7 +106,7 @@ public class ContestentDao {
         }
     }
 
-    public void updateContestent(Contestent contestent) throws SQLException {
+    public void updateContestent(Candidate contestent) throws SQLException {
         Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
@@ -123,7 +123,7 @@ public class ContestentDao {
             stmt.setInt(4, contestent.getVotes());
             stmt.setString(5, "TODO: Add summary to Contestent Class");
             stmt.setInt(6, contestent.getCampaignId());
-            stmt.setInt(7, contestent.getId());
+            stmt.setString(7, contestent.getId());
 
             stmt.executeUpdate();
             log.log(Level.INFO, "Updated contestent:{0} in DB", contestent);
@@ -135,7 +135,7 @@ public class ContestentDao {
         }
     }
     
-    public void deleteContestent(Contestent contestent) throws SQLException {
+    public void deleteContestent(Candidate contestent) throws SQLException {
         Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
@@ -144,7 +144,7 @@ public class ContestentDao {
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(updateQuery);
-            stmt.setInt(0, contestent.getId());
+            stmt.setString(0, contestent.getId());
 
             stmt.executeUpdate();
             log.log(Level.INFO, "Deleted contestent:{0} in DB", contestent);
@@ -156,11 +156,11 @@ public class ContestentDao {
         }
     }
 
-    private List<Contestent> resultSetToContestentList(ResultSet resultSet) throws SQLException {
-        List<Contestent> contestentList = new ArrayList();
+    private List<Candidate> resultSetToContestentList(ResultSet resultSet) throws SQLException {
+        List<Candidate> contestentList = new ArrayList();
         // ResultSet is initially before the first data set
         while (resultSet.next()) {
-            int id = resultSet.getInt("id");
+            String id = resultSet.getString("id");
             String name = resultSet.getString("name");
             String picLoc = resultSet.getString("picloc");
             String agenda = resultSet.getString("agenda");
@@ -175,7 +175,7 @@ public class ContestentDao {
             System.out.println("Summary: " + summary);
             System.out.println("campaignId: " + campaignId);
             // TODO: convert agentList array to real List and use it in constructor
-            Contestent contestent = new Contestent(name, picLoc, stringToList(agenda), campaignId);
+            Candidate contestent = new Candidate();
             contestent.setId(id);
             contestent.setVotes(vote);
             contestentList.add(contestent);

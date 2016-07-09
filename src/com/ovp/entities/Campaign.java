@@ -19,7 +19,7 @@ public class Campaign {
     private String title;
     private Date startDate;
     private Date endDate;
-    private List<Contestent> contestentList= new ArrayList();
+    private List<Candidate> contestentList= new ArrayList();
 
     public Campaign(String title, Date startDate, Date endDate) {
         this.title = title;
@@ -27,7 +27,7 @@ public class Campaign {
         this.endDate = endDate;
     }
 
-    public void addContestent(Contestent contestent){
+    public void addContestent(Candidate contestent){
         contestentList.add(contestent);
         contestent.setCampaignId(this.id);
     }
@@ -64,11 +64,11 @@ public class Campaign {
         this.endDate = endDate;
     }
 
-    public List<Contestent> getContestentList() {
+    public List<Candidate> getContestentList() {
         return contestentList;
     }
 
-    public void setContestentList(List<Contestent> contestentList) {
+    public void setContestentList(List<Candidate> contestentList) {
         this.contestentList = contestentList;
     }
 

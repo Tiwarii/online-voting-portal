@@ -36,7 +36,7 @@
   <div class="btn-group btn-group-justified">
     <a href="main.jsp" class="btn btn-primary btn-block button1">Voter</a>
   </div>
-  <br><br>
+<br><br>
   <div>
   <button type="button" class="btn btn-primary btn-group-justified button1" id="myBtn">Election&nbsp;commissioner</button>
 

@@ -4,6 +4,7 @@
     Author     : windows10
 --%>
 
+<%@page import="com.ovp.entities.Commisner"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,7 @@
                     margin: 0;
                     padding: 0;
                     overflow: hidden;
-                    background-color:#185890;
+                    background-color:#12436d;
                     position: fixed;
                     width: 100%;
                 } 
@@ -40,7 +41,7 @@
                     text-decoration: none;
                 }
                 li a:hover {
-                    background-color: #660066;
+                    background-color: #185890;
                 }
                 li.a:active {
                       background-color:darkorchid;
@@ -48,7 +49,7 @@
              .header{margin-right:10px;  padding:none; width:100%; }
 
             
-            .website_name{height:100px; width:100%; margin:auto; background-color:#185890;  position: fixed;
+            .website_name{height:80px; width:100%; margin:auto; background-color:#165083;  position: fixed;
                          padding-top:10px; color:burlywood; text-align:center;}
             .footer{height:90px; width:100%; margin:auto; color:lightgrey; padding-top:5px; padding-bottom:20px;  background-color:darkmagenta; text-align:center;}
             
@@ -65,12 +66,28 @@
             <div class="website_name" ><h1>Online voting portal</h1>
     
             <ul class="nav nav-tabs">
-                <li><a  href="main.jsp"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
-            <li ><a href="#election_setup"><span class="glyphicon glyphicon-cog"></span>&nbsp;Election Setup</a></li>
+                <%
+                    Commisner verifiedCommisner =(Commisner)session.getAttribute("verifiedCommisner");
+                    boolean admin=false;
+                if (verifiedCommisner!= null){
+                     admin=false;}
+                %>
+                 <li><a  href="#"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
+            <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Registration</a></li>
+               
+           <% 
+                if (verifiedCommisner!= null){
+                     admin=false;
+           %>
+                       
+                <li ><a href="main.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp;Election Setup</a></li>
+   
+            <% }else{%>
+           
+            <li ><a href="#"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
             <li ><a href="#contact"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact</a></li>
-            <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
-       
             <li ><a href="#about"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;About Us</a></li>
+            <% }%>
             </ul>
             </div>
              </div>    

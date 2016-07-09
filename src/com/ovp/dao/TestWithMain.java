@@ -6,7 +6,7 @@
 package com.ovp.dao;
 
 import com.ovp.entities.Campaign;
-import com.ovp.entities.Contestent;
+import com.ovp.entities.Candidate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,9 +36,9 @@ public class TestWithMain {
     agendas.add("That means we have good future!!.");
     
     // create a contestent
-    Contestent c = new Contestent("rashmi","/usr/share/pics/001.jpg", agendas, campaign.getId());
+    Candidate c = new Candidate("rashmi","/usr/share/pics/001.jpg", agendas, campaign.getId());
     agendas.add("Lets have fun together!!");
-    Contestent c2 = new Contestent("tiwari","/usr/share/pics/002.jpg", agendas, campaign.getId());
+    Candidate c2 = new Candidate("tiwari","/usr/share/pics/002.jpg", agendas, campaign.getId());
     
     // save these contestents
     contestentDao.createContestent(c);

@@ -12,27 +12,21 @@ import java.util.Objects;
  *
  * @author Rashmi Tiwari
  */
-public class Contestent {
+public class Candidate {
 
-    private Integer id = null;
+    private String id = null;
     private String name;
-    private String picLocation;
+    private String party;
     private List<String> agendaList;
     private int votes = 0;
     private int campaignId;
 
-    public Contestent(String name, String picLocation, List<String> agendaList, int campaignId) {
-        this.name = name;
-        this.picLocation = picLocation;
-        this.agendaList = agendaList;
-        this.campaignId = campaignId;
-    }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,11 +43,11 @@ public class Contestent {
     }
 
     public String getPicLocation() {
-        return picLocation;
+        return party;
     }
 
     public void setPicLocation(String picLocation) {
-        this.picLocation = picLocation;
+        this.party = picLocation;
     }
 
     public List<String> getAgendaList() {
@@ -80,12 +74,20 @@ public class Contestent {
         this.campaignId = campaignId;
     }
 
+    public String getParty() {
+        return party;
+    }
+
+    public void setParty(String party) {
+        this.party = party;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 79 * hash + Objects.hashCode(this.id);
         hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Objects.hashCode(this.picLocation);
+        hash = 79 * hash + Objects.hashCode(this.party);
         hash = 79 * hash + Objects.hashCode(this.agendaList);
         hash = 79 * hash + this.votes;
         hash = 79 * hash + this.campaignId;
@@ -105,14 +107,14 @@ public class Contestent {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Contestent other = (Contestent) obj;
+        final Candidate other = (Candidate) obj;
         if (this.votes != other.votes) {
             return false;
         }
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.picLocation, other.picLocation)) {
+        if (!Objects.equals(this.party, other.party)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
@@ -129,15 +131,7 @@ public class Contestent {
 
     
 
-    @Override
-    public String toString() {
-        return "Contestent{" + "id=" + id + 
-                ", name=" + name + 
-                ", picLocation=" + picLocation + 
-                ", agendaList=" + agendaList + 
-                ", votes=" + votes + 
-                ", campaignId=" + campaignId + '}';
-    }
+   
 
     
 }

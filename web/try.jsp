@@ -4,25 +4,36 @@
     Author     : Rashmi Tiwari
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <style>
-             body {
-                   background-image: url("Nepal-Flag-Wallpaper1.jpg");
-                    background-repeat: no-repeat;
-                    background-position: left top;
-                    background-attachment: fixed;
-                    background-size: 100% 100%;
-                    
-                    
-                }
-        </style>
-    </head>
-    <body>
-        hloo
-    </body>
-</html>
+        <html> 
+        <head> 
+        <script language="Javascript" type="text/javascript"> 
+
+        var counter = 1; 
+        var limit = 3; 
+        function addInput(divName){ 
+        if (counter == limit) { 
+        alert("Reached adding limit" + counter + " inputs"); 
+        } 
+        else { 
+        var newdiv = document.createElement('div'); 
+        newdiv.innerHTML = "Entry " + (counter + 1) + " 
+        <input type='text' name='myInputs[]'>"; 
+        document.getElementById(divName).appendChild(newdiv); 
+        counter++; 
+        } 
+        } 
+
+        </script> 
+        </head> 
+
+
+        <body> 
+        <form method="POST"> 
+        <div id="dynamicInput"> 
+        Entry 1
+        <input type="text" name="myInputs[]"> 
+        </div> 
+        <input type="button" value="Add another text input" onClick="addInput('dynamicInput');"> 
+        </form> 
+        </body> 
+        </html> 

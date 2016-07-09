@@ -6,7 +6,7 @@
 package com.ovp.dao;
 
 import com.ovp.entities.Campaign;
-import com.ovp.entities.Contestent;
+import com.ovp.entities.Candidate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -158,7 +158,7 @@ public class CampaignDao {
             String title = resultSet.getString("title");
             Date startDate = resultSet.getDate("startDate");
             Date endDate = resultSet.getDate("endDate");
-            List<Contestent> contestentList = new ContestentDao().getAllContestent(id);
+            List<Candidate> contestentList = new ContestentDao().getAllContestent(id);
             System.out.println("id: " + id);
             System.out.println("title: " + title);
             System.out.println("startDate: " + startDate);
