@@ -30,7 +30,7 @@
                 <div class="dropdown">
                     <button class="dropbtn btn-primary">Choose Post</button>
                     <div class="dropdown-content">
-                      <a href="#">President</a>
+                      <a href="./voting?position=president">President</a>
                       <a href="#">Vice President</a>
                       <a href="#">Prime Minister</a>
                       <a href="#">Chief Minister </a>

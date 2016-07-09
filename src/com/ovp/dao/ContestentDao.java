@@ -47,13 +47,31 @@ public class ContestentDao {
             DBUtil.close(connection);
         }
     }
-
+    
     public List<Candidate> getAllContestent(int campaignId) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         log.info("Getting all contestent from DB");
         String query = "SELECT * FROM candidate WHERE campaign_id="+campaignId;
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            return resultSetToContestentList(resultSet);
+        } finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(statement);
+            DBUtil.close(connection);
+        }
+    }
+    
+    public List<Candidate> getCandidateByPost(String post) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        log.info("Getting all contestent from DB");
+        String query = "SELECT * FROM candidate WHERE post="+post;
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();
