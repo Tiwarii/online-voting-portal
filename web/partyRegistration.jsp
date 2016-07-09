@@ -44,7 +44,7 @@
                             <input class="form-control" name="num_member" type='number'/>
                             <div class="text-justify">
                                  <label>Description:</label>
-                                 <textarea class=" form-control "  name="agendas"></textarea>
+                                 <textarea class=" form-control "  name="description"></textarea>
                             </div> 
                             
                             <div>

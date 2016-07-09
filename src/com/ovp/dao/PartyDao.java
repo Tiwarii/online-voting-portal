@@ -5,10 +5,21 @@
  */
 package com.ovp.dao;
 
+import com.ovp.entities.Party;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  *
  * @author Rashmi Tiwari
  */
 public class PartyDao {
+    public void InsertParty(Party party)throws SQLException{
+        try{
+            Connection connection=ConnectionFactory.getConnection();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     
 }

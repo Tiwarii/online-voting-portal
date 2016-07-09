@@ -5,8 +5,10 @@
  */
 package com.ovp.handller;
 
+import com.ovp.entities.Party;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +36,14 @@ public class PartyServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+           String name= request.getParameter("name");
+           String establishedDate= request.getParameter("e_date");
+           String numberOfMembers= request.getParameter("num_member");
+           String description= request.getParameter("description");
+            Party party= new Party();
+            party.setName(name);
+            party.setEstablishedDate(establishedDate);
+           
            
         }
     }
