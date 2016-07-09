@@ -29,7 +29,7 @@
                 </div>
             <fieldset class="scheduler-border">
                         <legend class="scheduler-border" >contestant:</legend>
-                        <form role="form" method="post" action="CandidateServlet">
+                        <form  method="post" action="CandidateServlet">
                     
                         <div class="form-group" >
                             <label for="name"> Name:</label>

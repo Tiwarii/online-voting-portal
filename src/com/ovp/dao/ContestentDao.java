@@ -53,7 +53,7 @@ public class ContestentDao {
         Statement statement = null;
         ResultSet resultSet = null;
         log.info("Getting all contestent from DB");
-        String query = "SELECT * FROM contestent WHERE campaign_id="+campaignId;
+        String query = "SELECT * FROM candidate WHERE campaign_id="+campaignId;
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();
@@ -111,7 +111,7 @@ public class ContestentDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Updating contestent:{0} in DB", contestent);
-        String updateQuery = "UPDATE contestent SET NAME=?, PICLOC=?, AGENDA=?, VOTE=?, SUMMARY=?, CAMPAIGN_ID=?"
+        String updateQuery = "UPDATE candidate SET NAME=?, PICLOC=?, AGENDA=?, VOTE=?, SUMMARY=?, CAMPAIGN_ID=?"
                 + "WHERE id=?";
         try {
             connection = ConnectionFactory.getConnection();

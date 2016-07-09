@@ -17,6 +17,7 @@ public class PartyDao {
     public void InsertParty(Party party)throws SQLException{
         try{
             Connection connection=ConnectionFactory.getConnection();
+            String qry="insert into party values('?','?','?','?')";
         }catch(Exception e){
             e.printStackTrace();
         }

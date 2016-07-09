@@ -85,7 +85,7 @@
             <% }else{%>
            
             <li ><a href="#"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
-            <li ><a href="#contact"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact</a></li>
+            <li ><a href="addContestant.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact</a></li>
             <li ><a href="#about"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;About Us</a></li>
             <% }%>
             </ul>
