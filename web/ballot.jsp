@@ -28,7 +28,7 @@
                <center> <label>Select post you want to vote for &nbsp;</label>
                 
                 <div class="dropdown">
-                    <button class="dropbtn btn-primary">Dropdown</button>
+                    <button class="dropbtn btn-primary">Choose Post</button>
                     <div class="dropdown-content">
                       <a href="#">President</a>
                       <a href="#">Vice President</a>
@@ -40,12 +40,14 @@
                <br>
                
                <br>
-                <label> vote for president</label>
-               
+               <center>
+                   <h4> <strong>vote for president</strong></h4>
+               </center>
                <br>
                 <table class="table table-condensed ">
                   <thead>
                     <tr>
+                      <th>S.N.</th>
                       <th>logo</th>
                       <th>Name</th>
                       <th>Party</th>
@@ -54,6 +56,7 @@
                   </thead>
                   <tbody>
                     <tr>
+                      <td>1.</td>
                       <td>John</td>
                       <td>Doe</td>
                       <td>individual</td>
