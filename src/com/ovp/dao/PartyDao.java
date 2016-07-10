@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  * @author Rashmi Tiwari
  */
 public class PartyDao {
+     private final static Logger log = Logger.getLogger("PartyDao");
     public void InsertParty(Party party)throws SQLException{
        Connection connection = null;
         PreparedStatement stmt = null;
@@ -43,13 +44,21 @@ public class PartyDao {
            // stmt.setInt(6, contestent.getCampaignId());
 
             int affectedRows = stmt.executeUpdate();
-//
-//            if (affectedRows == 0) {
-//                log.log(Level.SEVERE, "Creating user failed:{0} in DB", party);
-//                throw new SQLException("Creating user failed, no rows affected.");
-//            }
+
+            if (affectedRows == 0) {
+                log.log(Level.SEVERE, "Creating user failed:{0} in DB", party);
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
             // get primary key of the inserted row
-           
+           try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    party.setId(Integer.valueOf(generatedKeys.getString(1)));
+                    log.log(Level.INFO, "Contestent created:{0} in DB", party);
+                } else {
+                    log.log(Level.SEVERE, "Creating user failed:{0} in DB", party);
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
         } finally {
             DBUtil.close(resultSet);
             DBUtil.close(stmt);
