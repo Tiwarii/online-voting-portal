@@ -72,7 +72,7 @@
                 if (verifiedCommisner!= null){
                      admin=false;}
                 %>
-                 <li><a  href="#"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
+                 <li><a  href="partyRegistration.jsp"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
             <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Registration</a></li>
                
            <% 
