@@ -71,7 +71,7 @@ public class ContestentDao {
         Statement statement = null;
         ResultSet resultSet = null;
         log.info("Getting all contestent from DB");
-        String query = "SELECT * FROM candidate WHERE post="+post;
+        String query = "SELECT * FROM candidate WHERE post='"+post+"'";
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();
@@ -197,6 +197,8 @@ public class ContestentDao {
             Candidate contestent = new Candidate();
             contestent.setId(id);
             contestent.setVotes(vote);
+            contestent.setName(name);
+            contestent.setAgendaList(stringToList(agenda));
             contestentList.add(contestent);
         }
         return contestentList;

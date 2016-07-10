@@ -8,6 +8,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+        <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+        <%@page import="com.ovp.entities.Candidate"%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +21,11 @@
         
         <link rel="stylesheet" type="text/css" href="styleSheet.css">
     </head>
-    
+    <% 
+       
+        boolean readOnly = true;
+        
+       %>
     <body>
         <%@include file="Header.jsp" %>
        <div class="main">
@@ -54,16 +61,18 @@
                       <th>Vote</th>
                     </tr>
                   </thead>
+                  <c:forEach var="candidate" items="${candidates}">
                   <tbody>
                     <tr>
-                      <td>1.</td>
-                      <td>John</td>
-                      <td>Doe</td>
+                      <td>${candidate.id}</td>
+                      <td>logo</td>
+                      <td>${candidate.name}</td>
                       <td>individual</td>
                       <td><button class="btn btn-primary btn-group-sm">vote me</button></td>
                     </tr>
                     
                   </tbody>
+                  </c:forEach>
                 </table>
                </div>
            </div>

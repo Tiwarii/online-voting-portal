@@ -62,7 +62,7 @@ public class VotingHandler extends HttpServlet {
         try {
         processRequest(request, response);
         } catch(SQLException ex) {
-            
+            System.out.println(ex);
         }
     }
 
