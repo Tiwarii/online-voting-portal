@@ -25,7 +25,7 @@ public class PartyDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
        // log.log(Level.INFO, "Creating party:{0} in DB", party);
-        String insertQuery = "INSERT INTO candidate('Name','Established Date', 'No. of Members', 'description') VALUES(?,?,?,?)";
+        String insertQuery = "INSERT INTO party('Name','EstablishedDate', 'NoOfMembers', 'description') VALUES(?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
