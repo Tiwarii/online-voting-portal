@@ -27,7 +27,7 @@
                 </div>
             <fieldset class="scheduler-border">
                         <legend class="scheduler-border" >Party:</legend>
-                      <form role="form" method="post" enctype="multipart/form-data" name="formal" action="PartyServlet">
+                      <form role="form" method="post"  name="formal" action="PartyServlet">
                     
                         <div class="form-group" >
                             <label for="name"> Name:</label>

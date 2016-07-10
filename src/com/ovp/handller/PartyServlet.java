@@ -48,7 +48,7 @@ public class PartyServlet extends HttpServlet {
            String description= request.getParameter("description");
             Party party= new Party();
             party.setName(name);
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
             String dateInString = establishedDate;
             Date date = formatter.parse(dateInString);
             party.setEstablishedDate(date);

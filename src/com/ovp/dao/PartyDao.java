@@ -22,23 +22,24 @@ import java.util.logging.Logger;
 public class PartyDao {
      private final static Logger log = Logger.getLogger("PartyDao");
     public void InsertParty(Party party)throws SQLException{
-       Connection connection = null;
+        Connection connection = null;
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
-       // log.log(Level.INFO, "Creating party:{0} in DB", party);
-        String insertQuery = "INSERT INTO party VALUES(?,?,?,?)";
+        log.log(Level.INFO, "Creating party:{0} in DB", party);
+        String insertQuery = "INSERT INTO party VALUES(?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            stmt.setString(1, party.getName());
+            stmt.setInt(1, party.getId());
+            stmt.setString(2, party.getName());
             Date date = party.getEstablishedDate();
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String strDate = dateFormat.format(date);
-            stmt.setString(2,strDate);
+            stmt.setString(3,strDate);
          
-            stmt.setString(3, String.valueOf(party.getNumberOfMembers()));
-            stmt.setString(4, party.getDescription());
+            stmt.setString(4, String.valueOf(party.getNumberOfMembers()));
+            stmt.setString(5, party.getDescription());
             
            // stmt.setString(5, "TODO: Add summary to Contestent Class");
            // stmt.setInt(6, contestent.getCampaignId());
@@ -50,7 +51,7 @@ public class PartyDao {
                 throw new SQLException("Creating user failed, no rows affected.");
             }
             // get primary key of the inserted row
-           try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     party.setId(Integer.valueOf(generatedKeys.getString(1)));
                     log.log(Level.INFO, "Contestent created:{0} in DB", party);

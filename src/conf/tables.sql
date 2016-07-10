@@ -23,5 +23,16 @@ CREATE TABLE contestent (
     campaign_id INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (campaign_id) REFERENCES campaign(id));
+
+
+use ovp;
+CREATE TABLE party (
+    id INT NOT NULL AUTO_INCREMENT, 
+    NAME VARCHAR(30) NOT NULL,
+    EstablishedDate VARCHAR(30),  
+    NoOfMembers INT NOT NULL, 
+    description VARCHAR(40) NOT NULL,
+    PRIMARY KEY (ID)
+    );
     
 
