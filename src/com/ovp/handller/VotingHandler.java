@@ -41,9 +41,12 @@ public class VotingHandler extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String post= request.getParameter("position");
             List<Candidate> cadidates = candidateDao.getCandidateByPost(post);
+            
             request.setAttribute("candidates", cadidates);
             request.setAttribute("post", post);
+             
             request.getRequestDispatcher("ballot.jsp").forward(request, response);
+           System.out.println("upto here");
         }
     }
 

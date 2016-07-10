@@ -67,7 +67,7 @@
                       <td>${candidate.id}</td>
                       <td>logo</td>
                       <td>${candidate.name}</td>
-                      <td>individual</td>
+                      <td>${candidate.party}</td>
                       <td><button class="btn btn-primary btn-group-sm">vote me</button></td>
                     </tr>
                     

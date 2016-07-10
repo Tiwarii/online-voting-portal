@@ -49,7 +49,9 @@ public class CandidateServlet extends HttpServlet {
             candidate.setPost(post);
             ContestentDao cd=new ContestentDao();
             cd.createContestent(candidate);
+           response.sendRedirect("addContestant.jsp"); 
         }
+        
     }
     
     @Override
