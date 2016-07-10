@@ -31,10 +31,10 @@ public class PartyDao {
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, party.getName());
-            Date date = new Date();
+            Date date = party.getEstablishedDate();
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String strDate = dateFormat.format(date);
-            stmt.setString(2,String.valueOf(party.getEstablishedDate()));
+            stmt.setString(2,strDate);
          
             stmt.setString(3, String.valueOf(party.getNumberOfMembers()));
             stmt.setString(4, party.getDescription());
