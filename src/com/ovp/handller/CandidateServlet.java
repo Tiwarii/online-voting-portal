@@ -6,6 +6,7 @@
 package com.ovp.handller;
 
 import com.ovp.dao.ContestentDao;
+import com.ovp.dao.PartyDao;
 import com.ovp.entities.Candidate;
 import com.ovp.entities.Commisner;
 import java.io.IOException;
@@ -23,7 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "CandidateServlet", urlPatterns = {"/CandidateServlet"})
 public class CandidateServlet extends HttpServlet {
-
+    ContestentDao candidateDao =new ContestentDao();
+    PartyDao partyDao = new PartyDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,8 +49,7 @@ public class CandidateServlet extends HttpServlet {
             candidate.setId(voterId);
             candidate.setParty(party);
             candidate.setPost(post);
-            ContestentDao cd=new ContestentDao();
-            cd.createContestent(candidate);
+            candidateDao.createContestent(candidate);
            response.sendRedirect("addContestant.jsp"); 
         }
         

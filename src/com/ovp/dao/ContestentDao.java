@@ -89,18 +89,16 @@ public class ContestentDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Creating contestent:{0} in DB", contestent);
-        String insertQuery = "INSERT INTO candidate VALUES(?,?,?,?)";
+        String insertQuery = "INSERT INTO candidate(NAME, PARTY, POST,VOTE, CAMPAIGN_ID) VALUES(?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            stmt.setString(1, contestent.getId());
-            stmt.setString(2, contestent.getName());
-          //  stmt.setString(3, listToString(contestent.getAgendaList()));
-            stmt.setString(3, contestent.getParty());
-            stmt.setString(4, contestent.getPost());
-           // stmt.setString(5, "TODO: Add summary to Contestent Class");
-           // stmt.setInt(6, contestent.getCampaignId());
+            stmt.setString(1, contestent.getName());
+            stmt.setString(2, contestent.getParty());
+            stmt.setString(3, contestent.getPost());
+            stmt.setInt(4, contestent.getVotes());
+            stmt.setInt(5, 1);
 
             int affectedRows = stmt.executeUpdate();
 
@@ -118,7 +116,9 @@ public class ContestentDao {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
-        } finally {
+        } catch (SQLException ex){
+            System.out.println("");
+        }finally {
             DBUtil.close(resultSet);
             DBUtil.close(stmt);
             DBUtil.close(connection);
@@ -181,14 +181,14 @@ public class ContestentDao {
         while (resultSet.next()) {
             String id = resultSet.getString("id");
             String name = resultSet.getString("name");
-            String picLoc = resultSet.getString("picloc");
+            //String picLoc = resultSet.getString("picloc");
             String agenda = resultSet.getString("agenda");
             int vote = resultSet.getInt("vote");
             String summary = resultSet.getString("summary");
             int campaignId = resultSet.getInt("campaign_id");
             
             System.out.println("Name: " + name);
-            System.out.println("Picloc: " + picLoc);
+            //System.out.println("Picloc: " + picLoc);
             System.out.println("agenda: " + agenda);
             System.out.println("Vote: " + vote);
             System.out.println("Summary: " + summary);
@@ -213,8 +213,12 @@ public class ContestentDao {
     }
     
     private List<String> stringToList(String agenda){
+        if ( agenda != null) {
         String[] agendas = agenda.split(";");
         return Arrays.asList(agendas);
+        }
+        else 
+            return new ArrayList();
     }
 
 }

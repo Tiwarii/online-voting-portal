@@ -5,24 +5,30 @@
  */
 package com.ovp.handller;
 
-import com.ovp.dao.commisnerDao;
-import com.ovp.entities.Commisner;
+import com.ovp.dao.CampaignDao;
+import com.ovp.entities.Campaign;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Rashmi Tiwari
  */
-@WebServlet(name = "CommisnerLoginServlet", urlPatterns = {"/CommisnerLoginServlet"})
-public class CommisnerLoginServlet extends HttpServlet {
-
+@WebServlet(name = "CampaignServlet", urlPatterns = {"/CampaignServlet"})
+public class CampaignServlet extends HttpServlet {
+    private CampaignDao campaignDao = new CampaignDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,27 +39,27 @@ public class CommisnerLoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-              String userName= request.getParameter("userName");
-            String password= request.getParameter("password");
+            String title= request.getParameter("title");
+            String sDate= request.getParameter("startDate");
+            String eDate= request.getParameter("endDate");
+            String sTime= request.getParameter("startTime");
+            String eTime= request.getParameter("endTime");
             
-            Commisner commisner=new Commisner();
-            commisner.setUserName(userName);
-            commisner.setPassword(password);
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd");
+            Date startDate = new Date(dateFormatter.parse(sDate).getTime());
+            Date endDate = new Date(dateFormatter.parse(eDate).getTime());
             
-            commisnerDao cd= new commisnerDao();
-            Commisner verifiedCommisner =cd.verifyCommisner(commisner);
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+            Time startTime = new Time(formatter.parse(sTime).getTime());
+            Time endTime = new Time(formatter.parse(eTime).getTime());
             
-            if (verifiedCommisner!= null){
-              HttpSession session=request.getSession();
-              session.setAttribute("verifiedCommisner",verifiedCommisner);
-              response.sendRedirect("addCampaign.jsp");
-            }else {
-              response.sendRedirect("home.jsp");
-            }
- 
+           Campaign c = new Campaign(title, startDate, endDate, startTime, endTime);
+           campaignDao.createCampaign(c);
+            
+            
         }
     }
 
@@ -69,7 +75,13 @@ public class CommisnerLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
         processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(PartyServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PartyServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -83,7 +95,13 @@ public class CommisnerLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
         processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(CampaignServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CampaignServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

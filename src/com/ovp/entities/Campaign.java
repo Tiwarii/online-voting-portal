@@ -5,6 +5,7 @@
  */
 package com.ovp.entities;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,12 +20,18 @@ public class Campaign {
     private String title;
     private Date startDate;
     private Date endDate;
+    private Time startTime;
+    private Time endTime;
+    
     private List<Candidate> contestentList= new ArrayList();
 
-    public Campaign(String title, Date startDate, Date endDate) {
+    public Campaign(String title, Date startDate, Date endDate,
+            Time startTime, Time endTime) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public void addContestent(Candidate contestent){
@@ -72,6 +79,22 @@ public class Campaign {
         this.contestentList = contestentList;
     }
 
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
+    }
+
+    public Time getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -79,6 +102,8 @@ public class Campaign {
         hash = 89 * hash + Objects.hashCode(this.title);
         hash = 89 * hash + Objects.hashCode(this.startDate);
         hash = 89 * hash + Objects.hashCode(this.endDate);
+        hash = 89 * hash + Objects.hashCode(this.startTime);
+        hash = 89 * hash + Objects.hashCode(this.endTime);
         hash = 89 * hash + Objects.hashCode(this.contestentList);
         return hash;
     }
@@ -115,6 +140,6 @@ public class Campaign {
 
     @Override
     public String toString() {
-        return "Campaign{" + "title=" + title + ", startDate=" + startDate + ", endDate=" + endDate + ", contestentList=" + contestentList + '}';
+        return "Campaign{" + "id=" + id + ", title=" + title + ", startDate=" + startDate + ", endDate=" + endDate + ", startTime=" + startTime + ", endTime=" + endTime + ", contestentList=" + contestentList + '}';
     }
 }

@@ -165,7 +165,7 @@ public class CampaignDao {
             System.out.println("endDate: " + endDate);
             
             // TODO: convert agentList array to real List and use it in constructor
-            Campaign campaign = new Campaign(title, startDate, endDate);
+            Campaign campaign = new Campaign(title, startDate, endDate, null ,null);
             campaign.setId(id);
             campaign.setContestentList(contestentList);
             campaignList.add(campaign);

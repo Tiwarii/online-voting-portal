@@ -34,7 +34,7 @@
                 <br>
   <!-- Trigger the modal with a button -->
   <div class="btn-group btn-group-justified">
-    <a href="main.jsp" class="btn btn-primary btn-block button1">Voter</a>
+    <a href="registrationForm.jsp" class="btn btn-primary btn-block button1">Voter</a>
   </div>
 <br><br>
   <div>

@@ -28,38 +28,36 @@
        
         <div class="main">
             <div class="box1">
-            
              
                     <fieldset class="scheduler-border">
                         <legend class="scheduler-border" >  campaign:</legend>
-                      <form role="form">
+                      <form role="form" method="post"  action="CampaignServlet">
+                        <div class="form-group" >
+                            <label for="title">Title:</label>
+                            <input class="form-control" name = "title" id="title">
+                        </div>
                         <div class="form-group" >
                             <label for="start-date">Start date:</label>
-                            <input type="date" class="form-control" id="start-date" value="2017/06/02" <%=readOnly==true?"readonly":""%>>
+                            <input type="date" class="form-control" name = "startDate" id="start-date">
                         </div>
                           
                         <div class="form-group">
                              <label for="endDate">End Date:</label>
-                             <input class="form-control"  type="date" id="endDate" value="2017/07/22" <%=readOnly==true?"readonly":""%>>
+                             <input class="form-control"  name = "endDate" type="date" id="endDate">
                          </div>
                           <div class="form-group" >
-                            <label for="start-Time">Start date:</label>
-                            <input type="time" class="form-control" id="start-Time" value="" <%=readOnly==true?"readonly":""%>>
+                            <label for="start-Time">Start Time:</label>
+                            <input type="time" name = "startTime" class="form-control" id="start-Time" value="" >
                         </div>
                           
                         <div class="form-group">
-                             <label for="endTime">End Date:</label>
-                             <input class="form-control"  type="time" id="endTime" value="" <%=readOnly==true?"readonly":""%>>
+                             <label for="endTime">End Time:</label>
+                             <input name = "endTime" class="form-control"  type="time" id="endTime" value="">
                          </div>
-                        <a href="logout.jsp">Logout</a><br>
                         
+                        <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
-                    </fieldset>
-                          
-        
-       
-      
-                
+                    </fieldset> 
                     
             </div>    
         </div>

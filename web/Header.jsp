@@ -70,22 +70,19 @@
                     Commisner verifiedCommisner =(Commisner)session.getAttribute("verifiedCommisner");
                     boolean admin=false;
                 if (verifiedCommisner!= null){
-                     admin=false;}
-                %>
-                 <li><a  href="partyRegistration.jsp"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
-            <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Registration</a></li>
+                     admin=true;}
+                %>          
                
            <% 
-                if (verifiedCommisner!= null){
-                     admin=false;
+                if (admin){
            %>
-                       
-                <li ><a href="main.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp;Election Setup</a></li>
-   
+                <li><a href="addCampaign.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp;Election Setup</a></li>
+                <li><a  href="partyRegistration.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp; Party Setup</a></li>       
+                <li ><a href="addContestant.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp; Candidate Set up</a></li>
+                <li><a href="logout.jsp">Logout</a><br></li>
             <% }else{%>
-           
+            <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Registration</a></li>
             <li ><a href="ballot.jsp"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
-            <li ><a href="addContestant.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact</a></li>
             <li ><a href="#about"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;About Us</a></li>
             <% }%>
             </ul>
