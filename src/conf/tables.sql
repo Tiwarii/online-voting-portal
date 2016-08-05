@@ -51,3 +51,6 @@ CREATE TABLE party (
     description VARCHAR(40) NOT NULL,
     PRIMARY KEY (ID)
     );
+
+use ovp;
+insert into commisner(username,password) values('admin','admin');
