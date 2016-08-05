@@ -52,10 +52,12 @@ public class CandidateServlet extends HttpServlet {
             String party= request.getParameter("selectParty");
             int campaingId= Integer.parseInt(request.getParameter("selectCampaign"));
             String post= request.getParameter("selectPost");
+           // String district=request.getParameter("District");
             
             Candidate candidate=new Candidate();
             candidate.setName(name);
             candidate.setId(voterId);
+            //candidate.setDistrict(district);
             candidate.setParty(party);
             candidate.setPost(post);
             candidate.setCampaignId(campaingId);
@@ -84,12 +86,15 @@ public class CandidateServlet extends HttpServlet {
             List<String> posts = postDao.getAllPosts();
             List<Party> parties = partyDao.getAllPartiest();
             List<Campaign> campaigns = campaignDao.getAllCampaign();
+            List<Candidate> candidates = candidateDao.getAllCandidate();
             
             request.setAttribute("parties", parties);
             request.setAttribute("campaigns", campaigns);
             request.setAttribute("posts", posts);
+           // request.setAttribute("candidates",candidates );
             
             request.getRequestDispatcher("addContestant.jsp").forward(request, response);
+           // request.getRequestDispatcher("contestant.jsp").forward(request, response);
         }
         
     }

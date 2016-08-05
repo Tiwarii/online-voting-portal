@@ -16,10 +16,13 @@ public class Candidate {
 
     private String id = null;
     private String name;
+    private String district;
     private String party;
     private String post;
+    private String description;
     private List<String> agendaList;
     private int votes = 0;
+    
     private int campaignId;
 
 
@@ -43,6 +46,14 @@ public class Candidate {
         this.name = name;
     }
 
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+    
     public String getPost() {
         return post;
     }

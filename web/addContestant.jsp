@@ -29,15 +29,15 @@
         <div class="main">
             <div class="box1">
                 <div>
-                    <label><center> Enter contestant details below</center></label>
+                    <label><center> Enter candidate details below</center></label>
                 </div>
             <fieldset class="scheduler-border">
-                        <legend class="scheduler-border" >contestant:</legend>
+                        <legend class="scheduler-border" >Candidate form:</legend>
                         <form  method="post" action="CandidateServlet">
                             <div  class="form-group" id="container">		
                              <p id="first">
-                                 <label>Campaigns:</label>
-                            <select  name="selectCampaign" >
+                                 <label>Campaign:</label>
+                            <select  name="selectCampaign" class="form-control small" >
                                 <c:forEach var="campaign" items="${campaigns}">
                                     <option value="${campaign.id}"> <c:out value="${campaign.title}" /></option>
                                 </c:forEach>
@@ -47,14 +47,19 @@
                             <label for="name"> Name:</label>
                             <input type="text" class="form-control" name="name" placeholder="Your name" >
                         </div>
+                             <div class="form-group">
+                            <label for="district">District:</label>
+                            <input type="text" class="form-control" name="District" placeholder="District">
+                        </div>
                         <div class="form-group">
                              <label for="voterID">Voter ID: </label>
                              <input class="form-control"  type="text"  name="voterID" placeholder="Enter your Voter ID" >
                         </div>
+                             
                           <div  class="form-group" id="container">		
                              <p id="first">
                                  <label>Post:</label>
-                            <select name="selectPost" >
+                            <select name="selectPost" class="form-control small ">
                                     <c:forEach var="post" items="${posts}">
                                     <option value="${post}"> <c:out value="${post}" /></option>
                                 </c:forEach>

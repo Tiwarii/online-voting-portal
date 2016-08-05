@@ -74,6 +74,28 @@ public class ContestentDao {
         }
     }
     
+    public List<Candidate> getAllCandidate() throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        log.info("Getting all contestent from DB");
+        String query = "SELECT * FROM candidate ";
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            return resultSetToContestentList(resultSet);
+        } catch(SQLException ex){
+            log.log(Level.SEVERE, "getting  contestent:{0} failed in DB", ex);
+            throw ex;
+        }
+        finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(statement);
+            DBUtil.close(connection);
+        }
+    }
+    
     public List<Candidate> getCandidateByPost(String post) throws SQLException {
         Connection connection = null;
         Statement statement = null;
@@ -97,16 +119,17 @@ public class ContestentDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Creating contestent:{0} in DB", contestent);
-        String insertQuery = "INSERT INTO candidate(NAME, PARTY, POST,VOTE, CAMPAIGN_ID) VALUES(?,?,?,?,?)";
+        String insertQuery = "INSERT INTO candidate(NAME,DISTRICT, PARTY, POST,VOTE, CAMPAIGN_ID) VALUES(?,?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, contestent.getName());
-            stmt.setString(2, contestent.getParty());
-            stmt.setString(3, contestent.getPost());
-            stmt.setInt(4, contestent.getVotes());
-            stmt.setInt(5, contestent.getCampaignId());
+            stmt.setString(2, contestent.getDistrict());
+            stmt.setString(3, contestent.getParty());
+            stmt.setString(4, contestent.getPost());
+            stmt.setInt(5, contestent.getVotes());
+            stmt.setInt(6, contestent.getCampaignId());
 
             int affectedRows = stmt.executeUpdate();
 

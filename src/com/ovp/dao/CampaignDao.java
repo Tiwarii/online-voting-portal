@@ -74,7 +74,7 @@ public class CampaignDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Creating campaign:{0} in DB", campaign);
-        String insertQuery = "INSERT INTO campaign(TITLE, STARTDATE, ENDDATE) VALUES(?,?,?)";
+        String insertQuery = "INSERT INTO campaign(TITLE, STARTDATE, ENDDATE,STARTTIME,ENDTIME) VALUES(?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -82,7 +82,8 @@ public class CampaignDao {
             stmt.setString(1, campaign.getTitle());
             stmt.setDate(2, new java.sql.Date(campaign.getStartDate().getTime()));
             stmt.setDate(3, new java.sql.Date(campaign.getEndDate().getTime()));
-
+            stmt.setTime(4, new java.sql.Time(campaign.getStartTime().getTime()));
+            stmt.setTime(5, new java.sql.Time(campaign.getEndTime().getTime()));
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows == 0) {

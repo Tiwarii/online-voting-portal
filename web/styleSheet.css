@@ -9,8 +9,8 @@ and open the template in the editor.
 */
 
 
-            .main{ height:850px ; width:100%; margin-left:none; margin:none; padding-top:100px; background-color:cornsilk;}
-            .box1{ height:270px ; width:40%; padding-left:80px; margin:none; padding-top: 50px;  background-color:cornsilk;}
+            .main{ height:850px ; width:100%; margin-left:none; margin:none; padding-top:100px; background-color:whitesmoke;}
+            .box1{ height:270px ; width:40%; padding-left:80px; margin:none; padding-top: 50px;  background-color:whitesmoke;}
            
 
             .endDate{border-radius:7px 0px; width:250px; border-color:wheat; border-style:solid; padding:3px 3px 3px 3px;   color:black;

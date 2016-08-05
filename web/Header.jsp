@@ -27,6 +27,11 @@
                     background-color:#12436d;
                     position: fixed;
                     width: 100%;
+                    background-image: url("2016-05-8--20-29-05 (2).jpeg");
+                    background-repeat: no-repeat;
+                    background-position:top left;
+                    background-attachment: fixed;
+                    background-size:100% 100%; 
                 } 
                 li {
                     float: left;
@@ -50,7 +55,12 @@
 
             
             .website_name{height:80px; width:100%; margin:auto; background-color:#165083;  position: fixed;
-                         padding-top:10px; color:burlywood; text-align:center;}
+                         padding-top:10px; color:burlywood; text-align:center;
+                        background-image: url("2016-05-8--20-29-05 (2).jpeg");
+                    background-repeat: no-repeat;
+                    background-position:top left;
+                    background-attachment: fixed;
+                    background-size:100% 20%; }
             .footer{height:90px; width:100%; margin:auto; color:lightgrey; padding-top:5px; padding-bottom:20px;  background-color:darkmagenta; text-align:center;}
             
         </style>
@@ -80,7 +90,7 @@
                 <li><a  href="partyRegistration.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp; Party Setup</a></li>  
                 <li><a  href="addPost.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp; Post Set Up</a></li>       
                 <li ><a href="./CandidateServlet"><span class="glyphicon glyphicon-earphone"></span>&nbsp; Candidate Set up</a></li>
-                <li><a href="logout.jsp">Logout</a><br></li>
+                <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
             <% }else{%>
             <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Registration</a></li>
             <li ><a href="ballot.jsp"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>

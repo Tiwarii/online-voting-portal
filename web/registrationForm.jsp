@@ -25,13 +25,14 @@
                             <label for="first-name">First name:</label>
                             <input type="text" class="form-control" id="first-name" placeholder="first name">
                         </div>
-                        <div class="form-group">
-                            <label for="middle-name">Middle name:</label>
-                            <input type="text" class="form-control" id="middle-name" placeholder="middle name">
-                        </div>
+                        
                           <div class="form-group">
                             <label for="last-name">Last name:</label>
                             <input type="text" class="form-control" id="last-name" placeholder="last name">
+                        </div>
+                          <div class="form-group">
+                            <label for="district">District:</label>
+                            <input type="text" class="form-control" id="district" placeholder="District">
                         </div>
                         <div class="form-group">
                             <label for="dob">Date of birth:</label>
@@ -57,7 +58,7 @@
                             <input type="email" class="form-control" id="email" placeholder="Enter email">
                           </div>
                           
-                          <button type="submit" class="btn btn-default">Submit</button>
+                          <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </fieldset>
                 
