@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class PartyDao {
      private final static Logger log = Logger.getLogger("PartyDao");
-     
+     DateFormat dateFormater = new SimpleDateFormat("dd/MM/yyyy");
     public void InsertParty(Party party)throws SQLException{
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -40,8 +41,8 @@ public class PartyDao {
             stmt.setInt(1, party.getId());
             stmt.setString(2, party.getName());
             Date date = party.getEstablishedDate();
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String strDate = dateFormat.format(date);
+            
+            String strDate = dateFormater.format(date);
             stmt.setString(3,strDate);
          
             stmt.setString(4, String.valueOf(party.getNumberOfMembers()));
@@ -63,14 +64,18 @@ public class PartyDao {
                     throw new SQLException("Creating party failed, no ID obtained.");
                 }
             }
-        } finally {
+        } catch(SQLException ex){
+            log.log(Level.SEVERE, "Creating party:{0} failed in DB", ex);
+            throw ex;
+        }
+        finally {
             DBUtil.close(resultSet);
             DBUtil.close(stmt);
             DBUtil.close(connection);
         }
     }
     
-    public List<Party> getAllPartiest() throws SQLException {
+    public List<Party> getAllPartiest() throws SQLException, ParseException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -81,28 +86,34 @@ public class PartyDao {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
             return resultSetToPartyList(resultSet);
-        } finally {
+        } catch(SQLException ex){
+            log.log(Level.SEVERE, "Getting party:{0} failed in DB", ex);
+            throw ex;
+        }
+        finally {
             DBUtil.close(resultSet);
             DBUtil.close(statement);
             DBUtil.close(connection);
         }
     }
     
-    private List<Party> resultSetToPartyList(ResultSet resultSet) throws SQLException {
+    private List<Party> resultSetToPartyList(ResultSet resultSet) throws SQLException, ParseException {
         List<Party> partyList = new ArrayList();
         // ResultSet is initially before the first data set
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             //String picLoc = resultSet.getString("picloc");
-            Date estDate = resultSet.getDate("EstablishedDate");
-            int numberOfMembers = resultSet.getInt("numberOfMembers");
-            String description = resultSet.getString("summary");
-
+            String estDate = resultSet.getString("EstablishedDate");
+            int numberOfMembers = resultSet.getInt("NoOfMembers");
+            String description = resultSet.getString("description");
+               
             // TODO: convert agentList array to real List and use it in constructor
             Party party = new Party();
             party.setId(id);
-            party.setEstablishedDate(estDate);
+            
+            
+            party.setEstablishedDate(dateFormater.parse(estDate));
             party.setName(name);
             party.setNumberOfMembers(numberOfMembers);
             party.setDescription(description);

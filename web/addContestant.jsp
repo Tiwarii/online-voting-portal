@@ -8,6 +8,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+        <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+        <%@page import="com.ovp.entities.Campaign"%>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -22,6 +25,7 @@
     </head>
     <body>
         <%@include file="Header.jsp" %>
+        
         <div class="main">
             <div class="box1">
                 <div>
@@ -30,7 +34,15 @@
             <fieldset class="scheduler-border">
                         <legend class="scheduler-border" >contestant:</legend>
                         <form  method="post" action="CandidateServlet">
-                    
+                            <div  class="form-group" id="container">		
+                             <p id="first">
+                                 <label>Campaigns:</label>
+                            <select  name="selectCampaign" >
+                                <c:forEach var="campaign" items="${campaigns}">
+                                    <option value="${campaign.id}"> <c:out value="${campaign.title}" /></option>
+                                </c:forEach>
+                                                
+                            </select>
                         <div class="form-group" >
                             <label for="name"> Name:</label>
                             <input type="text" class="form-control" name="name" placeholder="Your name" >
@@ -39,19 +51,22 @@
                              <label for="voterID">Voter ID: </label>
                              <input class="form-control"  type="text"  name="voterID" placeholder="Enter your Voter ID" >
                         </div>
-                          <div class="form-group">
-                             <label for="position">Post: </label>
-                             <input class="form-control"  type="text"  name="position" placeholder="Enter your post for this election" >
-                        </div>
+                          <div  class="form-group" id="container">		
+                             <p id="first">
+                                 <label>Post:</label>
+                            <select name="selectPost" >
+                                    <c:forEach var="post" items="${posts}">
+                                    <option value="${post}"> <c:out value="${post}" /></option>
+                                </c:forEach>
+                                                
+                            </select>
                        <div  class="form-group" id="container">		
                              <p id="first">
                                  <label>Party:</label>
                             <select id="sample1" class="form-control small " name="selectParty" >
-                                    <option value=""> </option>
-                          
-                                    <option value="Individual">Individual</option>
-                                    <option value="Congress">Congress</option>
-                                    <option value="Maoist">Maoist</option>
+                                    <c:forEach var="party" items="${parties}">
+                                    <option value="${party.name}"> <c:out value="${party.name}" /></option>
+                                </c:forEach>
                                                 
                             </select>
                              <div class="list-group">

@@ -41,7 +41,10 @@ public class CampaignDao {
             } else {
                 return lists.get(0);
             }
-        } finally {
+        } catch(SQLException ex){
+            log.log(Level.SEVERE, "getting  campaign:{0} failed in DB", ex);
+            throw ex;
+        }finally {
             DBUtil.close(resultSet);
             DBUtil.close(statement);
             DBUtil.close(connection);
@@ -96,6 +99,10 @@ public class CampaignDao {
                     throw new SQLException("Creating campaign failed, no ID obtained.");
                 }
             }
+            catch(SQLException ex){
+            log.log(Level.SEVERE, "Creating campaign:{0} failed in DB", ex);
+            throw ex;
+        }
         } finally {
             DBUtil.close(resultSet);
             DBUtil.close(stmt);

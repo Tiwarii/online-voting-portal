@@ -41,7 +41,11 @@ public class ContestentDao {
             } else {
                 return lists.get(0);
             }
-        } finally {
+        }
+        catch(SQLException ex){
+            log.log(Level.SEVERE, "getting  contestent:{0} failed in DB", ex);
+            throw ex;
+        }finally {
             DBUtil.close(resultSet);
             DBUtil.close(statement);
             DBUtil.close(connection);
@@ -59,7 +63,11 @@ public class ContestentDao {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
             return resultSetToContestentList(resultSet);
-        } finally {
+        } catch(SQLException ex){
+            log.log(Level.SEVERE, "getting  contestent:{0} failed in DB", ex);
+            throw ex;
+        }
+        finally {
             DBUtil.close(resultSet);
             DBUtil.close(statement);
             DBUtil.close(connection);
@@ -98,7 +106,7 @@ public class ContestentDao {
             stmt.setString(2, contestent.getParty());
             stmt.setString(3, contestent.getPost());
             stmt.setInt(4, contestent.getVotes());
-            stmt.setInt(5, 1);
+            stmt.setInt(5, contestent.getCampaignId());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -116,8 +124,9 @@ public class ContestentDao {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
-        } catch (SQLException ex){
-            System.out.println("");
+        } catch(SQLException ex){
+            log.log(Level.SEVERE, "creating  contestent:{0} failed in DB", ex);
+            throw ex;
         }finally {
             DBUtil.close(resultSet);
             DBUtil.close(stmt);

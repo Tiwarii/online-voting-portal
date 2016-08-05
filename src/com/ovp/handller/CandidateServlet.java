@@ -5,13 +5,19 @@
  */
 package com.ovp.handller;
 
+import com.ovp.dao.CampaignDao;
 import com.ovp.dao.ContestentDao;
 import com.ovp.dao.PartyDao;
+import com.ovp.dao.PostDao;
+import com.ovp.entities.Campaign;
 import com.ovp.entities.Candidate;
 import com.ovp.entities.Commisner;
+import com.ovp.entities.Party;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +32,8 @@ import javax.servlet.http.HttpServletResponse;
 public class CandidateServlet extends HttpServlet {
     ContestentDao candidateDao =new ContestentDao();
     PartyDao partyDao = new PartyDao();
+    PostDao postDao = new PostDao();
+    CampaignDao campaignDao = new CampaignDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,15 +50,17 @@ public class CandidateServlet extends HttpServlet {
             String name= request.getParameter("name");
             String voterId= request.getParameter("voterID");
             String party= request.getParameter("selectParty");
-            String post= request.getParameter("position");
+            int campaingId= Integer.parseInt(request.getParameter("selectCampaign"));
+            String post= request.getParameter("selectPost");
             
             Candidate candidate=new Candidate();
             candidate.setName(name);
             candidate.setId(voterId);
             candidate.setParty(party);
             candidate.setPost(post);
+            candidate.setCampaignId(campaingId);
             candidateDao.createContestent(candidate);
-           response.sendRedirect("addContestant.jsp"); 
+            response.sendRedirect("./CandidateServlet"); 
         }
         
     }
@@ -59,12 +69,30 @@ public class CandidateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            processRequest(request, response);
+            processGetRequest(request, response);
         } catch(SQLException ex) {
+            
+        } catch ( ParseException ex) {
             
         }
     }
 
+    protected void processGetRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, ParseException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            List<String> posts = postDao.getAllPosts();
+            List<Party> parties = partyDao.getAllPartiest();
+            List<Campaign> campaigns = campaignDao.getAllCampaign();
+            
+            request.setAttribute("parties", parties);
+            request.setAttribute("campaigns", campaigns);
+            request.setAttribute("posts", posts);
+            
+            request.getRequestDispatcher("addContestant.jsp").forward(request, response);
+        }
+        
+    }
     /**
      * Handles the HTTP <code>POST</code> method.
      *
