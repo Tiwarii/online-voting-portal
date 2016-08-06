@@ -28,7 +28,7 @@ import org.hibernate.validator.constraints.Email;
  */
 @WebServlet(name = "VoterRegistrationHandller", urlPatterns = {"/VoterRegistrationHandller"})
 public class VoterRegistrationHandller extends HttpServlet {
-private VoterDao vd=new VoterDao();
+    private VoterDao vd=new VoterDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

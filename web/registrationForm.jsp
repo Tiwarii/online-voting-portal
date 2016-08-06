@@ -20,7 +20,7 @@
               
                     <fieldset class="scheduler-border">
                         <legend class="scheduler-border" >Registration:</legend>
-                      <form role="form">
+                      <form role="form" method="post"  name="formal" action="VoterRegistrationHandller">
                         <div class="form-group" >
                             <label for="first-name">First name:</label>
                             <input type="text" class="form-control" name="firstName" placeholder="first name">
@@ -49,7 +49,7 @@
                         </div>
                         <div class="form-group">
                             <label for="vid">Voter ID:</label>
-                            <input type="text" class="form-control" id="voterId" placeholder="enter your voter id">
+                            <input type="text" class="form-control" name="voterId" id="voterId" placeholder="enter your voter id">
                         </div>
                           <div class="form-group">
                             <label for="email">Email:</label>
