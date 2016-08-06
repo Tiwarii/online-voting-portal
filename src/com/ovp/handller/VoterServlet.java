@@ -62,6 +62,7 @@ public class VoterServlet extends HttpServlet {
             voter.setVoterId(voterId);
             voter.setEmail(email);
             vd.RegisterVoter(voter);
+            response.sendRedirect("./");
         }
     }
 

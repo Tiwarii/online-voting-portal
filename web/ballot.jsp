@@ -4,6 +4,7 @@
     Author     : Rashmi Tiwari
 --%>
 
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -46,6 +47,16 @@
                    </center>
                <br>
                
+               <%
+                   boolean enable = true;
+                    List<String> votedPosts =(List)session.getAttribute("votedPosts");
+                    String selectedPost =(String)request.getAttribute("selectedPost");
+                    if(votedPosts != null){
+                        if(votedPosts.contains(selectedPost))
+                            enable = false;
+                    }
+                %>  
+               
                <br>
                <center>
                    <h4> <strong>vote for president</strong></h4>
@@ -68,7 +79,13 @@
                       <td>logo</td>
                       <td>${candidate.name}</td>
                       <td>${candidate.party}</td>
-                      <td><button class="btn btn-primary btn-group-sm">vote me</button></td>
+                      <td>
+                          <%
+                              if(enable){ 
+                              %>
+                          <a href="./VotingServletHandler?id=${candidate.id}&post=${selectedPost}"><span class="glyphicon glyphicon-cog"></span>Vote Me</a></td>
+                          <% }else %>
+                            Vote Me
                     </tr>
                     
                   </tbody>

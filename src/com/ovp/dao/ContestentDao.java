@@ -30,7 +30,7 @@ public class ContestentDao {
         Statement statement = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Getting Contestent with Id:{0} from DB", contestentId);
-        String query = "SELECT * FROM contestent WHERE id=" + contestentId;
+        String query = "SELECT * FROM candidate WHERE id=" + contestentId;
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();
@@ -162,19 +162,14 @@ public class ContestentDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Updating contestent:{0} in DB", contestent);
-        String updateQuery = "UPDATE candidate SET NAME=?, PICLOC=?, AGENDA=?, VOTE=?, SUMMARY=?, CAMPAIGN_ID=?"
+        String updateQuery = "UPDATE candidate SET VOTE=? "
                 + "WHERE id=?";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(updateQuery);
 
-            stmt.setString(1, contestent.getName());
-            stmt.setString(2, contestent.getPicLocation());
-            stmt.setString(3, listToString(contestent.getAgendaList()));
-            stmt.setInt(4, contestent.getVotes());
-            stmt.setString(5, "TODO: Add summary to Contestent Class");
-            stmt.setInt(6, contestent.getCampaignId());
-            stmt.setString(7, contestent.getId());
+            stmt.setInt(1, contestent.getVotes());
+             stmt.setString(2, contestent.getId());
 
             stmt.executeUpdate();
             log.log(Level.INFO, "Updated contestent:{0} in DB", contestent);

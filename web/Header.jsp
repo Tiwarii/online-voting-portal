@@ -4,6 +4,7 @@
     Author     : windows10
 --%>
 
+<%@page import="com.ovp.entities.Voter"%>
 <%@page import="com.ovp.entities.Commisner"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -77,10 +78,16 @@
     
             <ul class="nav nav-tabs">
                 <%
+                    boolean unRegisterdUser = true;
                     Commisner verifiedCommisner =(Commisner)session.getAttribute("verifiedCommisner");
                     boolean admin=false;
+                    Voter voter =(Voter)session.getAttribute("voter");
                 if (verifiedCommisner!= null){
-                     admin=true;}
+                     admin=true;
+                     unRegisterdUser = false;
+                } else if(voter != null) {
+                   unRegisterdUser = false;
+                }
                 %>          
                
            <% 
@@ -91,12 +98,15 @@
                 <li><a  href="addPost.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp; Post Set Up</a></li>       
                 <li ><a href="./CandidateServlet"><span class="glyphicon glyphicon-earphone"></span>&nbsp; Candidate Set up</a></li>
                 <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
-            <% }else{%>
+            <% }else if(unRegisterdUser){%>
+             <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Registration</a></li>
+             
+            <% } else {%>
             <li ><a href="./DisplayCandidate"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
-            <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Registration</a></li>
             <li ><a href="./VotingLoader"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
             <li ><a href="#about"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;About Us</a></li>
-            <% }%>
+            
+            <% } %>
             </ul>
             </div>
              </div>    
