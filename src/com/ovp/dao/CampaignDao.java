@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -166,6 +167,8 @@ public class CampaignDao {
             String title = resultSet.getString("title");
             Date startDate = resultSet.getDate("startDate");
             Date endDate = resultSet.getDate("endDate");
+            Time startTime = resultSet.getTime("startTime");
+            Time endTime = resultSet.getTime("endTime");
             List<Candidate> contestentList = new ContestentDao().getAllContestent(id);
             System.out.println("id: " + id);
             System.out.println("title: " + title);
@@ -173,7 +176,7 @@ public class CampaignDao {
             System.out.println("endDate: " + endDate);
             
             // TODO: convert agentList array to real List and use it in constructor
-            Campaign campaign = new Campaign(title, startDate, endDate, null ,null);
+            Campaign campaign = new Campaign(title, startDate, endDate, startTime ,endTime);
             campaign.setId(id);
             campaign.setContestentList(contestentList);
             campaignList.add(campaign);

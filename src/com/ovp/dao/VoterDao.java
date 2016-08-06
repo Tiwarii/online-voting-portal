@@ -17,7 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  *
  * @author Rashmi Tiwari
  */
-public class voterDao {
+public class VoterDao {
     private final static Logger log = Logger.getLogger("VoterDao");
      DateFormat dateFormater = new SimpleDateFormat("dd/MM/yyyy");
     public void RegisterVoter(Voter voter)throws SQLException{
@@ -34,23 +34,19 @@ public class voterDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Registering voter:{0} in DB", voter);
-        String insertQuery = "INSERT INTO voter VALUES(?,?,?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO voter(FIRSTNAME, LASTNAME,"
+                + " DISTRICT, BirthDate, CITIZENSHIP, VoterId, Email) VALUES(?,?,?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            stmt.setInt(1, voter.getId());
-            stmt.setString(2, voter.getFirstName());
-            stmt.setString(3, voter.getLastName());
-            stmt.setString(4, voter.getDistrict());
-            Date date = voter.getDateOfBirth();
-            
-            String strDate = dateFormater.format(date);
-            stmt.setString(5,strDate);
-         
-            stmt.setString(6, String.valueOf(voter.getCitizenshipNum()));
-            stmt.setString(7, voter.getVoterId());
-            stmt.setString(8, voter.getEmail());
+            stmt.setString(1, voter.getFirstName());
+            stmt.setString(2, voter.getLastName());
+            stmt.setString(3, voter.getDistrict());
+            stmt.setDate(4,voter.getDateOfBirth());
+            stmt.setString(5, String.valueOf(voter.getCitizenshipNum()));
+            stmt.setString(6, voter.getVoterId());
+            stmt.setString(7, voter.getEmail());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -110,8 +106,23 @@ public class voterDao {
         List<Voter> voterList = new ArrayList();
         // ResultSet is initially before the first data set
         while (resultSet.next()) {
-            String voter = resultSet.getString("voter");
-           // voterList.add(voter);
+            String firstName = resultSet.getString("firstName");
+            String lastName = resultSet.getString("LASTNAME");
+            String district = resultSet.getString("DISTRICT");
+            Date bdate = resultSet.getDate("BirthDate");
+            String citizenship = resultSet.getString("CITIZENSHIP");
+            String voterId = resultSet.getString("VoterId");
+            String email = resultSet.getString("Email");
+
+            Voter voter = new Voter();
+            voter.setFirstName(firstName);
+            voter.setLastName(lastName);
+            voter.setDistrict(district);
+            voter.setCitizenshipNum(citizenship);
+            voter.setEmail(email);
+            voter.setDateOfBirth(bdate);
+            voter.setVoterId(voterId);
+            voterList.add(voter);
         }
         return voterList;
     } 
