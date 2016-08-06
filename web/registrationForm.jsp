@@ -20,7 +20,7 @@
               
                     <fieldset class="scheduler-border">
                         <legend class="scheduler-border" >Registration:</legend>
-                      <form role="form" method="post"  name="formal" action="VoterRegistrationHandller">
+                      <form role="form" method="post"  name="formal" action="VoterServlet">
                         <div class="form-group" >
                             <label for="first-name">First name:</label>
                             <input type="text" class="form-control" name="firstName" placeholder="first name">
