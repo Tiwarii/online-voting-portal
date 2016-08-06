@@ -52,5 +52,18 @@ CREATE TABLE party (
     PRIMARY KEY (ID)
     );
 
+DROP TABLE IF EXISTS party;
+CREATE TABLE voter (
+    id INT NOT NULL AUTO_INCREMENT, 
+    FIRSTNAME VARCHAR(30) NOT NULL,
+    LASTNAME VARCHAR(30) NOT NULL,
+    DISTRICT VARCHAR(30) NOT NULL,
+    BirthDate VARCHAR(30) NOT NULL,  
+    CITIZENSHIP VARCHAR(40) NOT NULL, 
+    VoterId VARCHAR(40) NOT NULL,
+    Email VARCHAR(40) NOT NULL,
+    PRIMARY KEY (ID)
+    );
+
 use ovp;
 insert into commisner(username,password) values('admin','admin');

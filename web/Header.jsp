@@ -92,8 +92,9 @@
                 <li ><a href="./CandidateServlet"><span class="glyphicon glyphicon-earphone"></span>&nbsp; Candidate Set up</a></li>
                 <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
             <% }else{%>
+            <li ><a href="./DisplayCandidate"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
             <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Registration</a></li>
-            <li ><a href="ballot.jsp"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
+            <li ><a href="./VotingLoader"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
             <li ><a href="#about"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;About Us</a></li>
             <% }%>
             </ul>

@@ -36,11 +36,11 @@
                 
                 <div class="dropdown">
                     <button class="dropbtn btn-primary">Choose Post</button>
+                    
                     <div class="dropdown-content">
-                      <a href="./voting?position=president">President</a>
-                      <a href="#">Vice President</a>
-                      <a href="#">Prime Minister</a>
-                      <a href="#">Chief Minister </a>
+                        <c:forEach var="post" items="${posts}">
+                      <a href="./voting?position=${post}">${post}</a>
+                        </c:forEach>
                     </div>
                 </div>
                    </center>

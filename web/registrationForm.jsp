@@ -23,39 +23,37 @@
                       <form role="form">
                         <div class="form-group" >
                             <label for="first-name">First name:</label>
-                            <input type="text" class="form-control" id="first-name" placeholder="first name">
+                            <input type="text" class="form-control" name="firstName" placeholder="first name">
                         </div>
                         
                           <div class="form-group">
                             <label for="last-name">Last name:</label>
-                            <input type="text" class="form-control" id="last-name" placeholder="last name">
+                            <input type="text" class="form-control" name="lastName" placeholder="last name">
                         </div>
                           <div class="form-group">
                             <label for="district">District:</label>
-                            <input type="text" class="form-control" id="district" placeholder="District">
+                            <input type="text" class="form-control" name="district" placeholder="District">
                         </div>
                         <div class="form-group">
                             <label for="dob">Date of birth:</label>
                             <div class='input-group date' id='datetimepicker2'>
-                                <input type="date" class="form-control" placeholder="mm/dd/yy"/>
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
+                                <input type="date" class="form-control" name="dob" placeholder="mm/dd/yy"/>
+                                
                     
                              </div>
                         </div>
                          
                           <div class="form-group">
                             <label for="ctn">Citizenship No.:</label>
-                            <input type="text" class="form-control" id="ctn" placeholder="enter your citizenship number">
+                            <input type="text" class="form-control" name="citizenshipNum" placeholder="enter your citizenship number">
                         </div>
                         <div class="form-group">
                             <label for="vid">Voter ID:</label>
-                            <input type="text" class="form-control" id="vid" placeholder="enter your voter id">
+                            <input type="text" class="form-control" id="voterId" placeholder="enter your voter id">
                         </div>
                           <div class="form-group">
                             <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                            <input type="email" class="form-control" name="email" placeholder="Enter email">
                           </div>
                           
                           <button type="submit" class="btn btn-primary">Submit</button>

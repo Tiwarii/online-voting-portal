@@ -52,12 +52,12 @@ public class CandidateServlet extends HttpServlet {
             String party= request.getParameter("selectParty");
             int campaingId= Integer.parseInt(request.getParameter("selectCampaign"));
             String post= request.getParameter("selectPost");
-           // String district=request.getParameter("District");
+            String district=request.getParameter("District");
             
             Candidate candidate=new Candidate();
             candidate.setName(name);
             candidate.setId(voterId);
-            //candidate.setDistrict(district);
+            candidate.setDistrict(district);
             candidate.setParty(party);
             candidate.setPost(post);
             candidate.setCampaignId(campaingId);

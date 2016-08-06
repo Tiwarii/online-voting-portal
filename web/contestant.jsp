@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>home</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -32,8 +32,7 @@
 </head>
 <body>
 
-    <form action="/DisplayCandidate">
-
+   
 <div class="jumbotron">
   <div class="container text-center">
     
@@ -46,9 +45,9 @@
     <c:forEach var="candidate" items="${candidates}">
        <div class="col-sm-3">
         <img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
-        <p>Name:${candidate.name}</p><br>
-        <p>Party:${candidate.party}</p><br>
-        <p>Post:${candidate.post}</p><br>
+        <p>Name:${candidate.name}<br>
+        Party:${candidate.party}<br>
+        Post:${candidate.post}</p><br>
         
         </div>
     </c:forEach>  
@@ -62,6 +61,6 @@
 <footer class="container-fluid text-center">
   <p>Footer Text</p>
 </footer>
-    </form>
+   
 </body>
 </html>

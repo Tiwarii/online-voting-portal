@@ -214,6 +214,9 @@ public class ContestentDao {
             String id = resultSet.getString("id");
             String name = resultSet.getString("name");
             //String picLoc = resultSet.getString("picloc");
+            String post= resultSet.getString("post");
+            String party= resultSet.getString("party");
+            String district= resultSet.getString("district");
             String agenda = resultSet.getString("agenda");
             int vote = resultSet.getInt("vote");
             String summary = resultSet.getString("summary");
@@ -230,6 +233,10 @@ public class ContestentDao {
             contestent.setId(id);
             contestent.setVotes(vote);
             contestent.setName(name);
+            contestent.setDistrict(district);
+            contestent.setParty(party);
+            contestent.setPost(post);
+            
             contestent.setAgendaList(stringToList(agenda));
             contestentList.add(contestent);
         }

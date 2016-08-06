@@ -6,6 +6,7 @@
 package com.ovp.handller;
 
 import com.ovp.dao.ContestentDao;
+import com.ovp.dao.PostDao;
 import com.ovp.entities.Candidate;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpSession;
 public class VotingHandler extends HttpServlet {
     
     private ContestentDao candidateDao = new ContestentDao();
+     private PostDao postDao = new PostDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,9 +43,10 @@ public class VotingHandler extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String post= request.getParameter("position");
             List<Candidate> cadidates = candidateDao.getCandidateByPost(post);
-            
+            List<String> posts= postDao.getAllPosts();
             request.setAttribute("candidates", cadidates);
             request.setAttribute("post", post);
+            request.setAttribute("posts", posts);
              
             request.getRequestDispatcher("ballot.jsp").forward(request, response);
            System.out.println("upto here");

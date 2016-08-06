@@ -5,7 +5,7 @@
  */
 package com.ovp.handller;
 
-import com.ovp.dao.ContestentDao;
+import com.ovp.dao.PostDao;
 import com.ovp.entities.Candidate;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,9 +23,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Rashmi Tiwari
  */
-@WebServlet(name = "DisplayCandidate", urlPatterns = {"/DisplayCandidate"})
-public class DisplayCandidate extends HttpServlet {
-  private ContestentDao candidateDao = new ContestentDao();
+@WebServlet(name = "VotingLoader", urlPatterns = {"/VotingLoader"})
+public class VotingLoader extends HttpServlet {
+    private PostDao postDao= new PostDao();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,13 +40,9 @@ public class DisplayCandidate extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            List<Candidate> cadidates = candidateDao.getAllCandidate();
-            
-            request.setAttribute("candidates", cadidates);
-            request.getRequestDispatcher("contestant.jsp").forward(request, response);
-           System.out.println("upto here");
-
+          List<String> posts = postDao.getAllPosts(); 
+          request.setAttribute("posts", posts);
+            request.getRequestDispatcher("ballot.jsp").forward(request, response);
         }
     }
 
@@ -62,9 +59,9 @@ public class DisplayCandidate extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-        processRequest(request, response);
-        } catch(SQLException ex) {
-            System.out.println(ex);
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(VotingLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -77,12 +74,12 @@ public class DisplayCandidate extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-        processRequest(request, response);
-        } catch(SQLException ex) {
-            
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(VotingLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
