@@ -5,11 +5,16 @@
  */
 package com.ovp.handller;
 
+import com.ovp.dao.VoterDao;
+import com.ovp.entities.Voter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +28,7 @@ import org.hibernate.validator.constraints.Email;
  */
 @WebServlet(name = "VoterRegistrationHandller", urlPatterns = {"/VoterRegistrationHandller"})
 public class VoterRegistrationHandller extends HttpServlet {
-
+private VoterDao vd=new VoterDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,7 +39,7 @@ public class VoterRegistrationHandller extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
+            throws ServletException, IOException, ParseException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String firstName=request.getParameter("firstName");
@@ -47,7 +52,16 @@ public class VoterRegistrationHandller extends HttpServlet {
             
             SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd");
             Date dateOfBirth = new Date(dateFormatter.parse(birthDate).getTime());
-            
+          
+            Voter voter = new Voter();         
+            voter.setFirstName(firstName);
+            voter.setLastName(lastName);
+            voter.setDistrict(district);
+            voter.setCitizenshipNum(citizenshipNum);
+            voter.setDateOfBirth(dateOfBirth);
+            voter.setVoterId(voterId);
+            voter.setEmail(email);
+            vd.RegisterVoter(voter);
         }
     }
 
@@ -63,7 +77,13 @@ public class VoterRegistrationHandller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(VoterRegistrationHandller.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+        Logger.getLogger(VoterRegistrationHandller.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     /**
@@ -77,7 +97,13 @@ public class VoterRegistrationHandller extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(VoterRegistrationHandller.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+        Logger.getLogger(VoterRegistrationHandller.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     /**
