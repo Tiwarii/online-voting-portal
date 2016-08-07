@@ -20,6 +20,7 @@ public class Voter {
     private String citizenshipNum;
     private String voterId;
     private String email;
+    private boolean voted = false;
 
     public int getId() {
         return id;
@@ -85,6 +86,14 @@ public class Voter {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean hasVoted() {
+        return voted;
+    }
+
+    public void setVoted(boolean voted) {
+        this.voted = voted;
     }
     
     

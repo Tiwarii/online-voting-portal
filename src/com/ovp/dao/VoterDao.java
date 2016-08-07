@@ -35,7 +35,7 @@ public class VoterDao {
         ResultSet resultSet = null;
         log.log(Level.INFO, "Registering voter:{0} in DB", voter);
         String insertQuery = "INSERT INTO voter(FIRSTNAME, LASTNAME,"
-                + " DISTRICT, BirthDate, CITIZENSHIP, VoterId, Email) VALUES(?,?,?,?,?,?,?)";
+                + " DISTRICT, BirthDate, CITIZENSHIP, VoterId, Email, VOTED) VALUES(?,?,?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -47,6 +47,7 @@ public class VoterDao {
             stmt.setString(5, String.valueOf(voter.getCitizenshipNum()));
             stmt.setString(6, voter.getVoterId());
             stmt.setString(7, voter.getEmail());
+            stmt.setBoolean(8, voter.hasVoted());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -66,6 +67,38 @@ public class VoterDao {
             }
         } catch(SQLException ex){
             log.log(Level.SEVERE, "Creating voter:{0} failed in DB", ex);
+            throw ex;
+        }
+        finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(stmt);
+            DBUtil.close(connection);
+        }
+    }
+    
+    public void updateVoter(Voter voter)throws SQLException{
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        log.log(Level.INFO, "Updating voter:{0} in DB", voter);
+        String updateQuery = "UPDATE voter set voted = ?"
+                + " Where id = ?";
+        try {
+            connection = ConnectionFactory.getConnection();
+            stmt = connection.prepareStatement(updateQuery);
+
+            stmt.setBoolean(1, voter.hasVoted());
+            stmt.setInt(2, voter.getId());
+            
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                log.log(Level.SEVERE, "Updating voter failed:{0} in DB", voter);
+                throw new SQLException("Uodating voter failed, no rows affected.");
+            }
+            
+        } catch(SQLException ex){
+            log.log(Level.SEVERE, "Updating voter:{0} failed in DB", ex);
             throw ex;
         }
         finally {

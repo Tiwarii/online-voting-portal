@@ -51,6 +51,36 @@ public class CampaignDao {
             DBUtil.close(connection);
         }
     }
+    
+    public Campaign getActiveCampaign() throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        log.log(Level.INFO, "Getting active campaign from DB");
+        String query = "SELECT * FROM campaign WHERE "
+                + "STARTDATE < DATE(NOW()) and "
+                + "ENDDATE > DATE(NOW()) and "
+                + "STARTTIME > TIME(NOW()) and "
+                + "ENDTIME < TIME(NOW())";
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            List<Campaign> lists = resultSetToCampaignList(resultSet);
+            if (lists.isEmpty()) {
+                return null;
+            } else {
+                return lists.get(0);
+            }
+        } catch(SQLException ex){
+            log.log(Level.SEVERE, "getting active campaign:{0} failed in DB", ex);
+            throw ex;
+        }finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(statement);
+            DBUtil.close(connection);
+        }
+    }
 
     public List<Campaign> getAllCampaign() throws SQLException {
         Connection connection = null;

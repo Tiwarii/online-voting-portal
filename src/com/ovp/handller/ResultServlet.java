@@ -5,11 +5,18 @@
  */
 package com.ovp.handller;
 
-import com.ovp.dao.VoterDao;
-import com.ovp.entities.Voter;
+import com.ovp.dao.CampaignDao;
+import com.ovp.dao.ContestentDao;
+import com.ovp.entities.Campaign;
+import com.ovp.entities.Candidate;
+import com.ovp.entities.Result;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -17,16 +24,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author pjayswal
  */
-@WebServlet(name = "VoterLoginHandler", urlPatterns = {"/VoterLoginHandler"})
-public class VoterLoginHandler extends HttpServlet {
-
-    VoterDao voterDao = new VoterDao();
+@WebServlet(name = "ResultServlet", urlPatterns = {"/ResultServlet"})
+public class ResultServlet extends HttpServlet {
+    ContestentDao contestentDao = new ContestentDao();
+    CampaignDao campaignDao = new CampaignDao();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,30 +47,25 @@ public class VoterLoginHandler extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String voterId = request.getParameter("voterId");
-            String email = request.getParameter("email");
-            boolean logged = false;
-            try {
-              int  voterIdInt = Integer.parseInt(voterId);
-                Voter voter = voterDao.getVoter(Integer.parseInt(voterId));
-                if (voter != null) {
-                    if (email.equals(voter.getEmail())) {
-                        if (!voter.hasVoted()) {
-                            logged = true;
-                            HttpSession session = request.getSession();
-                            session.setAttribute("voter", voter);
-                            voter.setVoted(logged);
-                            voterDao.updateVoter(voter);
-                            response.sendRedirect("./VotingLoader");
-                        }
-                        
+            List<Campaign> campaigns = campaignDao.getAllCampaign();
+            request.setAttribute("campaigns", campaigns);
+            String campaignId= request.getParameter("campaign_id");
+            if (campaignId != null) {
+                List<Candidate> candidates = contestentDao.getAllContestent(Integer.parseInt(campaignId));
+                Map<String, List<Candidate>> results = new HashMap();
+                for (Candidate candidate : candidates) {
+                    String post = candidate.getPost();
+                    List<Candidate> candidateByPost = results.get(post);
+                    if (candidateByPost == null) {
+                        candidateByPost = new ArrayList();
                     }
+                    candidateByPost.add(candidate);
+                    results.put(post, candidateByPost);
+                    //results.values()
                 }
-            } catch (Exception ex) {
-
+                request.setAttribute("results", results);
             }
-            if(!logged)
-                response.sendRedirect("./");
+            request.getRequestDispatcher("result.jsp").forward(request, response);
         }
     }
 
@@ -83,7 +84,7 @@ public class VoterLoginHandler extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(VoterLoginHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResultServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -101,7 +102,7 @@ public class VoterLoginHandler extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(VoterLoginHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResultServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

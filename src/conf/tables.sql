@@ -65,6 +65,7 @@ CREATE TABLE voter (
     CITIZENSHIP VARCHAR(40) NOT NULL, 
     VoterId VARCHAR(40) NOT NULL,
     Email VARCHAR(40) NOT NULL,
+    voted boolean NOT NULL,
     PRIMARY KEY (ID)
     );
 
