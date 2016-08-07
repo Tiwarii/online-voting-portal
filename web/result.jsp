@@ -36,7 +36,7 @@
                <center> <label>Select post you want to vote for &nbsp;</label>
                 
                 <div class="dropdown">
-                    <button class="dropbtn btn-primary">Choose Post</button>
+                    <button class="dropbtn btn-primary">Choose Campaign</button>
                     
                     <div class="dropdown-content">
                         <c:forEach var="campaign" items="${campaigns}">
