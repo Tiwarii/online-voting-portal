@@ -101,7 +101,7 @@ public class ContestentDao {
         Statement statement = null;
         ResultSet resultSet = null;
         log.info("Getting all contestent from DB");
-        String query = "SELECT * FROM candidate WHERE post='"+post+"' order by votes DESC";
+        String query = "SELECT * FROM candidate WHERE post='"+post+"' order by vote DESC";
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();

@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author pjayswal
+ * @author Rashmi Tiwari
  */
 public class PostDao {
     private final static Logger log = Logger.getLogger("PostDao");

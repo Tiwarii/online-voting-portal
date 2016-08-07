@@ -106,7 +106,7 @@
             <li ><a href="./DisplayCandidate"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
             <li ><a href="./VotingLoader"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
             <li ><a href="#about"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;About Us</a></li>
-            
+            <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
             <% } %>
             </ul>
             </div>

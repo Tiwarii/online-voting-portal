@@ -9,7 +9,6 @@ import com.ovp.dao.CampaignDao;
 import com.ovp.dao.ContestentDao;
 import com.ovp.entities.Campaign;
 import com.ovp.entities.Candidate;
-import com.ovp.entities.Result;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -27,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author pjayswal
+ * @author Rashmi Tiwari
  */
 @WebServlet(name = "ResultServlet", urlPatterns = {"/ResultServlet"})
 public class ResultServlet extends HttpServlet {

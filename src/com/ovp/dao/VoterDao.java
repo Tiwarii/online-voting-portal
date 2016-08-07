@@ -35,7 +35,7 @@ public class VoterDao {
         ResultSet resultSet = null;
         log.log(Level.INFO, "Registering voter:{0} in DB", voter);
         String insertQuery = "INSERT INTO voter(FIRSTNAME, LASTNAME,"
-                + " DISTRICT, BirthDate, CITIZENSHIP, VoterId, Email, VOTED) VALUES(?,?,?,?,?,?,?)";
+                + " DISTRICT, BirthDate, CITIZENSHIP, VoterId, Email, VOTED) VALUES(?,?,?,?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -139,6 +139,7 @@ public class VoterDao {
         List<Voter> voterList = new ArrayList();
         // ResultSet is initially before the first data set
         while (resultSet.next()) {
+            int id = resultSet.getInt("id");
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("LASTNAME");
             String district = resultSet.getString("DISTRICT");
@@ -146,8 +147,10 @@ public class VoterDao {
             String citizenship = resultSet.getString("CITIZENSHIP");
             String voterId = resultSet.getString("VoterId");
             String email = resultSet.getString("Email");
+            boolean voted = resultSet.getBoolean("voted");
 
             Voter voter = new Voter();
+            voter.setId(id);
             voter.setFirstName(firstName);
             voter.setLastName(lastName);
             voter.setDistrict(district);
@@ -155,6 +158,7 @@ public class VoterDao {
             voter.setEmail(email);
             voter.setDateOfBirth(bdate);
             voter.setVoterId(voterId);
+            voter.setVoted(voted);
             voterList.add(voter);
         }
         return voterList;

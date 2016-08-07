@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author pjayswal
+ * @author Rashmi Tiwari
  */
 @WebServlet(name = "VoterLoginHandler", urlPatterns = {"/VoterLoginHandler"})
 public class VoterLoginHandler extends HttpServlet {
