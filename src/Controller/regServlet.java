@@ -3,25 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ovp.handller;
+package Controller;
 
-import com.ovp.dao.commisnerDao;
-import com.ovp.entities.Commisner;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Rashmi Tiwari
+ * @author acer
  */
-@WebServlet(name = "CommisnerLoginServlet", urlPatterns = {"/CommisnerLoginServlet"})
-public class CommisnerLoginServlet extends HttpServlet {
+@WebServlet(name = "regServlet", urlPatterns = {"/regServlet"})
+public class regServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,31 +31,7 @@ public class CommisnerLoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-              String userName= request.getParameter("userName");
-            String password= request.getParameter("password");
-            
-            Commisner commisner=new Commisner();
-            commisner.setUserName(userName);
-            commisner.setPassword(password);
-            
-            commisnerDao cd= new commisnerDao();
-            Commisner verifiedCommisner =cd.verifyCommisner(commisner);
-            
-            if (verifiedCommisner!= null){
-              HttpSession session=request.getSession();
-              session.setAttribute("verifiedCommisner",verifiedCommisner);
-              response.sendRedirect("addCampaign.jsp");
-            }else {
-                out.println("Invalid username or password. Please  enter your username and password again.");
-              response.sendRedirect("admin.jsp");
-            }
- 
-        }
-    }
+   
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -70,7 +45,7 @@ public class CommisnerLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doPost(request, response);
     }
 
     /**
@@ -84,14 +59,39 @@ public class CommisnerLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+      
+      String email=request.getParameter("email");
+      
+//      String name=request.getParameter("name"); 
+//      String district=request.getParameter("district");
+//      String voter_id=request.getParameter("voter_id");
+//      String citizenship=request.getParameter("citizenship");
+//      String pin=request.getParameter("pin");
+//      String secondPin=request.getParameter("secondPin");
+
+
+
+      
+      
+        
+
+      
+    
+
+//       request.setAttribute("name",request.getParameter("name"));
+//              request.setAttribute("email",request.getParameter("email"));
+//
+//                     request.setAttribute("name",request.getParameter("name"));
+//
+//       request.getRequestDispatcher("user/successreg.jsp").forward(request,response);
+//    }
 
     /**
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
      */
+    }
     @Override
     public String getServletInfo() {
         return "Short description";

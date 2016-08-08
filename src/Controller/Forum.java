@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ovp.handller;
+package Controller;
 
-import com.ovp.dao.commisnerDao;
-import com.ovp.entities.Commisner;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,14 +12,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Rashmi Tiwari
+ * @author acer
  */
-@WebServlet(name = "CommisnerLoginServlet", urlPatterns = {"/CommisnerLoginServlet"})
-public class CommisnerLoginServlet extends HttpServlet {
+@WebServlet(name = "Forum", urlPatterns = {"/Forum"})
+public class Forum extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,25 +33,16 @@ public class CommisnerLoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-              String userName= request.getParameter("userName");
-            String password= request.getParameter("password");
-            
-            Commisner commisner=new Commisner();
-            commisner.setUserName(userName);
-            commisner.setPassword(password);
-            
-            commisnerDao cd= new commisnerDao();
-            Commisner verifiedCommisner =cd.verifyCommisner(commisner);
-            
-            if (verifiedCommisner!= null){
-              HttpSession session=request.getSession();
-              session.setAttribute("verifiedCommisner",verifiedCommisner);
-              response.sendRedirect("addCampaign.jsp");
-            }else {
-                out.println("Invalid username or password. Please  enter your username and password again.");
-              response.sendRedirect("admin.jsp");
-            }
- 
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Forum</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Forum at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

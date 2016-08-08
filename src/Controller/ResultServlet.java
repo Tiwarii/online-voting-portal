@@ -3,25 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ovp.handller;
+package Controller;
 
-import com.ovp.dao.commisnerDao;
-import com.ovp.entities.Commisner;
+import Domain.Admin.Result;
+import Service.ResultService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import utils.Database_connection;
 
 /**
  *
- * @author Rashmi Tiwari
+ * @author acer
  */
-@WebServlet(name = "CommisnerLoginServlet", urlPatterns = {"/CommisnerLoginServlet"})
-public class CommisnerLoginServlet extends HttpServlet {
+@WebServlet(name = "ResultServlet", urlPatterns = {"/ResultServlet"})
+public class ResultServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,31 +37,6 @@ public class CommisnerLoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-              String userName= request.getParameter("userName");
-            String password= request.getParameter("password");
-            
-            Commisner commisner=new Commisner();
-            commisner.setUserName(userName);
-            commisner.setPassword(password);
-            
-            commisnerDao cd= new commisnerDao();
-            Commisner verifiedCommisner =cd.verifyCommisner(commisner);
-            
-            if (verifiedCommisner!= null){
-              HttpSession session=request.getSession();
-              session.setAttribute("verifiedCommisner",verifiedCommisner);
-              response.sendRedirect("addCampaign.jsp");
-            }else {
-                out.println("Invalid username or password. Please  enter your username and password again.");
-              response.sendRedirect("admin.jsp");
-            }
- 
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -70,7 +50,7 @@ public class CommisnerLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doPost(request, response);
     }
 
     /**
@@ -84,7 +64,38 @@ public class CommisnerLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         String  page=request.getParameter("page");
+//                  
+     if(page.equalsIgnoreCase("map")){
+         
+   
+  RequestDispatcher rd=request.getRequestDispatcher("map.jsp");//code number display
+                rd.forward(request, response);   
+     
+     }    
+      
+       if(page.equalsIgnoreCase("result")){
+     int id=Integer.parseInt(request.getParameter("id"));
+        try {String query="select party,name,value from tblcandidate where district=(select name from districts where districts.id=?) ";
+      
+        PreparedStatement pstm=new Database_connection().getPreparedStatement(query);
+          pstm.setInt(1,id);
+        
+            ResultSet rs=pstm.executeQuery();
+            
+            System.out.print(rs.getString("party"));
+            System.out.print(rs.getString("candidate"));
+            System.out.print(rs.getString("value"));
+            
+
+
+          } catch (SQLException ex) {
+              System.out.print("this is catch");
+          }
+           
+      }
+    
+    }
     }
 
     /**
@@ -92,9 +103,4 @@ public class CommisnerLoginServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-}
+  

@@ -93,7 +93,9 @@
            <% 
                 if (admin){
            %>
-                <li><a href="addCampaign.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp;Election Setup</a></li>
+                <li id="voterSignup"><a href="addCampaign.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp;Election Setup</a>
+                       
+                </li>
                 <li><a  href="partyRegistration.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp; Party Setup</a></li>  
                 <li><a  href="addPost.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp; Post Set Up</a></li>       
                 <li ><a href="./CandidateServlet"><span class="glyphicon glyphicon-earphone"></span>&nbsp; Candidate Set up</a></li>
@@ -104,13 +106,58 @@
              
             <% } else {%>
             <li ><a href="./DisplayCandidate"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
-            <li ><a href="./VotingLoader"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
+            <li  ><a href="./VotingLoader"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
             <li ><a href="#about"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;About Us</a></li>
-            <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
+            <li ><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
             <% } %>
             </ul>
+            <div>
+                <button type="button" class="btn btn-primary btn-group-justified button1" id="myBtn">Election&nbsp;commissioner</button>
+                 <div class="modal fade" id="voterModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header" style="padding:35px 50px;">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3><span class="glyphicon glyphicon-lock"></span> Login</h3>
+                                </div>
+                                <div class="modal-body" style="padding:40px 50px;">
+                                    <form action="VoterLoginHandler" role="form" method="post">
+                                        <div class="form-group">
+                                            <label for="voterId"><span class="glyphicon glyphicon-user"></span> VoterId</label>
+                                            <input type="text" class="form-control" name="voterId" placeholder="Enter voterId">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email"><span class="glyphicon glyphicon-eye-open"></span> Email</label>
+                                            <input type="email" class="form-control" name="email" placeholder="Enter Email">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+
+                                    <p>Forgot <a href="#">Password?</a></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
             </div>
-             </div>    
+                      
+         </div>
+             </div>     
+            <script>
+           $(document).ready(function () {
+                $("#voterSignup").click(function () {
+                    $("#voterModal").modal();
+                });
+            });
+            
+        
+        </script>
         
             
        
