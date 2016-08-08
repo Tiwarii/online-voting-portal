@@ -56,7 +56,7 @@ public class PartyServlet extends HttpServlet {
             party.setNumberOfMembers(Integer.valueOf(numberOfMembers)); 
             PartyDao pd=new PartyDao();
             pd.InsertParty(party); 
-           response.sendRedirect("partyRegistration.jsp");
+           response.sendRedirect("set_img.jsp");
            
         }
     }

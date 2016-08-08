@@ -47,10 +47,7 @@
                                  <textarea class=" form-control "  name="description"></textarea>
                             </div> 
                             
-                            <div>
-                                <label>Logo:</label>
-                                <input name="file" type="file" class="form-control"/>
-                            </div>
+                            
                       </div>                      
                         <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
