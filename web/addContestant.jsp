@@ -33,7 +33,8 @@
                 </div>
             <fieldset class="scheduler-border">
                         <legend class="scheduler-border" >Candidate form:</legend>
-                        <form  method="post" action="CandidateServlet">
+
+                    <form  method="post" action="CandidateServlet" enctype="multipart/form-data">
                             <div  class="form-group" id="container">		
                              <p id="first">
                                  <label>Campaign:</label>
@@ -74,6 +75,13 @@
                                 </c:forEach>
                                                 
                             </select>
+<<<<<<< HEAD
+=======
+                            <div>
+                                <label>Image:</label>
+                                <input name="photo" type="file" class="form-control"/>
+                            </div>
+>>>>>>> 3ca807e... fix file upload and display
                              <div class="list-group">
                                  <label>Agendas:</label>
                                  <textarea class="list-group-item form-control "  name="agendas"></textarea>

@@ -10,6 +10,7 @@ package com.ovp.dao;
  * @author Rashmi Tiwari
  */
 import com.ovp.entities.Candidate;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -119,7 +120,7 @@ public class ContestentDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Creating contestent:{0} in DB", contestent);
-        String insertQuery = "INSERT INTO candidate(NAME,DISTRICT, PARTY, POST,VOTE, CAMPAIGN_ID) VALUES(?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO candidate(NAME,DISTRICT, PARTY, POST,VOTE, PHOTO_ID, CAMPAIGN_ID) VALUES(?,?,?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -129,7 +130,8 @@ public class ContestentDao {
             stmt.setString(3, contestent.getParty());
             stmt.setString(4, contestent.getPost());
             stmt.setInt(5, contestent.getVotes());
-            stmt.setInt(6, contestent.getCampaignId());
+            stmt.setInt(6, contestent.getPhotoId());
+            stmt.setInt(7, contestent.getCampaignId());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -216,6 +218,7 @@ public class ContestentDao {
             int vote = resultSet.getInt("vote");
             String summary = resultSet.getString("summary");
             int campaignId = resultSet.getInt("campaign_id");
+            int photoId = resultSet.getInt("PHOTO_ID");
             
             System.out.println("Name: " + name);
             //System.out.println("Picloc: " + picLoc);
@@ -231,7 +234,7 @@ public class ContestentDao {
             contestent.setDistrict(district);
             contestent.setParty(party);
             contestent.setPost(post);
-            
+            contestent.setPhotoId(photoId);
             contestent.setAgendaList(stringToList(agenda));
             contestentList.add(contestent);
         }

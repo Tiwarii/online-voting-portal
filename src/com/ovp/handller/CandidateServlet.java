@@ -7,6 +7,7 @@ package com.ovp.handller;
 
 import com.ovp.dao.CampaignDao;
 import com.ovp.dao.ContestentDao;
+import com.ovp.dao.ImageDao;
 import com.ovp.dao.PartyDao;
 import com.ovp.dao.PostDao;
 import com.ovp.entities.Campaign;
@@ -14,26 +15,31 @@ import com.ovp.entities.Candidate;
 import com.ovp.entities.Commisner;
 import com.ovp.entities.Party;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Rashmi Tiwari
  */
 @WebServlet(name = "CandidateServlet", urlPatterns = {"/CandidateServlet"})
+@MultipartConfig(maxFileSize = 16177215)
 public class CandidateServlet extends HttpServlet {
     ContestentDao candidateDao =new ContestentDao();
     PartyDao partyDao = new PartyDao();
     PostDao postDao = new PostDao();
     CampaignDao campaignDao = new CampaignDao();
+    ImageDao imageDao = new ImageDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,6 +67,16 @@ public class CandidateServlet extends HttpServlet {
             candidate.setParty(party);
             candidate.setPost(post);
             candidate.setCampaignId(campaingId);
+           
+            InputStream inputStream = null; // input stream of the upload file
+        // obtains the upload file part in this multipart request
+        Part filePart = request.getPart("photo");
+        if (filePart != null) {
+            // obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+            int imageId = imageDao.InsertImage(inputStream);
+            candidate.setPhotoId(imageId);
+        }   
             candidateDao.createContestent(candidate);
             response.sendRedirect("./CandidateServlet"); 
         }

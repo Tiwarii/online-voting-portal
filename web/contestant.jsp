@@ -44,7 +44,7 @@
   <div class="row">
     <c:forEach var="candidate" items="${candidates}">
        <div class="col-sm-3">
-        <img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image">
+        <img src="./ImageServlet?image_id=${candidate.photoId}" class="img-responsive" style="width:100%" alt="Image">
         <p>Name:${candidate.name}<br>
         Party:${candidate.party}<br>
         Post:${candidate.post}</p><br>

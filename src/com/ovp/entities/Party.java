@@ -5,6 +5,7 @@
  */
 package com.ovp.entities;
 
+import java.io.InputStream;
 import java.util.Date;
 
 /**
@@ -16,6 +17,7 @@ public class Party {
      private Date establishedDate;
      private Integer numberOfMembers;
      private String description;
+     private int photoId;
      private int id;
 
     public String getName() {
@@ -59,6 +61,15 @@ public class Party {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public int getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(int photoId) {
+        this.photoId = photoId;
+    }
+
      
      
     

@@ -6,6 +6,7 @@
 package com.ovp.dao;
 
 import com.ovp.entities.Party;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +34,7 @@ public class PartyDao {
         
         log.log(Level.INFO, "Creating party:{0} in DB", party);
         
-        String insertQuery = "INSERT INTO party VALUES(?,?,?,?,?)";
+        String insertQuery = "INSERT INTO party VALUES(?,?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -47,6 +48,7 @@ public class PartyDao {
          
             stmt.setString(4, String.valueOf(party.getNumberOfMembers()));
             stmt.setString(5, party.getDescription());
+            stmt.setInt(6, party.getPhotoId());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -107,6 +109,7 @@ public class PartyDao {
             String estDate = resultSet.getString("EstablishedDate");
             int numberOfMembers = resultSet.getInt("NoOfMembers");
             String description = resultSet.getString("description");
+            int photoId = resultSet.getInt("photo_id");
                
             // TODO: convert agentList array to real List and use it in constructor
             Party party = new Party();
@@ -117,6 +120,7 @@ public class PartyDao {
             party.setName(name);
             party.setNumberOfMembers(numberOfMembers);
             party.setDescription(description);
+            party.setPhotoId(photoId);
             partyList.add(party);
         }
         return partyList;
