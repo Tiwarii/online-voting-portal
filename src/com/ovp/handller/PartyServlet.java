@@ -39,7 +39,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 @MultipartConfig(maxFileSize = 16177215)
 public class PartyServlet extends HttpServlet {
 
-    private static final String filePath = "/Users/pjayswal/uploads/party/";
+
     int maxFileSize = 5000 * 1024;
     int maxMemSize = 5000 * 1024;
     ImageDao  imageDao = new ImageDao();
