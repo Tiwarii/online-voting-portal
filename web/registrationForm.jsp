@@ -78,7 +78,7 @@
                             <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
                           </div>
                           
-                         <input type="submit" id="btn1" value="submit" >
+                        <button type="submit" id="btn1" class="btn btn-primary" >submit</button>
                         </form>
                         <div class="form-group" id="emailpin">
                         <form action="FirstPinForm.jsp" method="post"> 
@@ -87,7 +87,7 @@
                             <input type="text" class="form-control" id="pin" name="pin" placeholder="pin">
                            <input type="submit" id="btn2" value="submit" >
                         
-                       </form>  </div>
+                        </form>  </div>
                     </fieldset>
                 
                     

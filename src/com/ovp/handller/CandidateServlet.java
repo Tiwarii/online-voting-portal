@@ -93,8 +93,8 @@ public class CandidateServlet extends HttpServlet {
             request.setAttribute("posts", posts);
            // request.setAttribute("candidates",candidates );
             
-           // request.getRequestDispatcher("addContestant.jsp").forward(request, response);
-            response.sendRedirect("set_img.jsp");
+            request.getRequestDispatcher("addContestant.jsp").forward(request, response);
+           // response.sendRedirect("set_img.jsp");
         }
         
     }

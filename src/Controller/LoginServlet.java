@@ -7,14 +7,16 @@ package Controller;
 
 import Classes.e;
 import Domain.Admin.Admin;
+import Domain.Candidate.Candidate;
 import Domain.Voter.Voter;
 import Service.Admin.AdminService;
-//import Service.Admin.AdminService;
+import Service.CandidateService;
 import Service.ResultService;
 import Service.VoterService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -57,15 +59,10 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String page=request.getParameter("page");
         
-        if(page.equalsIgnoreCase("AdminLogin"))
-        {
-                   RequestDispatcher rd=request.getRequestDispatcher("admin/AdminLogin.jsp");
-                   rd.forward(request, response);
-        }
-        
+      
              if(page.equalsIgnoreCase("VoterLogin"))
       {
-                   RequestDispatcher rd=request.getRequestDispatcher("user/VoterLogin.jsp");
+                   RequestDispatcher rd=request.getRequestDispatcher("VoterLogin.jsp");
                  rd.forward(request, response);
       }
           if(page.equalsIgnoreCase("email1")){
@@ -85,22 +82,7 @@ public class LoginServlet extends HttpServlet {
       
         
         
-        if(page.equalsIgnoreCase("AdminForm")){
-        String name=request.getParameter("aname");
-        String password=request.getParameter("apassword");
-       Admin admin=new AdminService().getAdmin(name,password);
-        if(admin!=null){
-            HttpSession session=request.getSession(false);
-            session.setAttribute("admin",admin);
-        RequestDispatcher rd=request.getRequestDispatcher("admin/admin.jsp");
-        rd.forward(request, response);
-    }
-        else{
-             request.setAttribute("message","login unsuccessful");
-             RequestDispatcher rd=request.getRequestDispatcher("admin/AdminLogin.jsp");
-        rd.forward(request, response);
-        }
-        }
+       
         
         
        
@@ -109,10 +91,11 @@ public class LoginServlet extends HttpServlet {
        
         String voter_id=request.getParameter("voter_id");
         String citizenship=request.getParameter("citizenship");
-     
+    
+
         
         Voter voter=new VoterService().getVoter(voter_id,citizenship);
-        
+        System.out.print("1");
         if(voter!=null){
              HttpSession session=request.getSession(false);
             session.setAttribute("voter",voter);
@@ -120,17 +103,21 @@ public class LoginServlet extends HttpServlet {
                    int  VoterCheck=new VoterService().checkVotedVoter(id);
                    if(VoterCheck==1){
                        
-                   
+                   System.out.print("3");
             String district=voter.getDistrict();
             session.setAttribute("district",district);
             session.setAttribute("id",id);
         new VoterService().setSecondPin(id);//encrypt into table
            Voter v=new VoterService().getSecondPin(id);//receiving ass along with spin in variables
+           
            String secondPin=v.getSecondPin();//taking secondPin from program variables
-            if(secondPin!=null){
+           System.out.println("4");
+           if(secondPin!=null){
                    try{  
+                       System.out.print("8");
                        String decryptSecPin=e.decrypt(secondPin);//decrypting secondPin
-                       session.setAttribute("message",decryptSecPin);
+                       System.out.println("decryptsecpin"+decryptSecPin);
+                      session.setAttribute("message",decryptSecPin);
                 session.setAttribute("VoterCheck",VoterCheck);
                    String ReceiptEmail=voter.getEmail();
                     session.setAttribute("id",id);
@@ -138,7 +125,7 @@ public class LoginServlet extends HttpServlet {
        
                 session.setAttribute("recipient",ReceiptEmail);
                 
-             RequestDispatcher rd=request.getRequestDispatcher("/EmailSendingServlet");//code number display
+             RequestDispatcher rd=request.getRequestDispatcher("EmailSendingServlet");//code number display
                 rd.forward(request, response);
                         }
                       
@@ -147,21 +134,22 @@ public class LoginServlet extends HttpServlet {
                    }
             } 
             else{
-                            request.setAttribute("spin","tero bau");
-                            RequestDispatcher rd=request.getRequestDispatcher("user/emailpin.jsp");//code number display
+                            request.setAttribute("spin",".....");
+                            RequestDispatcher rd=request.getRequestDispatcher("emailpin.jsp");//code number display
                             rd.forward(request, response);
                         }
     }
                    else{
-                       request.setAttribute("message","already vote garisakis");
-                    RequestDispatcher rd=request.getRequestDispatcher("user/VoterLogin.jsp");//code number display
+                       request.setAttribute("mnotlogin","already voted");
+                    RequestDispatcher rd=request.getRequestDispatcher("home.jsp");//code number display
                             rd.forward(request, response);
                    }
         }
        
         else{
-            request.setAttribute("message","login un");
-             RequestDispatcher rd=request.getRequestDispatcher("user/VoterLogin.jsp");
+            System.out.print("5");
+            request.setAttribute("mnotlogin","login unsuccessful .You arenot registered");
+             RequestDispatcher rd=request.getRequestDispatcher("home.jsp");
         rd.forward(request, response);
         }
         
@@ -183,11 +171,21 @@ public class LoginServlet extends HttpServlet {
                 String secondPin=e.encrypt(dsecondpin);//encrypt real 
                 Voter voter=new VoterService().CheckSecondPin(id,secondPin);
               if(voter!=null){
-                RequestDispatcher rd=request.getRequestDispatcher("user/vote.jsp");
-                rd.forward(request, response);
+                   
+                           String district=(String) request.getSession().getAttribute("district");
+System.out.println("district"+district);
+              List<Candidate> candidateList =(List<Candidate>)new CandidateService().getCandidateList(district);
+              request.setAttribute("candidateList",candidateList);
+          RequestDispatcher rd=request.getRequestDispatcher("ballot.jsp");
+        rd.forward(request,response);
+        
+
+                  
+                  
+                
              }else{
-                  request.setAttribute("message","your code is wrong .please verify it again in youe email .");
-                  RequestDispatcher rd=request.getRequestDispatcher("user/SecondPinForm.jsp");
+                  request.setAttribute("message","your code is wrong .please verify it again in your email .");
+                  RequestDispatcher rd=request.getRequestDispatcher("SecondPinForm.jsp");
                   rd.forward(request, response);
                 }
            }
@@ -198,7 +196,7 @@ public class LoginServlet extends HttpServlet {
           
       
         if(page.equalsIgnoreCase("SecondPinForm")){
-             RequestDispatcher rd=request.getRequestDispatcher("user/SecondPinForm.jsp");
+             RequestDispatcher rd=request.getRequestDispatcher("SecondPinForm.jsp");
                     rd.forward(request, response);
             }
     }
