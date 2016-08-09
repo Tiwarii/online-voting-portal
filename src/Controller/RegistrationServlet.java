@@ -67,14 +67,14 @@ public class RegistrationServlet extends HttpServlet {
         String citizenship=request.getParameter("citizenship");
 
 
-//                System.out.println("========"+name);
-//                                System.out.println(email);
-//
-//                                                System.out.println(district);
-//                System.out.println(voter_id);
-//                System.out.println(citizenship);
-//           
-//                
+                System.out.println("========"+name);
+                                System.out.println(email);
+
+                                                System.out.println(district);
+                System.out.println(voter_id);
+                System.out.println(citizenship);
+           
+                
                                                 
         
       new  RegService().setReg(name,email,district,voter_id,citizenship);
@@ -103,15 +103,15 @@ public class RegistrationServlet extends HttpServlet {
                 System.out.println("1");
              RequestDispatcher rd=request.getRequestDispatcher("/EmailSendingServlet");//code number display
                 rd.forward(request, response);
-                        }
-                   catch(Exception e){
-                       System.out.println("error in reg encryption");
-                   }}
-         
-        
                       
-                 
-            } 
+                
+                   }
+                   catch(Exception e){
+                   System.out.print("error in email");
+                   }
+                   
+            }
+                   }
                    else{
                        request.setAttribute("mes","already been registered");
                         RequestDispatcher rd=request.getRequestDispatcher("registrationForm.jsp");//code number display

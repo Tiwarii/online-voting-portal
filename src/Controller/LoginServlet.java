@@ -176,14 +176,17 @@ public class LoginServlet extends HttpServlet {
 System.out.println("district"+district);
               List<Candidate> candidateList =(List<Candidate>)new CandidateService().getCandidateList(district);
               request.setAttribute("candidateList",candidateList);
+               HttpSession session=request.getSession(false);
+         
+         
           RequestDispatcher rd=request.getRequestDispatcher("ballot.jsp");
-        rd.forward(request,response);
+        rd.forward(request,response);}
+          
+          
         
 
                   
-                  
-                
-             }else{
+             else{
                   request.setAttribute("message","your code is wrong .please verify it again in your email .");
                   RequestDispatcher rd=request.getRequestDispatcher("SecondPinForm.jsp");
                   rd.forward(request, response);

@@ -53,16 +53,20 @@ doPost(request,response);
 
 		try {
 			EmailUtility.sendEmail(host, port, user, pass, recipient,resultMessage);
-					
+					                       System.out.print("9");
+
 			resultMessage = "The e-mail was sent successfully";
 		} catch (Exception ex) {
+                                           System.out.print("11");
+
 			ex.printStackTrace();
 			resultMessage = "There were an error: " + ex.getMessage();
 		} finally {
 			request.setAttribute("Message", resultMessage);
                       Voter voter=(Voter) session.getAttribute("voter");
                    if(voter!=null) {
-			getServletContext().getRequestDispatcher("/user/SecondPinForm.jsp").forward(
+                       System.out.print("10");
+			getServletContext().getRequestDispatcher("/SecondPinForm.jsp").forward(
 					request, response);
                   
                               }

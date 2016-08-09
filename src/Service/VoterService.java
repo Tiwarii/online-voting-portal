@@ -42,7 +42,7 @@ public class VoterService {
     
     
       public void addVoter(String email){
-       String query="INSERT INTO tblvoter(name,email,district,voter_id,citizenship,pin) SELECT name,email,district,voter_id,citizenship,pin FROM reg1 where email=?";
+       String query="INSERT INTO tblvoter(name,email,district,voter_id,citizenship) SELECT name,email,district,voter_id,citizenship FROM reg1 where email=?";
       
        try{ 
            PreparedStatement ps=new Database_connection().getPreparedStatement(query);
@@ -58,15 +58,21 @@ public class VoterService {
     
     
     public Voter getVoter(String voter_id,String citizenship){
-       String query="select id,name,email,district,voter_id,citizenship from tblvoter where voter_id=? and citizenship=? ";
+        System.out.print(voter_id); 
+        System.out.print(citizenship);
+
+        
+       String query="select id,name,email,district,voter_id,citizenship from tblvoter where voter_id=? and citizenship=?  ";
        Voter voter=null;
        try{ 
            PreparedStatement ps=new Database_connection().getPreparedStatement(query);
        ps.setString(1,voter_id);
        ps.setString(2,citizenship);
-     
+           
+
 
            ResultSet rs=ps.executeQuery();
+           System.out.println("1");
            while(rs.next()){
           voter =new Voter();
            voter.setId(rs.getInt("id"));
@@ -78,7 +84,7 @@ public class VoterService {
 
            voter.setVoter_id(rs.getString("voter_id"));
            voter.setCitizenship(rs.getString("citizenship"));
-         voter.setPin(rs.getString("pin"));
+        
          break;
            }
        
@@ -86,7 +92,13 @@ public class VoterService {
        catch(SQLException e){
            e.printStackTrace();
        }
-       return voter;
+     
+       if(voter!=null){
+       System.out.print("6");
+    }else{
+            System.out.print("7");
+       }
+         return voter;
     }
     
     
@@ -108,7 +120,7 @@ public class VoterService {
 
            voter.setVoter_id(rs.getString("voter_id"));
            voter.setCitizenship(rs.getString("citizenship"));
-         voter.setPin(rs.getString("pin"));
+        
            voter.setSecondPin(rs.getString("secondPin"));
           
     }
@@ -137,7 +149,7 @@ public class VoterService {
 
            voter.setVoter_id(rs.getString("voter_id"));
            voter.setCitizenship(rs.getString("citizenship"));
-         voter.setPin(rs.getString("pin"));
+         
            voter.setSecondPin(rs.getString("secondPin"));
           
     }

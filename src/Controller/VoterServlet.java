@@ -23,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -51,6 +52,10 @@ public class VoterServlet extends HttpServlet {
 System.out.println("district"+district);
               List<Candidate> candidateList =(List<Candidate>)new CandidateService().getCandidateList(district);
               request.setAttribute("candidateList",candidateList);
+                HttpSession session=request.getSession(false);
+
+            
+            
           RequestDispatcher rd=request.getRequestDispatcher("ballot.jsp");
         rd.forward(request,response);
         }
@@ -60,15 +65,26 @@ System.out.println("district"+district);
           {
               
               int id=(int) request.getSession().getAttribute("id");
+             int voter= new VoterService().checkVotedVoter(id);
+             if(voter==1){
+             
+             
               new VoterService().setVotedVoter(id);
               
 
               int option=Integer.parseInt(request.getParameter("radioName"));
               new CandidateService().voteIncrease(option);
-              
-        RequestDispatcher rd=request.getRequestDispatcher("user/feedback.jsp");
+                         
+        RequestDispatcher rd=request.getRequestDispatcher("feedback.jsp");
         rd.forward(request,response);
         }
+             else if(voter==0){
+                 request.setAttribute("againv", "already voted");
+                  RequestDispatcher rd=request.getRequestDispatcher("feedback.jsp");
+        rd.forward(request,response);
+             }
+             
+          }
 
            if(page.equalsIgnoreCase("forum"))
           {
@@ -81,10 +97,10 @@ System.out.println("district"+district);
         if(page.equalsIgnoreCase("VotedList")){   
                     List<VotedVoter> VotedList=   new  VoterService().DisplayVotedVoter();
 request.setAttribute("VotedList",VotedList);
-       RequestDispatcher rd=request.getRequestDispatcher("user/VotedList.jsp");
+       RequestDispatcher rd=request.getRequestDispatcher("VotedList.jsp");
        rd.forward(request,response);
  }
-    }
+          }
 }
           
          

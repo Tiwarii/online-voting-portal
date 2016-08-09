@@ -4,7 +4,8 @@
     Author     : windows10
 --%>
 
-<%@page import="com.ovp.entities.Voter"%>
+<%@page import="Domain.Voter.Voter"%>
+<%@page import="javax.faces.bean.SessionScoped"%>
 <%@page import="com.ovp.entities.Commisner"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,7 +19,24 @@
         <script >
             <%@include file="bootstrap/js/bootstrap.js" %>
         </script>
-        <script type="text/javascript">
+        
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+        <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ 
+
+    
+        
+
+        <script src="bootstrap/js/jquery.js"></script>
+        
+        <script >
+            <%@include file="bootstrap/js/bootstrap.js" %>
+        </script>
+ <script type="text/javascript">
        
     function notify_date(){
         var value;
@@ -58,11 +76,6 @@
                     background-color:#12436d;
                     position: fixed;
                     width: 100%;
-                    background-image: url("2016-05-8--20-29-05 (2).jpeg");
-                    background-repeat: no-repeat;
-                    background-position:top left;
-                    background-attachment: fixed;
-                    background-size:100% 100%; 
                 } 
                 li {
                     float: left;
@@ -86,12 +99,7 @@
 
             
             .website_name{height:80px; width:100%; margin:auto; background-color:#165083;  position: fixed;
-                         padding-top:10px; color:burlywood; text-align:center;
-                        background-image: url("2016-05-8--20-29-05 (2).jpeg");
-                    background-repeat: no-repeat;
-                    background-position:top left;
-                    background-attachment: fixed;
-                    background-size:100% 20%; }
+                         padding-top:10px; color:burlywood; text-align:center;}
             .footer{height:90px; width:100%; margin:auto; color:lightgrey; padding-top:5px; padding-bottom:20px;  background-color:darkmagenta; text-align:center;}
             
         </style>
@@ -100,7 +108,7 @@
 </head>
         
    
-    <body onload="notify_date()">
+<body onload="notify_date()">
         
            
             <div class="header"> 
@@ -108,41 +116,34 @@
     
             <ul class="nav nav-tabs">
                 <%
-                    boolean unRegisterdUser = true;
                     Commisner verifiedCommisner =(Commisner)session.getAttribute("verifiedCommisner");
                     boolean admin=false;
-                    Voter voter =(Voter)session.getAttribute("voter");
                 if (verifiedCommisner!= null){
-                     admin=true;
-                     unRegisterdUser = false;
-                } else if(voter != null) {
-                   unRegisterdUser = false;
-                }
-                %>          
+                     admin=false;}
+                %>
+                 <li><a  href="partyRegistration.jsp"><span class="glyphicon glyphicon-home"></span>&nbsp; Home</a></li>
+            <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Registration</a></li>
                
            <% 
-                if (admin){
+                if (verifiedCommisner!= null){
+                     admin=false;
            %>
-                <li ><a href="addCampaign.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp;Election Setup</a>
                        
-                </li>
-                <li><a  href="partyRegistration.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp; Party Setup</a></li>  
-                <li><a  href="addPost.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp; Post Set Up</a></li>       
-                <li ><a href="./CandidateServlet"><span class="glyphicon glyphicon-earphone"></span>&nbsp; Candidate Set up</a></li>
-                <li ><a href="./ResultServlet"><span class="glyphicon glyphicon-earphone"></span>&nbsp; View Result</a></li>
-                <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
-            <% } else {%>          
-            <li ><a href="./DisplayCandidate"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
-            <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Registration</a></li>
-             
-             <li ><a href="home%20.jsp"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
+                <li ><a href="main.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp;Election Setup</a></li>
+   
+            <% }else{%>
+           
+            <div id="voter"> <li ><a href="home.jsp"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li></div>
+
+            <li ><a href="addContestant.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Contact</a></li>
             <li ><a href="#about"><span class="glyphicon glyphicon-heart-empty"></span>&nbsp;About Us</a></li>
-            <li ><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
-            <% } %>
+            <li style="float:right;"><div class="date"></div></li>
+            <% }%>
             </ul>
-            
-                    </div>
             </div>
-  
+             </div>    
+        
+            
+       
     </body>
 </html>
