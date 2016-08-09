@@ -33,7 +33,7 @@
                 </div>
             <fieldset class="scheduler-border">
                         <legend class="scheduler-border" >Candidate form:</legend>
-                    <form  method="post" action="CandidateServlet">
+                    <form  method="post" action="CandidateServlet" enctype="multipart/form-data">
                             <div  class="form-group" id="container">		
                              <p id="first">
                                  <label>Campaign:</label>
@@ -75,8 +75,8 @@
                                                 
                             </select>
                             <div>
-                                <label>Logo:</label>
-                                <input name="file" type="file" class="form-control"/>
+                                <label>Image:</label>
+                                <input name="photo" type="file" class="form-control"/>
                             </div>
                              <div class="list-group">
                                  <label>Agendas:</label>

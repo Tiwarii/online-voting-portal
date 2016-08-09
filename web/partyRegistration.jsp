@@ -27,7 +27,7 @@
                 </div>
             <fieldset class="scheduler-border">
                         <legend class="scheduler-border" >Party:</legend>
-                      <form role="form" method="post"  name="formal" action="PartyServlet">
+                      <form role="form" method="post"  name="formal" action="PartyServlet" enctype="multipart/form-data">
                     
                         <div class="form-group" >
                             <label for="name"> Name:</label>
@@ -48,7 +48,8 @@
                             </div> 
                             
                             
-                      </div>                      
+                      </div>
+                          <input type="file" name="file" size="50" />
                         <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </fieldset>

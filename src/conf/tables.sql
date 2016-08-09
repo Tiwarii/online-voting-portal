@@ -42,8 +42,10 @@ CREATE TABLE candidate (
     VOTE INT NOT NULL, 
     SUMMARY VARCHAR(40)  ,
     campaign_id INT NOT NULL,
+    photo_id int,
     PRIMARY KEY (id),
-    FOREIGN KEY (campaign_id) REFERENCES campaign(id));
+    FOREIGN KEY (campaign_id) REFERENCES campaign(id),
+    FOREIGN KEY (photo_id) REFERENCES image(id));
     
 DROP TABLE IF EXISTS party;
 CREATE TABLE party (
@@ -52,7 +54,9 @@ CREATE TABLE party (
     EstablishedDate VARCHAR(30),  
     NoOfMembers INT NOT NULL, 
     description VARCHAR(40) NOT NULL,
-    PRIMARY KEY (ID)
+    photo_id int,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (photo_id) REFERENCES image(id)
     );
 
 DROP TABLE IF EXISTS voter;
@@ -68,6 +72,11 @@ CREATE TABLE voter (
     voted boolean NOT NULL,
     PRIMARY KEY (ID)
     );
+
+DROP TABLE IF EXISTS image;
+CREATE TABLE image (id INT NOT NULL AUTO_INCREMENT, 
+    photo mediumblob NOT NULL,
+    PRIMARY KEY (ID));
 
 use ovp;
 insert into commisner(username,password) values('admin','admin');

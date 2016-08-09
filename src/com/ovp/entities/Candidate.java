@@ -5,6 +5,7 @@
  */
 package com.ovp.entities;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +24,7 @@ public class Candidate {
     private String description;
     private List<String> agendaList;
     private int votes = 0;
-    
+    private int photoId;
     private int campaignId;
 
 
@@ -103,6 +104,24 @@ public class Candidate {
     public void setParty(String party) {
         this.party = party;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(int photoId) {
+        this.photoId = photoId;
+    }
+
+
 
     @Override
     public int hashCode() {
