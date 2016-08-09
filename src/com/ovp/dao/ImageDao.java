@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 /**
  *
- * @author pjayswal
+ * @author Rashmi Tiwari
  */
 public class ImageDao {
     private final static Logger log = Logger.getLogger("PostDao");

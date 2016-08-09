@@ -22,6 +22,13 @@ CREATE TABLE post (
     post VARCHAR(50) NOT NULL,
     PRIMARY KEY (post)
 );
+
+
+DROP TABLE IF EXISTS image;
+CREATE TABLE image (id INT NOT NULL AUTO_INCREMENT, 
+    photo mediumblob NOT NULL,
+    PRIMARY KEY (ID));
+
 DROP TABLE IF EXISTS campaign;
 CREATE TABLE campaign (id INT NOT NULL AUTO_INCREMENT, 
     TITLE VARCHAR(30) NOT NULL,
@@ -73,10 +80,6 @@ CREATE TABLE voter (
     PRIMARY KEY (ID)
     );
 
-DROP TABLE IF EXISTS image;
-CREATE TABLE image (id INT NOT NULL AUTO_INCREMENT, 
-    photo mediumblob NOT NULL,
-    PRIMARY KEY (ID));
 
 use ovp;
 insert into commisner(username,password) values('admin','admin');
