@@ -7,8 +7,11 @@ package com.ovp.handller;
 
 import com.ovp.dao.CampaignDao;
 import com.ovp.dao.ContestentDao;
+import com.ovp.dao.DistrictAreaDao;
+import com.ovp.dao.PartyDao;
 import com.ovp.entities.Campaign;
 import com.ovp.entities.Candidate;
+import com.ovp.entities.Party;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -30,8 +33,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ResultServlet", urlPatterns = {"/ResultServlet"})
 public class ResultServlet extends HttpServlet {
+
     ContestentDao contestentDao = new ContestentDao();
     CampaignDao campaignDao = new CampaignDao();
+    DistrictAreaDao distAreaDao = new DistrictAreaDao();
+    PartyDao partyDao = new PartyDao();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,23 +52,34 @@ public class ResultServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            List<Campaign> campaigns = campaignDao.getAllCampaign();
-            request.setAttribute("campaigns", campaigns);
-            String campaignId= request.getParameter("campaign_id");
-            if (campaignId != null) {
-                List<Candidate> candidates = contestentDao.getAllContestent(Integer.parseInt(campaignId));
-                Map<String, List<Candidate>> results = new HashMap();
-                for (Candidate candidate : candidates) {
-                    String post = candidate.getPost();
-                    List<Candidate> candidateByPost = results.get(post);
-                    if (candidateByPost == null) {
-                        candidateByPost = new ArrayList();
+            Campaign campaign = campaignDao.getActiveCampaign();
+            if (campaign != null) {
+                Map<String, Map<String, Integer>> results = new HashMap();
+                List<String> distAreas = distAreaDao.getAllDistrictArea();
+                List<Party> parties = partyDao.getAllPartiest();
+                Map<String, Integer> totalPartyResult = new HashMap();
+                for (String area : distAreas) {
+                    Map<String, Integer> areaResult = new HashMap();
+                    List<Candidate> candidates = contestentDao.getCandidateByDistArea(area);
+                    for (Candidate candidate : candidates) {
+                        String partyName = candidate.getPartyName();
+                        int vote = candidate.getVotes();
+                        areaResult.put(partyName, vote);
+                        Integer totalPartyVote = totalPartyResult.get(partyName);
+                        if (totalPartyVote != null) {
+                            totalPartyResult.put(partyName, totalPartyVote + vote);
+                        } else {
+                            totalPartyResult.put(partyName, vote);
+                        }
                     }
-                    candidateByPost.add(candidate);
-                    results.put(post, candidateByPost);
-                    //results.values()
+                    results.put(area, areaResult);
                 }
+                results.put("total", totalPartyResult);
                 request.setAttribute("results", results);
+                request.setAttribute("parties", parties);
+            } else {
+                request.setAttribute("message", "No active election going on ...\n No Results Found. \n Please try later.");
+                request.getRequestDispatcher("home.jsp").forward(request, response);
             }
             request.getRequestDispatcher("result.jsp").forward(request, response);
         }

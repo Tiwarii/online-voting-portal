@@ -33,47 +33,34 @@
            <div class="container">
                <br>
                <br>
-               <center> <label>Select post you want to vote for &nbsp;</label>
-                
-                <div class="dropdown">
-                    <button class="dropbtn btn-primary">Choose Campaign</button>
-                    
-                    <div class="dropdown-content">
-                        <c:forEach var="campaign" items="${campaigns}">
-                      <a href="./ResultServlet?campaign_id=${campaign.id}">${campaign.title}</a>
-                        </c:forEach>
-                    </div>
-                </div>
-                   </center>
-               <br> 
-               
+
                <br>
                <center>
-                   <h4> <strong>vote for president</strong></h4>
+                   <h4> <strong>Result of Voting</strong></h4>
                </center>
                <br>
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th>Post</th>
-                      <th>candidates</th>
+                      <th>Divisions</th>
+                        <c:forEach var="party" items="${parties}">
+                      <th>${party.name}</th>
+                      </c:forEach>
                     </tr>
                   </thead>
                   <c:forEach var="entry" items="${results}">
                   <tbody>
                     <tr>
                       <td>${entry.key}</td>
-                      <c:forEach var="candidate" items="${entry.value}">
-                          <td>${candidate.name}<br><button type="button" class="btn btn-danger">${candidate.votes}</button> </td>
-                       </c:forEach>
-                    </tr>
-                    
+                      <c:forEach var="party" items="${parties}">
+                          <td>${entry.value[party.name]}</td>
+                      </c:forEach>
+                      
+                     </tr>
                   </tbody>
                   </c:forEach>
                 </table>
                </div>
            </div>
-      
-
     </body>
 </html>

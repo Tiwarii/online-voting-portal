@@ -23,15 +23,15 @@
         <div class="main">
             <div class="box1">
                 <div>
-                    <label><center> Enter Post Name </center></label>
+                    <label><center> Enter District Area Name </center></label>
                 </div>
             <fieldset class="scheduler-border">
-                        <legend class="scheduler-border" >Party:</legend>
-                      <form role="form" method="post"  name="formal" action="PostServlet">
+                        <legend class="scheduler-border" >District Area</legend>
+                      <form role="form" method="post"  name="formal" action="DistrictAreaServlet">
                     
                         <div class="form-group" >
-                            <label for="name"> Name:</label>
-                            <input type="text" class="form-control" name="name" placeholder="party name" >
+                            <label for="name"> District Area</label>
+                            <input type="text" class="form-control" name="district_area" placeholder="district_area" >
                         </div>
                                              
                         <button type="submit" class="btn btn-primary">Submit</button>

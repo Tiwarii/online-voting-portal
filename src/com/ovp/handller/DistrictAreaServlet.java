@@ -5,7 +5,7 @@
  */
 package com.ovp.handller;
 
-import com.ovp.dao.PostDao;
+import com.ovp.dao.DistrictAreaDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Rashmi Tiwari
  */
-@WebServlet(name = "PostServlet", urlPatterns = {"/PostServlet"})
-public class PostServlet extends HttpServlet {
-    private PostDao postDao = new PostDao();
+@WebServlet(name = "DistrictAreaServlet", urlPatterns = {"/DistrictAreaServlet"})
+public class DistrictAreaServlet extends HttpServlet {
+    private DistrictAreaDao districtAreaDao = new DistrictAreaDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,9 +35,10 @@ public class PostServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String post= request.getParameter("name");
-            postDao.InsertPost(post.toLowerCase());
-            response.sendRedirect("./addPost.jsp");
+            String districtArea= request.getParameter("district_area");
+            String desc= request.getParameter("desc");
+            districtAreaDao.InsertDistrictArea(districtArea.toLowerCase(), desc);
+            response.sendRedirect("./addDistrictArea.jsp");
         }
     }
 

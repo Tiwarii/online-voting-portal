@@ -77,7 +77,7 @@ public class PartyDao {
         }
     }
     
-    public List<Party> getAllPartiest() throws SQLException, ParseException {
+    public List<Party> getAllPartiest() throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -99,7 +99,35 @@ public class PartyDao {
         }
     }
     
-    private List<Party> resultSetToPartyList(ResultSet resultSet) throws SQLException, ParseException {
+    public Party getPartyByName(String name) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        log.info("Getting all contestent from DB");
+        String query = "SELECT * FROM party where name = '" + name + "'";
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            List<Party> parties =  resultSetToPartyList(resultSet);
+            if ( parties.size() > 0) {
+                return parties.get(0);
+            } else {
+                return null;
+            }
+            
+        } catch(SQLException ex){
+            log.log(Level.SEVERE, "Getting party:{0} failed in DB", ex);
+            throw ex;
+        }
+        finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(statement);
+            DBUtil.close(connection);
+        }
+    }
+    
+    private List<Party> resultSetToPartyList(ResultSet resultSet) throws SQLException {
         List<Party> partyList = new ArrayList();
         // ResultSet is initially before the first data set
         while (resultSet.next()) {
@@ -115,8 +143,11 @@ public class PartyDao {
             Party party = new Party();
             party.setId(id);
             
-            
+            try {
             party.setEstablishedDate(dateFormater.parse(estDate));
+            } catch (ParseException ex) {
+                Logger.getLogger(PartyDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
             party.setName(name);
             party.setNumberOfMembers(numberOfMembers);
             party.setDescription(description);

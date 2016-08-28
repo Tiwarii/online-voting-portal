@@ -6,8 +6,9 @@
 package com.ovp.handller;
 
 import com.ovp.dao.ContestentDao;
-import com.ovp.dao.PostDao;
+import com.ovp.dao.DistrictAreaDao;
 import com.ovp.entities.Candidate;
+import com.ovp.entities.Voter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpSession;
 public class VotingHandler extends HttpServlet {
     
     private ContestentDao candidateDao = new ContestentDao();
-     private PostDao postDao = new PostDao();
+     private DistrictAreaDao districtAreaDao = new DistrictAreaDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,15 +42,13 @@ public class VotingHandler extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String selectedPost= request.getParameter("position");
-            List<Candidate> cadidates = candidateDao.getCandidateByPost(selectedPost);
-            List<String> posts= postDao.getAllPosts();
+            HttpSession session = request.getSession();
+            Voter voter =    (Voter) session.getAttribute("voter");
+            String distArea = voter.getDistrictArea();
+            List<Candidate> cadidates = candidateDao.getCandidateByDistArea(distArea);
             request.setAttribute("candidates", cadidates);
-            request.setAttribute("selectedPost", selectedPost);
-            request.setAttribute("posts", posts);
-             
+            request.setAttribute("selectedArea", distArea);         
             request.getRequestDispatcher("ballot.jsp").forward(request, response);
-           System.out.println("upto here");
         }
     }
 

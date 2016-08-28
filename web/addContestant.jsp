@@ -47,11 +47,7 @@
                         <div class="form-group" >
                             <label for="name"> Name:</label>
                             <input type="text" class="form-control" name="name" placeholder="Your name" >
-                        </div>
-                             <div class="form-group">
-                            <label for="district">District:</label>
-                            <input type="text" class="form-control" name="District" placeholder="District">
-                        </div>
+
                         <div class="form-group">
                              <label for="voterID">Voter ID: </label>
                              <input class="form-control"  type="text"  name="voterID" placeholder="Enter your Voter ID" >
@@ -59,10 +55,10 @@
                              
                           <div  class="form-group" id="container">		
                              <p id="first">
-                                 <label>Post:</label>
-                            <select name="selectPost" class="form-control small ">
-                                    <c:forEach var="post" items="${posts}">
-                                    <option value="${post}"> <c:out value="${post}" /></option>
+                                 <label>Electoral Area:</label>
+                            <select name="districtArea" class="form-control small ">
+                                    <c:forEach var="districtArea" items="${districtAreas}">
+                                    <option value="${districtArea}"> <c:out value="${districtArea}" /></option>
                                 </c:forEach>
                                                 
                             </select>
@@ -75,13 +71,10 @@
                                 </c:forEach>
                                                 
                             </select>
-<<<<<<< HEAD
-=======
                             <div>
                                 <label>Image:</label>
                                 <input name="photo" type="file" class="form-control"/>
                             </div>
->>>>>>> 3ca807e... fix file upload and display
                              <div class="list-group">
                                  <label>Agendas:</label>
                                  <textarea class="list-group-item form-control "  name="agendas"></textarea>

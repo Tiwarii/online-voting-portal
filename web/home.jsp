@@ -31,10 +31,6 @@
                     <label >  login as </label>
                 </center>
                 <br>
-                <!-- Trigger the modal with a button -->
-                <div class="btn-group btn-group-justified">
-                    <a href="registrationForm.jsp" class="btn btn-primary btn-block button1">Register</a>
-                </div>
 
                 <br><br>
                 <div>
@@ -53,14 +49,13 @@
                                 <div class="modal-body" style="padding:40px 50px;">
                                     <form action="VoterLoginHandler" role="form" method="post">
                                         <div class="form-group">
-                                            <label for="voterId"><span class="glyphicon glyphicon-user"></span> VoterId</label>
-                                            <input type="text" class="form-control" name="voterId" placeholder="Enter voterId">
+                                            <label for="usrname"><span class="glyphicon glyphicon-user"></span>Voter_id</label>
+                                            <input type="text" class="form-control" name="voter_id" placeholder="voter_id">
                                         </div>
                                         <div class="form-group">
-                                            <label for="email"><span class="glyphicon glyphicon-eye-open"></span> Email</label>
-                                            <input type="email" class="form-control" name="email" placeholder="Enter Email">
+                                            <label for="psw"><span class="glyphicon glyphicon-eye-open"></span>Citizenship</label>
+                                            <input type="password" class="form-control" name="citizenship" placeholder="Citizenship_no.">
                                         </div>
-
                                         <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
                                     </form>
                                 </div>
@@ -75,43 +70,9 @@
                     </div>
                 </div>
                 <br><br><br>
-                
+
                 <div>
-                    <button type="button" class="btn btn-primary btn-group-justified button1" id="myBtn">Election&nbsp;commissioner</button>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header" style="padding:35px 50px;">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h3><span class="glyphicon glyphicon-lock"></span> Login</h3>
-                                </div>
-                                <div class="modal-body" style="padding:40px 50px;">
-                                    <form action="CommisnerLoginServlet" role="form" method="post">
-                                        <div class="form-group">
-                                            <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                                            <input type="text" class="form-control" name="userName" placeholder="Enter email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-                                            <input type="password" class="form-control" name="password" placeholder="Enter password">
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-
-                                    <p>Forgot <a href="#">Password?</a></p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="right2">
@@ -122,18 +83,18 @@
 
         </div>
         <script>
-           $(document).ready(function () {
+            $(document).ready(function () {
                 $("#voterBtn").click(function () {
                     $("#voterModal").modal();
                 });
             });
-            
-        $(document).ready(function(){
-        $("#myBtn").click(function(){
-        $("#myModal").modal();
+
+            $(document).ready(function () {
+                $("#myBtn").click(function () {
+                    $("#myModal").modal();
                 });
             });
- 
+
         </script>
     </body>
 </html>

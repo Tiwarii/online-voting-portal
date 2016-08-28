@@ -44,7 +44,7 @@ public class VoterRegistrationHandller extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String firstName=request.getParameter("firstName");
             String lastName=request.getParameter("lastName");
-            String district=request.getParameter("district");
+            String district=request.getParameter("districtArea");
             String birthDate=request.getParameter("dob");
             String citizenshipNum=request.getParameter("citizenshipNum");
             String voterId=request.getParameter("voterId");
@@ -56,7 +56,7 @@ public class VoterRegistrationHandller extends HttpServlet {
             Voter voter = new Voter();         
             voter.setFirstName(firstName);
             voter.setLastName(lastName);
-            voter.setDistrict(district);
+            voter.setDistrictArea(district);
             voter.setCitizenshipNum(citizenshipNum);
             voter.setDateOfBirth(dateOfBirth);
             voter.setVoterId(voterId);

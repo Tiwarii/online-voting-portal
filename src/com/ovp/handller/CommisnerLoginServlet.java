@@ -51,7 +51,8 @@ public class CommisnerLoginServlet extends HttpServlet {
               session.setAttribute("verifiedCommisner",verifiedCommisner);
               response.sendRedirect("addCampaign.jsp");
             }else {
-              response.sendRedirect("home.jsp");
+                request.setAttribute("message", "Login Failed for admin ...\n Invalid username or password.");
+                request.getRequestDispatcher("message.jsp").forward(request, response);
             }
  
         }

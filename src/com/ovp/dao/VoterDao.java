@@ -8,6 +8,8 @@ package com.ovp.dao;
 import com.ovp.entities.Candidate;
 import com.ovp.entities.Party;
 import com.ovp.entities.Voter;
+import com.ovp.utils.RandomUtils;
+import com.ovp.utils.Security;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,14 +37,14 @@ public class VoterDao {
         ResultSet resultSet = null;
         log.log(Level.INFO, "Registering voter:{0} in DB", voter);
         String insertQuery = "INSERT INTO voter(FIRSTNAME, LASTNAME,"
-                + " DISTRICT, BirthDate, CITIZENSHIP, VoterId, Email, VOTED) VALUES(?,?,?,?,?,?,?,?)";
+                + " DistrictArea, BirthDate, CITIZENSHIP, VoterId, Email, VOTED) VALUES(?,?,?,?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, voter.getFirstName());
             stmt.setString(2, voter.getLastName());
-            stmt.setString(3, voter.getDistrict());
+            stmt.setString(3, voter.getDistrictArea());
             stmt.setDate(4,voter.getDateOfBirth());
             stmt.setString(5, String.valueOf(voter.getCitizenshipNum()));
             stmt.setString(6, voter.getVoterId());
@@ -108,12 +110,12 @@ public class VoterDao {
         }
     }
     
-    public Voter getVoter(int voterId) throws SQLException {
+    public Voter getVoter(int voterId, String citizenship) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Getting voter with VoterId:{0} from DB", voterId);
-        String query = "SELECT * FROM voter WHERE VoterId=" + voterId;
+        String query = String.format("SELECT * FROM voter WHERE VoterId=%s and citizenship=%s", voterId, citizenship);
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();
@@ -126,10 +128,31 @@ public class VoterDao {
             }
         }
         catch(SQLException ex){
-            log.log(Level.SEVERE, "getting  contestent:{0} failed in DB", ex);
+            log.log(Level.SEVERE, "getting  voter:{0} failed in DB", ex);
             throw ex;
         }finally {
             DBUtil.close(resultSet);
+            DBUtil.close(statement);
+            DBUtil.close(connection);
+        }
+    }
+    public String setPin(int id) throws SQLException, Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        String updateQuery = "update voter set pin=? where VoterId=?";
+        try {
+            int randomNumber = RandomUtils.getRandomNumber();
+            String rand = Security.encrypt(""+randomNumber+"");
+            connection = ConnectionFactory.getConnection();
+            statement = connection.prepareStatement(updateQuery);
+            statement.setString(1, rand);
+            statement.setInt(2, id);
+            statement.execute();
+            return rand;
+        } catch(SQLException ex){
+            log.log(Level.SEVERE, "setting  pin :{0} failed in DB", ex);
+            throw ex;
+        }finally {
             DBUtil.close(statement);
             DBUtil.close(connection);
         }
@@ -142,23 +165,25 @@ public class VoterDao {
             int id = resultSet.getInt("id");
             String firstName = resultSet.getString("firstName");
             String lastName = resultSet.getString("LASTNAME");
-            String district = resultSet.getString("DISTRICT");
+            String districtArea = resultSet.getString("DistrictArea");
             Date bdate = resultSet.getDate("BirthDate");
             String citizenship = resultSet.getString("CITIZENSHIP");
             String voterId = resultSet.getString("VoterId");
             String email = resultSet.getString("Email");
+            String pin = resultSet.getString("pin");
             boolean voted = resultSet.getBoolean("voted");
 
             Voter voter = new Voter();
             voter.setId(id);
             voter.setFirstName(firstName);
             voter.setLastName(lastName);
-            voter.setDistrict(district);
+            voter.setDistrictArea(districtArea);
             voter.setCitizenshipNum(citizenship);
             voter.setEmail(email);
             voter.setDateOfBirth(bdate);
             voter.setVoterId(voterId);
             voter.setVoted(voted);
+            voter.setPin(pin);
             voterList.add(voter);
         }
         return voterList;

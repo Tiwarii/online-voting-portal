@@ -17,11 +17,12 @@ CREATE TABLE commisner (
     password VARCHAR(1000), 
     PRIMARY KEY (userId));
 
-DROP TABLE IF EXISTS POST;
-CREATE TABLE post (
-    post VARCHAR(50) NOT NULL,
-    PRIMARY KEY (post)
-);
+DROP TABLE IF EXISTS DistrictArea;
+CREATE TABLE DistrictArea (
+    districtArea VARCHAR(30) NOT NULL,
+    Description VARCHAR(30),
+    PRIMARY KEY (districtArea)
+    );
 
 
 DROP TABLE IF EXISTS image;
@@ -43,15 +44,15 @@ CREATE TABLE candidate (
     id INT NOT NULL AUTO_INCREMENT, 
     NAME VARCHAR(30) NOT NULL, 
     AGENDA VARCHAR(1000)  NULL, 
-    POST VARCHAR(50) NOT NULL,
     PARTY VARCHAR(50) NOT NULL,
-    DISTRICT VARCHAR(50) NOT NULL,
+    DistrictArea VARCHAR(50) NOT NULL,
     VOTE INT NOT NULL, 
     SUMMARY VARCHAR(40)  ,
     campaign_id INT NOT NULL,
     photo_id int,
     PRIMARY KEY (id),
     FOREIGN KEY (campaign_id) REFERENCES campaign(id),
+    FOREIGN KEY (districtArea) REFERENCES DistrictArea(districtArea),
     FOREIGN KEY (photo_id) REFERENCES image(id));
     
 DROP TABLE IF EXISTS party;
@@ -71,15 +72,28 @@ CREATE TABLE voter (
     id INT NOT NULL AUTO_INCREMENT, 
     FIRSTNAME VARCHAR(30) NOT NULL,
     LASTNAME VARCHAR(30) NOT NULL,
-    DISTRICT VARCHAR(30) NOT NULL,
+    districtArea VARCHAR(30) NOT NULL,
     BirthDate VARCHAR(30) NOT NULL,  
     CITIZENSHIP VARCHAR(40) NOT NULL, 
     VoterId VARCHAR(40) NOT NULL,
     Email VARCHAR(40) NOT NULL,
+    pin VARCHAR(40),
     voted boolean NOT NULL,
-    PRIMARY KEY (ID)
+    PRIMARY KEY (ID),
+    FOREIGN KEY (districtArea) REFERENCES DistrictArea(districtArea)
     );
-
 
 use ovp;
 insert into commisner(username,password) values('admin','admin');
+
+insert into districtArea values('Dhanusha-1', 'Dhanusha -1');
+insert into districtArea values('Dhanusha-2', 'Dhanusha -2');
+insert into districtArea values('Dhanusha-3', 'Dhanusha -3');
+
+insert into voter(FIRSTNAME,LASTNAME, districtArea, BirthDate, CITIZENSHIP, VoterId, Email, pin, voted) values('testUser1','testUser1', 
+'Dhanusha-1', '1990-10-10', '1355','12345', 'tiwarirashmi042@gmail.com', null, false);
+insert into voter(FIRSTNAME,LASTNAME, districtArea, BirthDate, CITIZENSHIP, VoterId, Email, pin, voted) values('testUser2','testUser2', 
+'Dhanusha-1', '1990-10-10', '1356','12346', 'tiwarirashmi042@gmail.com', null, false);
+insert into voter(FIRSTNAME,LASTNAME, districtArea, BirthDate, CITIZENSHIP, VoterId, Email, pin, voted) values('testUser3','testUser3', 
+'Dhanusha-2', '1990-10-10', '1357','12347', 'tiwarirashmi042@gmail.com', null, false);
+

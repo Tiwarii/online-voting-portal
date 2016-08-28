@@ -6,7 +6,9 @@
 package com.ovp.handller;
 
 import com.ovp.dao.ContestentDao;
+import com.ovp.dao.VoterDao;
 import com.ovp.entities.Candidate;
+import com.ovp.entities.Voter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -28,6 +30,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "VotingServletHandler", urlPatterns = {"/VotingServletHandler"})
 public class VotingServletHandler extends HttpServlet {
     ContestentDao candidateDao = new ContestentDao();
+    VoterDao voterDao = new VoterDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,19 +46,16 @@ public class VotingServletHandler extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String candidateId= request.getParameter("id");
-            String votedPost= request.getParameter("post");
             Candidate candidate = candidateDao.getContestent(Integer.parseInt(candidateId));
             candidate.increment();
             candidateDao.updateContestent(candidate);
             // set in the list of voted Post
             HttpSession session = request.getSession();
-            List<String> votedPosts = (List) session.getAttribute("votedPosts");
-            if(votedPosts == null) {
-                votedPosts = new ArrayList();
-            }
-            votedPosts.add(votedPost);
-            session.setAttribute("votedPosts", votedPosts);
-            response.sendRedirect("./VotingLoader");
+            Voter voter = (Voter) session.getAttribute("voter");
+            voterDao.updateVoter(voter);
+            session.invalidate();
+            request.setAttribute("message", "Successfully Voted ...\n Logged out. \n Thank You.");
+            request.getRequestDispatcher("message.jsp").forward(request, response);
         }
     }
 

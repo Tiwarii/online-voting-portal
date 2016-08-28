@@ -9,7 +9,7 @@ import com.ovp.dao.CampaignDao;
 import com.ovp.dao.ContestentDao;
 import com.ovp.dao.ImageDao;
 import com.ovp.dao.PartyDao;
-import com.ovp.dao.PostDao;
+import com.ovp.dao.DistrictAreaDao;
 import com.ovp.entities.Campaign;
 import com.ovp.entities.Candidate;
 import com.ovp.entities.Commisner;
@@ -35,11 +35,13 @@ import javax.servlet.http.Part;
 @WebServlet(name = "CandidateServlet", urlPatterns = {"/CandidateServlet"})
 @MultipartConfig(maxFileSize = 16177215)
 public class CandidateServlet extends HttpServlet {
-    ContestentDao candidateDao =new ContestentDao();
+
+    ContestentDao candidateDao = new ContestentDao();
     PartyDao partyDao = new PartyDao();
-    PostDao postDao = new PostDao();
+    DistrictAreaDao districtAreaDao = new DistrictAreaDao();
     CampaignDao campaignDao = new CampaignDao();
     ImageDao imageDao = new ImageDao();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -53,45 +55,43 @@ public class CandidateServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String name= request.getParameter("name");
-            String voterId= request.getParameter("voterID");
-            String party= request.getParameter("selectParty");
-            int campaingId= Integer.parseInt(request.getParameter("selectCampaign"));
-            String post= request.getParameter("selectPost");
-            String district=request.getParameter("District");
-            
-            Candidate candidate=new Candidate();
+            String name = request.getParameter("name");
+            String voterId = request.getParameter("voterID");
+            String party = request.getParameter("selectParty");
+            int campaingId = Integer.parseInt(request.getParameter("selectCampaign"));
+            String district = request.getParameter("districtArea");
+
+            Candidate candidate = new Candidate();
             candidate.setName(name);
             candidate.setId(voterId);
-            candidate.setDistrict(district);
-            candidate.setParty(party);
-            candidate.setPost(post);
+            candidate.setDistrictArea(district);
+            candidate.setPartyName(party);
             candidate.setCampaignId(campaingId);
-           
+
             InputStream inputStream = null; // input stream of the upload file
-        // obtains the upload file part in this multipart request
-        Part filePart = request.getPart("photo");
-        if (filePart != null) {
-            // obtains input stream of the upload file
-            inputStream = filePart.getInputStream();
-            int imageId = imageDao.InsertImage(inputStream);
-            candidate.setPhotoId(imageId);
-        }   
+            // obtains the upload file part in this multipart request
+            Part filePart = request.getPart("photo");
+            if (filePart != null) {
+                // obtains input stream of the upload file
+                inputStream = filePart.getInputStream();
+                int imageId = imageDao.InsertImage(inputStream);
+                candidate.setPhotoId(imageId);
+            }
             candidateDao.createContestent(candidate);
-            response.sendRedirect("./CandidateServlet"); 
+            response.sendRedirect("./CandidateServlet");
         }
-        
+
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processGetRequest(request, response);
-        } catch(SQLException ex) {
-            
-        } catch ( ParseException ex) {
-            
+        } catch (SQLException ex) {
+
+        } catch (ParseException ex) {
+
         }
     }
 
@@ -99,21 +99,22 @@ public class CandidateServlet extends HttpServlet {
             throws ServletException, IOException, SQLException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            List<String> posts = postDao.getAllPosts();
+            List<String> districtAreas = districtAreaDao.getAllDistrictArea();
             List<Party> parties = partyDao.getAllPartiest();
             List<Campaign> campaigns = campaignDao.getAllCampaign();
-            List<Candidate> candidates = candidateDao.getAllCandidate();
-            
+            //List<Candidate> candidates = candidateDao.getAllCandidate();
+
             request.setAttribute("parties", parties);
             request.setAttribute("campaigns", campaigns);
-            request.setAttribute("posts", posts);
-           // request.setAttribute("candidates",candidates );
-            
+            request.setAttribute("districtAreas", districtAreas);
+            // request.setAttribute("candidates",candidates );
+
             request.getRequestDispatcher("addContestant.jsp").forward(request, response);
-           // request.getRequestDispatcher("contestant.jsp").forward(request, response);
+            // request.getRequestDispatcher("contestant.jsp").forward(request, response);
         }
-        
+
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -126,9 +127,9 @@ public class CandidateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-        processRequest(request, response);
+            processRequest(request, response);
         } catch (SQLException ex) {
-            
+
         }
     }
 

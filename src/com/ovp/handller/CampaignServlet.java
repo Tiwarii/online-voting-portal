@@ -28,7 +28,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "CampaignServlet", urlPatterns = {"/CampaignServlet"})
 public class CampaignServlet extends HttpServlet {
+
     private CampaignDao campaignDao = new CampaignDao();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,24 +44,24 @@ public class CampaignServlet extends HttpServlet {
             throws ServletException, IOException, ParseException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String title= request.getParameter("title");
-            String sDate= request.getParameter("startDate");
-            String eDate= request.getParameter("endDate");
-            String sTime= request.getParameter("startTime");
-            String eTime= request.getParameter("endTime");
-            
+            String title = request.getParameter("title");
+            String sDate = request.getParameter("startDate");
+            String eDate = request.getParameter("endDate");
+            String sTime = request.getParameter("startTime");
+            String eTime = request.getParameter("endTime");
+
             SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd");
             Date startDate = new Date(dateFormatter.parse(sDate).getTime());
             Date endDate = new Date(dateFormatter.parse(eDate).getTime());
-            
+
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
             Time startTime = new Time(formatter.parse(sTime).getTime());
             Time endTime = new Time(formatter.parse(eTime).getTime());
-            
-           Campaign c = new Campaign(title, startDate, endDate, startTime, endTime);
-           campaignDao.createCampaign(c);
+
+            Campaign c = new Campaign(title, startDate, endDate, startTime, endTime);
+            campaignDao.createCampaign(c);
             response.sendRedirect("addCampaign.jsp");
-            
+
         }
     }
 
@@ -76,7 +78,7 @@ public class CampaignServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-        processRequest(request, response);
+            processRequest(request, response);
         } catch (ParseException ex) {
             Logger.getLogger(PartyServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -96,7 +98,7 @@ public class CampaignServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-        processRequest(request, response);
+            processRequest(request, response);
         } catch (ParseException ex) {
             Logger.getLogger(CampaignServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

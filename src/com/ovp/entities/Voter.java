@@ -15,11 +15,12 @@ public class Voter {
     private int id;
     private String firstName;
     private String lastName;
-    private String district;
+    private String districtArea;
     private Date dateOfBirth;
     private String citizenshipNum;
     private String voterId;
     private String email;
+    private String pin;
     private boolean voted = false;
 
     public int getId() {
@@ -48,12 +49,12 @@ public class Voter {
         this.lastName = lastName;
     }
 
-    public String getDistrict() {
-        return district;
+    public String getDistrictArea() {
+        return districtArea;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setDistrictArea(String districtArea) {
+        this.districtArea = districtArea;
     }
 
     public Date getDateOfBirth() {
@@ -95,6 +96,16 @@ public class Voter {
     public void setVoted(boolean voted) {
         this.voted = voted;
     }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+  
     
     
     

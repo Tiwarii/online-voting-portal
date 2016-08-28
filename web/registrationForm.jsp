@@ -31,8 +31,13 @@
                             <input type="text" class="form-control" name="lastName" placeholder="last name">
                         </div>
                           <div class="form-group">
-                            <label for="district">District:</label>
-                            <input type="text" class="form-control" name="district" placeholder="District">
+                            <label>Electoral Area:</label>
+                            <select name="districtArea" class="form-control small ">
+                                    <c:forEach var="districtArea" items="${districtAreas}">
+                                    <option value="${districtArea}"> <c:out value="${districtArea}" /></option>
+                                </c:forEach>
+                                                
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="dob">Date of birth:</label>

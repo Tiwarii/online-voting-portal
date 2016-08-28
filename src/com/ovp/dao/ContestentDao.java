@@ -10,13 +10,14 @@ package com.ovp.dao;
  * @author Rashmi Tiwari
  */
 import com.ovp.entities.Candidate;
-import java.io.InputStream;
+import com.ovp.entities.Party;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -97,12 +98,13 @@ public class ContestentDao {
         }
     }
     
-    public List<Candidate> getCandidateByPost(String post) throws SQLException {
+    
+    public List<Candidate> getCandidateByDistArea(String distArea) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         log.info("Getting all contestent from DB");
-        String query = "SELECT * FROM candidate WHERE post='"+post+"' order by vote DESC";
+        String query = "SELECT * FROM candidate WHERE DistrictArea='"+distArea+"' order by vote DESC";
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();
@@ -120,18 +122,17 @@ public class ContestentDao {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         log.log(Level.INFO, "Creating contestent:{0} in DB", contestent);
-        String insertQuery = "INSERT INTO candidate(NAME,DISTRICT, PARTY, POST,VOTE, PHOTO_ID, CAMPAIGN_ID) VALUES(?,?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO candidate(NAME,DistrictArea, PARTY,VOTE, PHOTO_ID, CAMPAIGN_ID) VALUES(?,?,?,?,?,?)";
         try {
             connection = ConnectionFactory.getConnection();
             stmt = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, contestent.getName());
-            stmt.setString(2, contestent.getDistrict());
-            stmt.setString(3, contestent.getParty());
-            stmt.setString(4, contestent.getPost());
-            stmt.setInt(5, contestent.getVotes());
-            stmt.setInt(6, contestent.getPhotoId());
-            stmt.setInt(7, contestent.getCampaignId());
+            stmt.setString(2, contestent.getDistrictArea());
+            stmt.setString(3, contestent.getPartyName());
+            stmt.setInt(4, contestent.getVotes());
+            stmt.setInt(5, contestent.getPhotoId());
+            stmt.setInt(6, contestent.getCampaignId());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -204,16 +205,15 @@ public class ContestentDao {
         }
     }
 
-    private List<Candidate> resultSetToContestentList(ResultSet resultSet) throws SQLException {
+    private List<Candidate> resultSetToContestentList(ResultSet resultSet) throws SQLException{
         List<Candidate> contestentList = new ArrayList();
         // ResultSet is initially before the first data set
         while (resultSet.next()) {
             String id = resultSet.getString("id");
             String name = resultSet.getString("name");
             //String picLoc = resultSet.getString("picloc");
-            String post= resultSet.getString("post");
-            String party= resultSet.getString("party");
-            String district= resultSet.getString("district");
+            String partyName= resultSet.getString("party");
+            String districtArea= resultSet.getString("districtArea");
             String agenda = resultSet.getString("agenda");
             int vote = resultSet.getInt("vote");
             String summary = resultSet.getString("summary");
@@ -228,12 +228,18 @@ public class ContestentDao {
             System.out.println("campaignId: " + campaignId);
             // TODO: convert agentList array to real List and use it in constructor
             Candidate contestent = new Candidate();
+            PartyDao partyDao = new PartyDao();
+
+            Party party = partyDao.getPartyByName(partyName);
+            if(party != null) {
+                contestent.party = party;
+            }
+
             contestent.setId(id);
             contestent.setVotes(vote);
             contestent.setName(name);
-            contestent.setDistrict(district);
-            contestent.setParty(party);
-            contestent.setPost(post);
+            contestent.setDistrictArea(districtArea);
+            contestent.setPartyName(partyName);
             contestent.setPhotoId(photoId);
             contestent.setAgendaList(stringToList(agenda));
             contestentList.add(contestent);

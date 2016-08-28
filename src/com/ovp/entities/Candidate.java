@@ -15,18 +15,16 @@ import java.util.Objects;
  * @author Rashmi Tiwari
  */
 public class Candidate {
-
     private String id = null;
     private String name;
-    private String district;
-    private String party;
-    private String post;
+    private String districtArea;
+    private String partyName;
     private String description;
     private List<String> agendaList;
     private int votes = 0;
     private int photoId;
     private int campaignId;
-
+    public Party party;
 
     public String getId() {
         return id;
@@ -48,29 +46,20 @@ public class Candidate {
         this.name = name;
     }
 
-    public String getDistrict() {
-        return district;
+    public String getDistrictArea() {
+        return districtArea;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-    
-    public String getPost() {
-        return post;
+    public void setDistrictArea(String districtArea) {
+        this.districtArea = districtArea;
     }
 
-    public void setPost(String post) {
-        this.post = post;
-    }
-
-    
     public String getPicLocation() {
-        return party;
+        return partyName;
     }
 
     public void setPicLocation(String picLocation) {
-        this.party = picLocation;
+        this.partyName = picLocation;
     }
 
     public List<String> getAgendaList() {
@@ -97,12 +86,12 @@ public class Candidate {
         this.campaignId = campaignId;
     }
 
-    public String getParty() {
-        return party;
+    public String getPartyName() {
+        return partyName;
     }
 
-    public void setParty(String party) {
-        this.party = party;
+    public void setPartyName(String party) {
+        this.partyName = party;
     }
 
     public String getDescription() {
@@ -121,18 +110,24 @@ public class Candidate {
         this.photoId = photoId;
     }
 
+    public Party getParty() {
+        return party;
+    }
 
+    public void setParty(Party party) {
+        this.party = party;
+    }
+    
 
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 79 * hash + Objects.hashCode(this.id);
         hash = 79 * hash + Objects.hashCode(this.name);
-        hash = 79 * hash + Objects.hashCode(this.party);
+        hash = 79 * hash + Objects.hashCode(this.partyName);
         hash = 79 * hash + Objects.hashCode(this.agendaList);
         hash = 79 * hash + this.votes;
         hash = 79 * hash + this.campaignId;
-        
         return hash;
     }
 
@@ -156,7 +151,7 @@ public class Candidate {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.party, other.party)) {
+        if (!Objects.equals(this.partyName, other.partyName)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
@@ -170,10 +165,5 @@ public class Candidate {
         }
         return true;
     }
-
-    
-
-   
-
     
 }
