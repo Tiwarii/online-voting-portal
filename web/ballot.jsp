@@ -46,13 +46,13 @@
                     <c:forEach var="candidate" items="${candidates}">
                         <tbody>
                             <tr>
-                                <td>${candidate.id}</td>
+                                <td><h4>${candidate.id}</h4></td>
                                 <td><img src="./ImageServlet?image_id=${candidate.party.photoId}" class="img-responsive" style="width:80px; height: 80px;" alt="Image"></td>
-                                <td>${candidate.name}</td>
-                                <td>${candidate.partyName}</td>
+                                <td><h4>${candidate.name}</h4></td>
+                                <td><h4>${candidate.partyName}</h4></td>
                                 <td>
-                                    <a href="./VotingServletHandler?id=${candidate.id}"><span class="glyphicon glyphicon-cog"></span>Vote Me</a></td>
-                                Vote Me
+                                    <a href="./VotingServletHandler?id=${candidate.id}"> <button class="btn btn-warning"> <span class="glyphicon glyphicon-cog"></span> Vote Me</button> <br> Warning:"vote me on ur own risk"</a></td>
+                        
                             </tr>       
                         </tbody>
                     </c:forEach>

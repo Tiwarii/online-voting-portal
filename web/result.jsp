@@ -33,7 +33,7 @@
            <div class="container">
                <br>
                <br>
-
+       
                <br>
                <center>
                    <h4> <strong>Result of Voting</strong></h4>
@@ -60,6 +60,8 @@
                   </tbody>
                   </c:forEach>
                 </table>
+               <h4>Total Voter= ${totalVoter}</h4>
+               <h4>Total Voter voted = ${totalVoterVoted}</h4>
                </div>
            </div>
     </body>

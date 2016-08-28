@@ -9,8 +9,10 @@ import com.ovp.dao.CampaignDao;
 import com.ovp.dao.ContestentDao;
 import com.ovp.dao.DistrictAreaDao;
 import com.ovp.dao.PartyDao;
+import com.ovp.dao.VoterDao;
 import com.ovp.entities.Campaign;
 import com.ovp.entities.Candidate;
+import com.ovp.entities.Voter;
 import com.ovp.entities.Party;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -77,6 +79,14 @@ public class ResultServlet extends HttpServlet {
                 results.put("total", totalPartyResult);
                 request.setAttribute("results", results);
                 request.setAttribute("parties", parties);
+                VoterDao voterDao=  new VoterDao();
+                int totalVoter= voterDao.getVoterCount();
+                int totalVoterVoted= voterDao.getVotedVoterCount();
+                
+               request.setAttribute("totalVoter",totalVoter);
+               request.setAttribute("totalVoterVoted",totalVoterVoted);
+                
+                
             } else {
                 request.setAttribute("message", "No active election going on ...\n No Results Found. \n Please try later.");
                 request.getRequestDispatcher("home.jsp").forward(request, response);

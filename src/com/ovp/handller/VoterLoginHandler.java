@@ -104,7 +104,7 @@ public class VoterLoginHandler extends HttpServlet {
                 Voter voter =    (Voter) session.getAttribute("voter");
                 String pin = request.getParameter("pin");
                 if (Security.decrypt(voter.getPin()).equals(pin) ) {
-                    voter.setVoted(true);
+                    
                     voterDao.updateVoter(voter);
                     response.sendRedirect("./voting");
                 }

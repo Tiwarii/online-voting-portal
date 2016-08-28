@@ -5,7 +5,9 @@
  */
 package com.ovp.handller;
 
+import com.ovp.dao.DistrictAreaDao;
 import com.ovp.dao.VoterDao;
+import com.ovp.entities.Campaign;
 import com.ovp.entities.Voter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +15,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -79,9 +82,10 @@ public class VoterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
      try {
-         processRequest(request, response);
-     } catch (ParseException ex) {
-         Logger.getLogger(VoterServlet.class.getName()).log(Level.SEVERE, null, ex);
+         DistrictAreaDao disrtictAreaDao= new DistrictAreaDao();
+         List<String> districtAreas = disrtictAreaDao.getAllDistrictArea();
+         request.setAttribute("districtAreas", districtAreas);
+         request.getRequestDispatcher("registrationForm.jsp").forward(request, response);
      } catch (SQLException ex) {
          Logger.getLogger(VoterServlet.class.getName()).log(Level.SEVERE, null, ex);
      }

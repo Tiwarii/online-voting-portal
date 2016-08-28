@@ -52,6 +52,7 @@ public class VotingServletHandler extends HttpServlet {
             // set in the list of voted Post
             HttpSession session = request.getSession();
             Voter voter = (Voter) session.getAttribute("voter");
+            voter.setVoted(true);
             voterDao.updateVoter(voter);
             session.invalidate();
             request.setAttribute("message", "Successfully Voted ...\n Logged out. \n Thank You.");

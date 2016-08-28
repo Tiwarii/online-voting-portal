@@ -190,4 +190,78 @@ public class VoterDao {
     } 
     
     
+    public List<Voter> getVotedVoter() throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        log.log(Level.INFO, "Getting voter with VoterId:{0} from DB");
+        String query = "SELECT * FROM voter WHERE Voted=1 ";
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            List<Voter> lists = resultSetToVoterList(resultSet);
+           return lists;
+        }
+        catch(SQLException ex){
+            log.log(Level.SEVERE, "getting  voter:{0} failed in DB", ex);
+            throw ex;
+        }finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(statement);
+            DBUtil.close(connection);
+        }
+        
+    } 
+    public int getVotedVoterCount() throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        log.log(Level.INFO, "Getting voter with VoterId:{0} from DB");
+        String query = "SELECT count(*) as total FROM voter WHERE Voted=1 ";
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+           // List<Voter> lists = resultSetToVoterList(resultSet);
+            if (resultSet.next()){
+             return resultSet.getInt("total");
+            }
+        }
+        catch(SQLException ex){
+            log.log(Level.SEVERE, "getting  voter:{0} failed in DB", ex);
+            throw ex;
+        }finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(statement);
+            DBUtil.close(connection);
+        }
+        return 0;
+     }  
+     
+   public int getVoterCount() throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        log.log(Level.INFO, "Getting voter with VoterId:{0} from DB");
+        String query = "SELECT count(*) as total FROM voter  ";
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+           // List<Voter> lists = resultSetToVoterList(resultSet);
+            if (resultSet.next()){
+             return resultSet.getInt("total");
+            }
+             return 0;
+        }
+        catch(SQLException ex){
+            log.log(Level.SEVERE, "getting  voter:{0} failed in DB", ex);
+            throw ex;
+        }finally {
+            DBUtil.close(resultSet);
+            DBUtil.close(statement);
+            DBUtil.close(connection);
+        }
+     }    
 }

@@ -100,7 +100,7 @@
                 <li><a  href="addDistrictArea.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp; District Area Set Up</a></li>       
                 <li ><a href="./CandidateServlet"><span class="glyphicon glyphicon-earphone"></span>&nbsp; Candidate Set up</a></li>
                 <li ><a href="./ResultServlet"><span class="glyphicon glyphicon-earphone"></span>&nbsp; View Result</a></li>
-                <li ><a href="registrationForm.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Voter Registration</a></li>
+                <li ><a href="./VoterServlet"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Voter Registration</a></li>
                 <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
             <% }else if(unRegisterdUser){%>
              <li ><a href="home.jsp"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Home</a></li>
