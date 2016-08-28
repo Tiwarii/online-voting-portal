@@ -42,6 +42,7 @@
         <div class="container-fluid bg-3 text-center">
             <h3>Participating candidates in election</h3><br>
             <div class="row">
+                <center>
                 <c:forEach var="candidate" items="${candidates}">
                     <div class="col-sm-3">
                         <img src="./ImageServlet?image_id=${candidate.photoId}" class="img-responsive" style="width:200px; height:200px;" alt="Image">
@@ -53,7 +54,7 @@
                         <br>
                     </div>
                 </c:forEach>  
-
+                </center>
             </div>
         </div>
         <footer class="container-fluid text-center">

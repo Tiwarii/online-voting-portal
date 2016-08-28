@@ -69,8 +69,8 @@
                         </div>
                     </div>
                 </div>
-                <br><br><br>
-
+                <br><br>
+                <center><a href="./DisplayCandidate" ><strong>Back to home</strong></a></center>
                 <div>
 
                 </div>

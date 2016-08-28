@@ -27,7 +27,7 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>
-            home.jsp
+            contestant.jsp
         </welcome-file>
     </welcome-file-list>
     <resource-ref>
