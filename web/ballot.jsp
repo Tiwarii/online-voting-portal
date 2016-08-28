@@ -47,7 +47,7 @@
                         <tbody>
                             <tr>
                                 <td>${candidate.id}</td>
-                                <td><img src="./ImageServlet?image_id=${candidate.party.photoId}" class="img-responsive" style="width:100%" alt="Image"></td>
+                                <td><img src="./ImageServlet?image_id=${candidate.party.photoId}" class="img-responsive" style="width:80px; height: 80px;" alt="Image"></td>
                                 <td>${candidate.name}</td>
                                 <td>${candidate.partyName}</td>
                                 <td>

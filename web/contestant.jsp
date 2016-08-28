@@ -44,13 +44,13 @@
             <div class="row">
                 <c:forEach var="candidate" items="${candidates}">
                     <div class="col-sm-3">
-                        <img src="./ImageServlet?image_id=${candidate.photoId}" class="img-responsive" style="width:100%" alt="Image">
-                        Name:<button type="button" class="btn btn-primary">${candidate.name}</button>
-                        <br><br>
-                        Party:<button type="button" class="btn btn-secondary">${candidate.party.name}</button>
-                        <br><br>
-                        Electoral Area: <button type="button" class="btn btn-success">${candidate.districtArea}</button>
-                        </p><br>
+                        <img src="./ImageServlet?image_id=${candidate.photoId}" class="img-responsive" style="width:200px; height:200px;" alt="Image">
+                        Name:${candidate.name}
+                        <br>
+                        Party:${candidate.party.name}
+                        <br>
+                        Electoral Area: ${candidate.districtArea}
+                        <br>
                     </div>
                 </c:forEach>  
 
