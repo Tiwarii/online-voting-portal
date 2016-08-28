@@ -93,7 +93,7 @@
            <% 
                 if (admin){
            %>
-                <li ><a href="./DisplayCandidate"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+                <li ><a href="./home"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
                 <li ><a href="./DisplayCandidate"><span class="glyphicon glyphicon-user"></span>&nbsp;Candidates</a></li>
                 <li><a href="addCampaign.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp;Election Setup</a></li>
                 <li><a  href="partyRegistration.jsp"><span class="glyphicon glyphicon-cog"></span>&nbsp; Party Setup</a></li>  
@@ -101,16 +101,10 @@
                 <li ><a href="./CandidateServlet"><span class="glyphicon glyphicon-cog"></span>&nbsp; Candidate Set up</a></li>
                 <li ><a href="./VoterServlet"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Voter Registration</a></li>
                 <li ><a href="./ResultServlet"><span class="glyphicon glyphicon-record"></span>&nbsp; View Result</a></li>
-                
-                
                 <li><a href="logout.jsp"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
-            
-            
             <% } else {%>
-             <li ><a href="./DisplayCandidate"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Home</a></li>
-            <li ><a href="./DisplayCandidate"><span class="glyphicon glyphicon-home"></span>&nbsp;Candidates</a></li>
-            <li ><a href="home.jsp"><span class="glyphicon glyphicon-hand-up"></span>&nbsp;Vote</a></li>
-            
+             <li ><a href="./home"><span class="glyphicon glyphicon-earphone"></span>&nbsp;Home</a></li>
+            <li ><a href="./DisplayCandidate"><span class="glyphicon glyphicon-home"></span>&nbsp;Candidates</a></li>   
             <% } %>
             </ul>
             </div>

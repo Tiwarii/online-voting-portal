@@ -25,17 +25,42 @@
             <div class="right1">
                 <label  ><h1>Election Commission of Nepal </h1> </label>
             </div>
-            <br>
+            <center>
+                <%
+                    boolean unRegisterdUser = true;
+                    Object activeCampaign = request.getAttribute("activeCampaign");
+                    if (activeCampaign == null) {
+                %>
+
+                <br>
+
+
+                No Active Campaign Found
+                <br>
+                <%
+                } else {
+                %>
+                Running Election for Campaign: ${activeCampaign.title}
+                <%
+                    }
+                %>
+            </center>
             <div class="right" >
+                <div>
+                <%
+                     if (activeCampaign != null) { %> 
                 <center>
                     <label >  login as </label>
                 </center>
                 <br>
 
                 <br><br>
-                <div>
-                    <button type="button" class="btn btn-primary btn-group-justified button1" id="voterBtn">Voter</button>
+                
 
+                    <button type="button" class="btn btn-primary btn-group-justified button1" id="voterBtn">Voter</button>
+                    <br><br>
+                    <center><a href="./DisplayCandidate" ><strong>See Candidates</strong></a></center>
+                    <% }%>
                     <!-- Modal -->
                     <div class="modal fade" id="voterModal" role="dialog">
                         <div class="modal-dialog">
@@ -70,8 +95,7 @@
                     </div>
                 </div>
                 <br><br>
-                <center><a href="./DisplayCandidate" ><strong>Back to home</strong></a></center>
-                <div>
+                                <div>
 
                 </div>
             </div>

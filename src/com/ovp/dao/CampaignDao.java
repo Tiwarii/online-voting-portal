@@ -58,8 +58,8 @@ public class CampaignDao {
         ResultSet resultSet = null;
         log.log(Level.INFO, "Getting active campaign from DB");
         String query = "SELECT * FROM campaign WHERE "
-                + "STARTDATE < DATE(NOW()) or ('STARTDATE' = DATE(NOW()) and 'STARTTIME' > TIME(NOW())) and"
-                + "'ENDDATE' > DATE(NOW()) or ('ENDDATE' = DATE(NOW()) and 'ENDTIME' < TIME(NOW()))";
+                + "(STARTDATE < DATE(NOW()) or (STARTDATE = DATE(NOW()) and STARTTIME < TIME(NOW()))) and"
+                + "(ENDDATE > DATE(NOW()) or (ENDDATE = DATE(NOW()) and ENDTIME > TIME(NOW())))";
         try {
             connection = ConnectionFactory.getConnection();
             statement = connection.createStatement();

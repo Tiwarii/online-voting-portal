@@ -10,11 +10,6 @@ import com.ovp.entities.Campaign;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -25,13 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Rashmi Tiwari
+ * @author pjayswal
  */
-@WebServlet(name = "CampaignServlet", urlPatterns = {"/CampaignServlet"})
-public class CampaignServlet extends HttpServlet {
-
+@WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
+public class HomeServlet extends HttpServlet {
     private CampaignDao campaignDao = new CampaignDao();
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,27 +35,14 @@ public class CampaignServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String title = request.getParameter("title");
-            String sDate = request.getParameter("startDate");
-            String eDate = request.getParameter("endDate");
-            String sTime = request.getParameter("startTime");
-            String eTime = request.getParameter("endTime");
-
-            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-            Date startDate = dateFormatter.parse(sDate);
-            Date endDate = dateFormatter.parse(eDate);
-
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-            Time startTime = new Time(formatter.parse(sTime).getTime());
-            Time endTime = new Time(formatter.parse(eTime).getTime());
-
-            Campaign c = new Campaign(title, startDate, endDate, startTime, endTime);
-            campaignDao.createCampaign(c);
-            response.sendRedirect("addCampaign.jsp");
-
+            Campaign activeCampaign = campaignDao.getActiveCampaign();
+            request.setAttribute("activeCampaign", activeCampaign);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -78,13 +58,7 @@ public class CampaignServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(PartyServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PartyServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -98,13 +72,7 @@ public class CampaignServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(CampaignServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(CampaignServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
